@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from "react-router-dom";
 import '../App.css';
+import Routes from '../Routes';
 
 class Header extends Component {
 
@@ -18,10 +20,10 @@ class Header extends Component {
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="#">Search Results <span class="sr-only">(current)</span></a>
+                <Link to ="/SearchResults" class="nav-link" >Search Results <span class="sr-only">(current)</span></Link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Compare Pages</a>
+                <Link to ="/ComparePages" class="nav-link">Compare Pages</Link>
               </li>
               {/* <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -35,10 +37,10 @@ class Header extends Component {
                 </div>
               </li> */}
               <li class="nav-item">
-                <a class="nav-link" href="#">Add User</a>
+                <Link to ="/AddUser" class="nav-link">Add User</Link>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Bulk Upload</a>
+                <Link to ="/BulkUpload" class="nav-link">Bulk Upload</Link>
               </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -46,6 +48,7 @@ class Header extends Component {
             </form>
           </div>
         </nav>
+        <Routes />
       </div>
     );
   }
