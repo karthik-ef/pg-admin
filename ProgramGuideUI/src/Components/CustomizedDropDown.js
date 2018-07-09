@@ -21,7 +21,7 @@ let Roles = [];
 var MultiSelectField = createClass({
 	displayName: 'MultiSelectField',
 	propTypes: {
-		label: PropTypes.string,
+		label1: PropTypes.string,
 	},
 	getInitialState () {
 		return {
@@ -49,7 +49,9 @@ var MultiSelectField = createClass({
 			this.setState({ value });
 		}
 		else{
-			this.setState({ value });
+			this.setState({ value }, function(){
+				this.props.bindedValue(value);
+			});
 		}
 	}
 	else{
@@ -61,6 +63,10 @@ var MultiSelectField = createClass({
 	handleOnOpen(){
 
 		if(this.state.IdentifyName === 'Role'){
+			this.state.multiValues = false;
+		}
+
+		if(this.state.IdentifyName === 'Tags'){
 			this.state.multiValues = false;
 		}
 		// alert('opened')
@@ -76,14 +82,22 @@ var MultiSelectField = createClass({
 			// console.log('Roles')
 		}
 
+		if(this.props.Tags){
+			this.state.IdentifyName = 'Tags'
+			this.state.dispalyText = '--Choose--';
+			this.state.id = 'Tags';
+			Roles = this.props.Tags.map((m) => {return m});
+			// console.log('Roles')
+		}
+
 		if(this.props.Markets){
 			this.state.IdentifyName = 'Market'
 			this.state.dispalyText = 'Select Market(s)';
 			// console.log('Markets')
 			// obj.Name
-			Market.push({label: 'Select All', value: 'Select All'});
+			Market.push({label1: 'Select All', value: 'Select All'});
 			Roles = this.props.Markets.map((m) => {return m});
-			Roles.unshift({label: 'Select All', value: 'Select All'});
+			Roles.unshift({label1: 'Select All', value: 'Select All'});
 			Market.push(Roles);
 			console.log(Roles);
 			// console.log(Roles);
