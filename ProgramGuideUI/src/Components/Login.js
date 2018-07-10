@@ -32,17 +32,49 @@ class Login extends Component {
     }
 
     handleSubmit(event) {
+        this.getAuth();
+        event.preventDefault();
+        // if (this.refs.emailId.value === "admin@ef.com" && this.refs.password.value === "password") {
+        //     $('#exampleModalCenter').modal('hide');
+        //     this.setState({ isAuthenticUser: true }, function () {
+        //         this.props.loginDetails(this.state.isAuthenticUser);
+        //     });
+        // }
+        // else {
+        //     event.preventDefault();
+        //     $('.alert').show();
+        // }
+    }
 
-        if (this.refs.emailId.value === "admin@ef.com" && this.refs.password.value === "password") {
-            $('#exampleModalCenter').modal('hide');
-            this.setState({ isAuthenticUser: true }, function () {
-                this.props.loginDetails(this.state.isAuthenticUser);
-            });
-        }
-        else {
-            event.preventDefault();
-            $('.alert').show();
-        }
+
+    getAuth() {
+        $.ajax({
+            url: 'http://localhost:53181/api/user/PostUserForPg',
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                "userName": this.refs.emailId.value,
+                "password": this.refs.password.value
+            },
+            cache: false,
+            success: function (data) {
+                console.log(data)
+                if (data['AuthenticationResponse']) {
+                    $('#exampleModalCenter').modal('hide');
+                    this.setState({ isAuthenticUser: true }, function () {
+                        this.props.loginDetails(this.state.isAuthenticUser);
+                    });
+                }
+                else{
+                    $('.alert').show();
+                }
+
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+
     }
 
     render() {
@@ -55,7 +87,7 @@ class Login extends Component {
                             <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                                 <div className="form-group row">
                                     <div className="col-sm-12">
-                                        <input type="email" className="form-control" id="inputEmail3" ref="emailId" placeholder="Email" required />
+                                        <input type="text" className="form-control" id="inputEmail3" ref="emailId" placeholder="Email" required />
                                     </div>
                                 </div>
 
