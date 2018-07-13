@@ -7,13 +7,16 @@ class AddUser extends Component {
     super();
     this.state = {
       roles: [],
-      markets: []
+      markets: [],
+      selectedMarkets: '',
+      selectedRoles: '',
+      saveUserDetails: {}
     }
   }
 
   getMarket() {
     $.ajax({
-      url: 'http://10.57.41.36:3001/market',
+      url: 'http://ctdev.ef.com:3001/market',
       dataType: 'json',
       cache: false,
       success: function (data) {
@@ -23,6 +26,26 @@ class AddUser extends Component {
           //console.log(this.state);
         });
 
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(err);
+      }
+    });
+
+  }
+
+
+  reisterUser() {
+    $.ajax({
+      url: 'http://localhost:3001/register',
+      type:'POST',
+      dataType: 'TEXT',
+      data: this.state.saveUserDetails,
+      cache: false,
+      success: function (data) {
+        console.log(data);
+        //this.setState({ markets: data.map(m => { return { label: m.Name, value: m.MarketCode } }) }, function () {
+          console.log('');
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(err);
@@ -45,12 +68,37 @@ class AddUser extends Component {
     this.getMarket();
   }
 
+  getMarket1(value) {
+    this.setState({ selectedMarkets: value });
+  }
+
+  getRoles1(value) {
+    this.setState({ selectedRoles: value });
+  }
+
+
+  handleSubmit(e) {
+
+    var userDetails = {};
+    userDetails.userName = this.refs.userName.value;
+    userDetails.marketCodeXml = '<userpermission xmlns="">' + this.state.selectedMarkets.split(',').map(m => {return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g,' ') + '</userpermission>'
+    userDetails.rolesXml = '<userpermission xmlns=""> <role rolename ="' +this.state.selectedRoles +'"/> </userpermission>';
+
+
+    this.setState({saveUserDetails:userDetails},function(){
+      this.reisterUser();
+    });
+
+    e.preventDefault();
+   
+  }
+
   render() {
     return (
       <div className="container">
         <h3>Add Users</h3>
 
-        <form className="form-horizontal" >
+        <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
           <div className="form-group row">
             <div className="col-sm-12">
               <input type="text" className="form-control" id="userName" ref="userName" placeholder="User Name" required />
@@ -59,13 +107,13 @@ class AddUser extends Component {
 
           <div className="form-group row">
             <div className="col-sm-12">
-            <Dropdowm Roles={this.state.roles} multiSelect={true} />
+              <Dropdowm Roles={this.state.roles} multiSelect={true} bindedRoleValue={this.getRoles1.bind(this)} />
             </div>
           </div>
 
           <div className="form-group row">
             <div className="col-sm-12">
-            <Dropdowm Markets={this.state.markets} multiSelect={true} />
+              <Dropdowm Markets={this.state.markets} multiSelect={true} bindedMarketValue={this.getMarket1.bind(this)} />
             </div>
           </div>
 

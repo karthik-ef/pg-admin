@@ -5,25 +5,15 @@ import PropTypes from 'prop-types';
 import Select from 'react-select';
 import './Dropdown.css';
 
-const FLAVOURS = [
-	{ label:'Select All', value:'Select All'},
-	{ label: 'Chocolate', value: 'chocolate' },
-	{ label: 'Vanilla', value: 'vanilla' },
-	{ label: 'Strawberry', value: 'strawberry' },
-	{ label: 'Caramel', value: 'caramel' },
-	{ label: 'Cookies and Cream', value: 'cookiescream' },
-	{ label: 'Peppermint', value: 'peppermint' },
-];
-
 let xys = [];
-let Roles = []; 
+let Roles = [];
 
 var MultiSelectField = createClass({
 	displayName: 'MultiSelectField',
 	propTypes: {
-		label1: PropTypes.string,
+		label: PropTypes.string,
 	},
-	getInitialState () {
+	getInitialState() {
 		return {
 			removeSelected: true,
 			disabled: false,
@@ -36,68 +26,80 @@ var MultiSelectField = createClass({
 			IdentifyName: ''
 		};
 	},
-	handleSelectChange (value) {
-		if(value){
-		if(value.includes("Select All")){
-			var difficult_tasks = [];
-			value = Roles.forEach(element => {
-				if(element.value !== "Select All"){
-					 difficult_tasks.push(element.value);
-				}
-			});
-			value = difficult_tasks;
+	handleSelectChange(value) {
+		if (value) {
+			if (value.includes("Select All")) {
+				var difficult_tasks = [];
+				value = Roles.forEach(element => {
+					if (element.value !== "Select All") {
+						difficult_tasks.push(element.value);
+					}
+				});
+				value = difficult_tasks;
+				this.setState({ value });
+			}
+
+			else if(this.state.IdentifyName === 'Role'){
+				this.setState({ value },function(){
+					this.props.bindedRoleValue(value);
+				});
+			}
+
+			else if(this.state.IdentifyName === 'Market'){
+				this.setState({ value },function(){
+					this.props.bindedMarketValue(value);
+				});
+			}
+			else {
+				this.setState({ value }, function () {
+					this.props.bindedValue(value);
+				});
+			}
+		}
+		else {
 			this.setState({ value });
 		}
-		else{
-			this.setState({ value }, function(){
-				this.props.bindedValue(value);
-			});
-		}
-	}
-	else{
-		this.setState({ value });
-	}
-		
+
 	},
 
-	handleOnOpen(){
+	handleOnOpen() {
 
-		if(this.state.IdentifyName === 'Role'){
+		if (this.state.IdentifyName === 'Role') {
 			this.state.multiValues = false;
 		}
 
-		if(this.state.IdentifyName === 'Tags'){
+		if (this.state.IdentifyName === 'Tags') {
 			this.state.multiValues = false;
 		}
 		// alert('opened')
 	},
 
-	render () {
+	render() {
 		let Market = [];
-		if(this.props.Roles){
+		if (this.props.Roles) {
 			this.state.IdentifyName = 'Role'
 			this.state.dispalyText = 'Select Role';
 			this.state.id = 'Role';
-			Roles = this.props.Roles.map((m) => {return m});
+			Roles = this.props.Roles.map((m) => { return m });
 			// console.log('Roles')
 		}
 
-		if(this.props.Tags){
+		if (this.props.Tags) {
 			this.state.IdentifyName = 'Tags'
 			this.state.dispalyText = '--Choose--';
 			this.state.id = 'Tags';
-			Roles = this.props.Tags.map((m) => {return m});
+			Roles = this.props.Tags.map((m) => { return m });
 			// console.log('Roles')
 		}
 
-		if(this.props.Markets){
+		if (this.props.Markets) {
 			this.state.IdentifyName = 'Market'
 			this.state.dispalyText = 'Select Market(s)';
 			// console.log('Markets')
 			// obj.Name
-			Market.push({label1: 'Select All', value: 'Select All'});
-			Roles = this.props.Markets.map((m) => {return m});
-			Roles.unshift({label1: 'Select All', value: 'Select All'});
+			Market.push({ label1: 'Select All', value: 'Select All' });
+			Roles = this.props.Markets.map((m) => { return m });
+			Roles.unshift({ label1: 'Select All', value: 'Select All' });
 			Market.push(Roles);
 			console.log(Roles);
 			// console.log(Roles);
@@ -105,16 +107,14 @@ var MultiSelectField = createClass({
 
 		// console.log(Roles);
 
-		 const { value } = this.state;
-		 // console.log(FLAVOURS);
-		// const options = crazy ? WHY_WOULD_YOU : FLAVOURS;
+		const { value } = this.state;
 		return (
 			<div>
-				<Select className= {this.state.IdentifyName}
+				<Select className={this.state.IdentifyName}
 					closeOnSelect={true}
 					placeholder={this.state.dispalyText}
-					multi = {this.state.multiValues}
-					onOpen = {this.handleOnOpen}
+					multi={this.state.multiValues}
+					onOpen={this.handleOnOpen}
 					onChange={this.handleSelectChange}
 					options={Roles}
 					simpleValue
