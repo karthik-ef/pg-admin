@@ -20,12 +20,7 @@ class AddUser extends Component {
       dataType: 'json',
       cache: false,
       success: function (data) {
-        this.setState({ markets: data.map(m => { return { label: m.Name, value: m.MarketCode } }) }, function () {
-          console.log(this.state);
-          //this.setState({market:this.state})
-          //console.log(this.state);
-        });
-
+        this.setState({ markets: data.map(m => { return { label: m.Name, value: m.MarketCode } }) });
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(err);
@@ -34,8 +29,8 @@ class AddUser extends Component {
 
   }
 
-
-  reisterUser() {
+//POST request to register user to PG-admin
+  registerUser() {
     $.ajax({
       url: 'http://localhost:3001/register',
       type:'POST',
@@ -44,7 +39,6 @@ class AddUser extends Component {
       cache: false,
       success: function (data) {
         console.log(data);
-        //this.setState({ markets: data.map(m => { return { label: m.Name, value: m.MarketCode } }) }, function () {
           console.log('');
       }.bind(this),
       error: function (xhr, status, err) {
@@ -86,7 +80,7 @@ class AddUser extends Component {
 
 
     this.setState({saveUserDetails:userDetails},function(){
-      this.reisterUser();
+      this.registerUser();
     });
 
     e.preventDefault();
