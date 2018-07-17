@@ -97,10 +97,10 @@ var MultiSelectField = createClass({
 			this.state.dispalyText = 'Select Market(s)';
 			// console.log('Markets')
 			// obj.Name
-			Market.push({ label1: 'Select All', value: 'Select All' });
+			Market.push({ label: 'Select All', value: 'Select All' });
 			Roles = this.props.Markets.map((m) => { return m });
-			Roles.unshift({ label1: 'Select All', value: 'Select All' });
 			Market.push(Roles);
+			Roles.unshift({ label: 'Select All', value: 'Select All' });
 			console.log(Roles);
 			// console.log(Roles);
 		}
