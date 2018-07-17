@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
+import SearchByTag from './SearchResult/SearchByTag';
+import AddUser from "./AddUser";
 
 class SearchResults extends Component {
 
@@ -6,7 +9,7 @@ class SearchResults extends Component {
 
     return (
       <div className="container">
-      Search Results
+      <SearchByTag/>
       </div>
     );
   }

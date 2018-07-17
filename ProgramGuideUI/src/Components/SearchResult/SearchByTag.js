@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Dropdown from '../CustomizedDropDown';
+import './Search.css';
 
 class SearchByTag extends Component {
     constructor() {
@@ -63,9 +64,10 @@ class SearchByTag extends Component {
 
     componentDidMount() {
         this.getTagData();
-        $(window).on('load', function () {
-            $('#exampleModalLong').modal('show');
-        });
+        $('#exampleModalLong').modal('show');
+        // $(window).on('load', function () {
+        //     $('#exampleModalLong').modal('show');
+        // });
     }
 
     bindVal(TagName, value) {
