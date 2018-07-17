@@ -6,7 +6,6 @@ class SearchByTag extends Component {
     constructor() {
         super();
         this.state = {
-            login: [],
             tagExperienceData: [],
             tagKeywordTopicData: [],
             tagWhenData: [],
@@ -62,28 +61,7 @@ class SearchByTag extends Component {
 
     }
 
-    getAuth(){
-        $.ajax({
-            url: 'http://localhost:53181/api/user/PostUserForPg',
-            type: 'POST',
-            dataType: 'json',
-            data: {"userName": "karthik.subbarayappa",
-            "password": "$picity12"},
-            cache: false,
-            success: function (data) {
-                console.log(data['AuthenticationResponse']);
-                alert('success')
-                this.setState({login: data});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
-
-    }
-
     componentDidMount() {
-        this.getAuth();
         this.getTagData();
         $(window).on('load', function () {
             $('#exampleModalLong').modal('show');
@@ -133,7 +111,6 @@ class SearchByTag extends Component {
     }
 
     render() {
-        console.log(this.state.login)
         return (
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">

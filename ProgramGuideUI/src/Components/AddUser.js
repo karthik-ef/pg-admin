@@ -32,7 +32,7 @@ class AddUser extends Component {
 //POST request to register user to PG-admin
   registerUser() {
     $.ajax({
-      url: 'http://localhost:3001/register',
+      url: 'http://ctdev.ef.com:3001/register',
       type:'POST',
       dataType: 'TEXT',
       data: this.state.saveUserDetails,
