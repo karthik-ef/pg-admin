@@ -1,0 +1,106 @@
+.mainDiv{
+    height: 100vh;
+    /* background-color: brown; */
+}
+
+/* Header Styles */
+.headerDiv{
+height: 10%;
+/* background-color: aqua; */
+}
+
+
+.brandDiv{
+    height: 100%;
+    width: 5%;
+    /* background-color: white; */
+    float: left;
+}
+.efLogo{
+    height: 100%;
+    width: 100%;
+}
+.applicationNameDiv1{
+    height: 100%;
+    width: 15%;
+    /* background-color: pink; */
+    float: left;
+    text-align: center;
+}
+.navItemsDiv{
+    height: 100%;
+    width: 60%;
+    float: left;
+    /* background-color: blue; */
+}
+.emptyDiv{
+    height: 30%;
+    width: 100%;
+    /* background-color: orange; */
+}
+.navBarDiv{
+    height: 70%;
+    width: 100%;
+    /* background-color: white; */
+}
+#horizontal-style {
+    display: table;
+    width: 100%
+}
+#horizontal-style li {
+    display: table-cell;
+}
+#horizontal-style Link {
+    display: block;
+    /* border: 1px solid red; */
+    text-align: center;
+    margin: 0 5px;
+    /* background: #999 */
+}
+
+.profileDiv{
+    height: 100%;
+    width: 20%;
+    float: left;
+    text-align: center;
+    /* background-color: red; */
+}
+/* END OF HEADER STYLE */
+
+/* APPLICATION NAME STYLE */
+.applicationNameDiv{
+    height: 5%;
+    width: 100%;
+    /* background-color: pink; */
+}
+/* END OF APPLCIATION STYLE */
+
+/* STYLES FOR CONTENT */
+.contentDiv{
+    height: 85%;
+    overflow: auto;
+    /* background-color: white;   */
+
+}
+.table{
+    width: 50%;
+    margin: 0px auto;
+}
+.itemDiv{
+    height: 100%;
+    width: 100%;
+    margin: 0px auto;
+}
+/* END OF STYLE */
+
+/* FOOTER STYLES */
+.footerDiv{
+    height: 5%;
+    background-color: pink;
+    text-align: center;
+}
+/* END OF STYLE */
+
+.floatLeft{
+    float: right;
+}
