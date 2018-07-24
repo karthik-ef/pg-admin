@@ -1,130 +1,121 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Dropdown from '../CustomizedDropDown';
-import './Search.css';
+
 
 class SearchByTag extends Component {
-    constructor() {
-        super();
-        this.state = {
-            tagExperienceData: [],
-            tagKeywordTopicData: [],
-            tagWhenData: [],
-            tagCourseTypeData: [],
-            tagAgeRangeData: [],
-            tagDurationData: [],
-            tagLanguageData: [],
-            tagPlatformData: [],
-            tagContinentData: [],
-            tagCountryData: [],
-            tagStateData: [],
-            tagCityData: [],
-            tagFeatureData: [],
-            tagExperienceValue: '',
-            tagKeywordTopicValue: '',
-            tagWhenValue: '',
-            tagCourseTypeValue: '',
-            tagAgeRangeValue: '',
-            tagDurationValue: '',
-            tagLanguageValue: '',
-            tagPlatformValue: '',
-            tagContinentValue: '',
-            tagCountryValue: '',
-            tagStateValue: '',
-            tagCityValue: '',
-            tagFeatureValue: ''
-        }
+  constructor() {
+    super();
+    this.state = {
+        tagExperienceData: [],
+        tagKeywordTopicData: [],
+        tagWhenData: [],
+        tagCourseTypeData: [],
+        tagAgeRangeData: [],
+        tagDurationData: [],
+        tagLanguageData: [],
+        tagPlatformData: [],
+        tagContinentData: [],
+        tagCountryData: [],
+        tagStateData: [],
+        tagCityData: [],
+        tagFeatureData: [],
+        tagExperienceValue: '',
+        tagKeywordTopicValue: '',
+        tagWhenValue: '',
+        tagCourseTypeValue: '',
+        tagAgeRangeValue: '',
+        tagDurationValue: '',
+        tagLanguageValue: '',
+        tagPlatformValue: '',
+        tagContinentValue: '',
+        tagCountryValue: '',
+        tagStateValue: '',
+        tagCityValue: '',
+        tagFeatureValue: ''
     }
-    getTagData() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3001/SearchByTag',
-            dataType: 'json',
-            cache: false,
-            success: function (data) {
-                this.setState({ tagExperienceData: data.filter(m => m.TagName === "Tag_Experience").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagKeywordTopicData: data.filter(m => m.TagName === "Tag_KeywordTopic").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagWhenData: data.filter(m => m.TagName === "Tag_When").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagCourseTypeData: data.filter(m => m.TagName === "Tag_CourseType").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagAgeRangeData: data.filter(m => m.TagName === "Tag_AgeRange").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagDurationData: data.filter(m => m.TagName === "Tag_Duration").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagLanguageData: data.filter(m => m.TagName === "Tag_Language").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagPlatformData: data.filter(m => m.TagName === "Tag_Platform").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagContinentData: data.filter(m => m.TagName === "Tag_Continent").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagCountryData: data.filter(m => m.TagName === "Tag_Country").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagStateData: data.filter(m => m.TagName === "Tag_State").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagCityData: data.filter(m => m.TagName === "Tag_City").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagFeatureData: data.filter(m => m.TagName === "Tag_Feature").map(m => { return { label: m.Value, value: m.Value } }) });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
+}
+getTagData() {
+    $.ajax({
+        url: 'http://ctdev.ef.com:3001/SearchByTag',
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+            this.setState({ tagExperienceData: data.filter(m => m.TagName === "Tag_Experience").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagKeywordTopicData: data.filter(m => m.TagName === "Tag_KeywordTopic").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagWhenData: data.filter(m => m.TagName === "Tag_When").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagCourseTypeData: data.filter(m => m.TagName === "Tag_CourseType").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagAgeRangeData: data.filter(m => m.TagName === "Tag_AgeRange").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagDurationData: data.filter(m => m.TagName === "Tag_Duration").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagLanguageData: data.filter(m => m.TagName === "Tag_Language").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagPlatformData: data.filter(m => m.TagName === "Tag_Platform").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagContinentData: data.filter(m => m.TagName === "Tag_Continent").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagCountryData: data.filter(m => m.TagName === "Tag_Country").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagStateData: data.filter(m => m.TagName === "Tag_State").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagCityData: data.filter(m => m.TagName === "Tag_City").map(m => { return { label: m.Value, value: m.Value } }) });
+            this.setState({ tagFeatureData: data.filter(m => m.TagName === "Tag_Feature").map(m => { return { label: m.Value, value: m.Value } }) });
+        }.bind(this),
+        error: function (xhr, status, err) {
+            console.log(err);
+        }
+    });
 
+}
+
+componentDidMount() {
+    this.getTagData();
+    $('#exampleModalLong').modal('show');
+    // $(window).on('load', function () {
+    //     $('#exampleModalLong').modal('show');
+    // });
+}
+
+bindVal(TagName, value) {
+    if (TagName === 'Tag_Experience') {
+        this.setState({ tagExperienceValue: value });
     }
-
-    componentDidMount() {
-        this.getTagData();
-        $('#exampleModalLong').modal('show');
-        // $(window).on('load', function () {
-        //     $('#exampleModalLong').modal('show');
-        // });
+    else if (TagName === 'Tag_KeywordTopic') {
+        this.setState({ tagKeywordTopicValue: value });
     }
-
-    bindVal(TagName, value) {
-        if (TagName === 'Tag_Experience') {
-            this.setState({ tagExperienceValue: value });
-        }
-        else if (TagName === 'Tag_KeywordTopic') {
-            this.setState({ tagKeywordTopicValue: value });
-        }
-        else if (TagName === 'Tag_When') {
-            this.setState({ tagWhenValue: value });
-        }
-        else if (TagName === 'Tag_CourseType') {
-            this.setState({ tagCourseTypeValue: value });
-        }
-        else if (TagName === 'Tag_AgeRange') {
-            this.setState({ tagAgeRangeValue: value });
-        }
-        else if (TagName === 'Tag_Duration') {
-            this.setState({ tagDurationValue: value });
-        }
-        else if (TagName === 'Tag_Language') {
-            this.setState({ tagLanguageValue: value });
-        }
-        else if (TagName === 'Tag_Platform') {
-            this.setState({ tagPlatformValue: value });
-        }
-        else if (TagName === 'Tag_Continent') {
-            this.setState({ tagContinentValue: value });
-        }
-        else if (TagName === 'Tag_Country') {
-            this.setState({ tagCountryValue: value });
-        }
-        else if (TagName === 'Tag_State') {
-            this.setState({ tagStateValue: value });
-        }
-        else if (TagName === 'Tag_City') {
-            this.setState({ tagCityValue: value });
-        }
-        else if (TagName === 'Tag_Feature') {
-            this.setState({ tagFeatureValue: value });
-        }
+    else if (TagName === 'Tag_When') {
+        this.setState({ tagWhenValue: value });
     }
+    else if (TagName === 'Tag_CourseType') {
+        this.setState({ tagCourseTypeValue: value });
+    }
+    else if (TagName === 'Tag_AgeRange') {
+        this.setState({ tagAgeRangeValue: value });
+    }
+    else if (TagName === 'Tag_Duration') {
+        this.setState({ tagDurationValue: value });
+    }
+    else if (TagName === 'Tag_Language') {
+        this.setState({ tagLanguageValue: value });
+    }
+    else if (TagName === 'Tag_Platform') {
+        this.setState({ tagPlatformValue: value });
+    }
+    else if (TagName === 'Tag_Continent') {
+        this.setState({ tagContinentValue: value });
+    }
+    else if (TagName === 'Tag_Country') {
+        this.setState({ tagCountryValue: value });
+    }
+    else if (TagName === 'Tag_State') {
+        this.setState({ tagStateValue: value });
+    }
+    else if (TagName === 'Tag_City') {
+        this.setState({ tagCityValue: value });
+    }
+    else if (TagName === 'Tag_Feature') {
+        this.setState({ tagFeatureValue: value });
+    }
+}
+  render() {
 
-    render() {
-        return (
-            <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">Search By Tag</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <strong>Please use the options below to specify one or more tags to start your search</strong>
+    return (
+      <div >
+        <strong>Please use the options below to specify one or more tags to start your search</strong>
                             <br />
                             <br />
                             <div class="row">
@@ -253,15 +244,9 @@ class SearchByTag extends Component {
                             </div>
                             <div>
                             </div>
-                            </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary">Search</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
+      </div>
+    );
+  }
 }
 
 export default SearchByTag;
