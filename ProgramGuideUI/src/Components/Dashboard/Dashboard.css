@@ -115,3 +115,6 @@ height: 10%;
     float: right;
 }
 
+.card-header p{
+    cursor: pointer;
+}
