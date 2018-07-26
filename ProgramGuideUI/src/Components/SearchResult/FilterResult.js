@@ -9,9 +9,11 @@ class FilterResult extends Component {
         super();
         
         this.state = {
-          selectedValue: 'Search By URL'
+          selectedValue: 'Search By URL',
+          isClosed: false
         };
         this.handleClick = this.handleClick.bind(this);
+        this.handleCloseClick = this.handleCloseClick.bind(this);
       }
 
     componentDidMount() {
@@ -25,8 +27,12 @@ class FilterResult extends Component {
       });
     }
 
-    render() {
+    handleCloseClick(){
+        this.setState({isClosed: true});
+    }
 
+    render() {
+        this.props.callbackFromParent(this.state.isClosed);
         return (
             <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-lg" role="document">
@@ -43,7 +49,7 @@ class FilterResult extends Component {
                                 <label class="custom-control-label" for="defaultInline2">Search By Tag</label>
                             </div>
 
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.handleCloseClick}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
