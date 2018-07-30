@@ -72,47 +72,52 @@ componentDidMount() {
 
 bindVal(TagName, value) {
     if (TagName === 'Tag_Experience') {
-        this.setState({ tagExperienceValue: value });
+        this.setState({ tagExperienceValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_KeywordTopic') {
-        this.setState({ tagKeywordTopicValue: value });
+        this.setState({ tagKeywordTopicValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_When') {
-        this.setState({ tagWhenValue: value });
+        this.setState({ tagWhenValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_CourseType') {
-        this.setState({ tagCourseTypeValue: value });
+        this.setState({ tagCourseTypeValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_AgeRange') {
-        this.setState({ tagAgeRangeValue: value });
+        this.setState({ tagAgeRangeValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Duration') {
-        this.setState({ tagDurationValue: value });
+        this.setState({ tagDurationValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Language') {
-        this.setState({ tagLanguageValue: value });
+        this.setState({ tagLanguageValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Platform') {
-        this.setState({ tagPlatformValue: value });
+        this.setState({ tagPlatformValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Continent') {
-        this.setState({ tagContinentValue: value });
+        this.setState({ tagContinentValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Country') {
-        this.setState({ tagCountryValue: value });
+        this.setState({ tagCountryValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_State') {
-        this.setState({ tagStateValue: value });
+        this.setState({ tagStateValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_City') {
-        this.setState({ tagCityValue: value });
+        this.setState({ tagCityValue: value }, function(){this.selectedTags()});
     }
     else if (TagName === 'Tag_Feature') {
-        this.setState({ tagFeatureValue: value });
+        this.setState({ tagFeatureValue: value }, function(){this.selectedTags()});
     }
+    
 }
-  render() {
 
+selectedTags(){
+   // alert($('#selectedTags').text());
+}
+
+  render() {
     return (
       <div >
         <strong>Please use the options below to specify one or more tags to start your search</strong>
@@ -224,6 +229,7 @@ bindVal(TagName, value) {
                                     <div class="col-sm-12">
                                         <label for="exampleInputEmail1"><strong>Seleted Tags:</strong></label>
                                         <br />
+                                        <label id="selectedTags">
                                         {this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
                                     {this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
                                     {this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
@@ -237,6 +243,7 @@ bindVal(TagName, value) {
                                     {this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
                                     {this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
                                     {this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
+                                    </label>
                                     </div>
                                 </div>
                                 <div class="col-md-1 ml-auto">
