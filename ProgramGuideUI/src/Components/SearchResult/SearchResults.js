@@ -29,42 +29,6 @@ class SearchResult extends Component {
             cache: false,
             success: function (data) {
                 console.log(data)
-                Array.prototype.flexFilter = function (info) {
-
-                    // Set our variables
-                    var matchesFilter, matches = [], count;
-
-                    // Helper function to loop through the filter criteria to find matching values
-                    // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
-                    // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
-                    matchesFilter = function (item) {
-                        count = 0
-                        for (var n = 0; n < info.length; n++) {
-                            if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
-                                count++;
-                            }
-                        }
-                        // If TRUE, then the current item in the array meets all the filter criteria
-                        return count == info.length;
-                    }
-
-                    // Loop through each item in the array
-                    for (var i = 0; i < this.length; i++) {
-                        // Determine if the current item matches the filter criteria
-                        if (matchesFilter(this[i])) {
-                            matches.push(this[i]);
-                        }
-                    }
-
-                    // Give us a new array containing the objects matching the filter criteria
-                    return matches;
-                }
-                var criteria = [
-                    { Field: "Tag_Experience", Values: ["Camps"] },
-                    { Field: "Tag_Country", Values: ["JP"] }
-                ];
-                var filtered = data.flexFilter(criteria);
-                console.log(filtered);
                 this.setState({ data: data })
             }.bind(this),
             error: function (xhr, status, err) {
@@ -74,27 +38,6 @@ class SearchResult extends Component {
 
     }
 
-    searchResults() {
-        this.setState({
-            data1: [
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-                { pageUrl: '/pg/auslandsaufenthalt/australien/brisbane/', anchorText: 'auslandsaufenthalt' },
-
-            ]
-        });
-    }
-
     handleClick() {
         this.setState({
             showModal: !this.state.showModal
@@ -102,7 +45,44 @@ class SearchResult extends Component {
     }
 
     myCallback = (modalClosed) => {
-        if (modalClosed) {
+        console.log(modalClosed[1]);
+        console.log(result);
+
+        Array.prototype.flexFilter = function (info) {
+
+            // Set our variables
+            var matchesFilter, matches = [], count;
+
+            // Helper function to loop through the filter criteria to find matching values
+            // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
+            // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
+            matchesFilter = function (item) {
+                count = 0
+                for (var n = 0; n < info.length; n++) {
+                    if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
+                        count++;
+                    }
+                }
+                // If TRUE, then the current item in the array meets all the filter criteria
+                return count == info.length;
+            }
+
+            // Loop through each item in the array
+            for (var i = 0; i < this.length; i++) {
+                // Determine if the current item matches the filter criteria
+                if (matchesFilter(this[i])) {
+                    matches.push(this[i]);
+                }
+            }
+
+            // Give us a new array containing the objects matching the filter criteria
+            return matches;
+        }
+        console.log(this.state.data);
+        var result = modalClosed[1].filter(m => m.Values != '00' && m.Values != '?' && m.Values != '*');
+        this.setState({data:this.state.data.flexFilter(result)});
+
+        if (modalClosed[0]) {
             this.setState({
                 showModal: !this.state.showModal
             });
@@ -110,6 +90,7 @@ class SearchResult extends Component {
     }
 
     render() {
+
         const flag = this.state.showModal;
         return (
             <div className="itemDiv">

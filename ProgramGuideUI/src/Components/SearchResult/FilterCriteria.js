@@ -4,16 +4,23 @@ import SearchByUrl from './SearchByUrl'
 
 class FilterCriteria extends Component {
 
-    render() {
-
-        if (this.props.FilterCriteria === 'Search By URL') {
-            return <SearchByUrl />
-        }
-        else {
-            return <SearchByTag />
-        }
-
+    constructor() {
+        super();
     }
+
+    getSearchByTagValues = (values) => {
+        this.props.SearchByTagValues(values)
+    }
+
+    render() {
+        return (
+
+            this.props.FilterCriteria === 'Search By URL' ?
+                <SearchByUrl />
+                : <SearchByTag SearchByTagValues={this.getSearchByTagValues} />
+        )
+    }
+
 }
 
 export default FilterCriteria;
