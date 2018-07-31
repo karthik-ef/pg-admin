@@ -45,59 +45,70 @@ class SearchResult extends Component {
     }
 
     myCallback = (modalClosed) => {
+        if (Array.isArray(modalClosed)) {
 
-        Array.prototype.flexFilter = function (info) {
-
-            // Set our variables
-            var matchesFilter, matches = [], count;
-
-            // Helper function to loop through the filter criteria to find matching values
-            // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
-            // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
-            matchesFilter = function (item) {
-                count = 0
-                for (var n = 0; n < info.length; n++) {
-
-                    if(info[n]["Values"] ==='00'){
-                        if(item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]){
-                            count++;
-                        }
-                    }
-                    else if(info[n]["Values"]==='?'){
-                        if(item[info[n]["Field"]] !== '00'  && !item[info[n]["Field"]]){
-                            count++;
-                        }
-                    }
-                    else{
-                        if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
-                            count++;
-                        }
-                    } 
-                }
-                // If TRUE, then the current item in the array meets all the filter criteria
-                return count === info.length;
+            if (modalClosed[0]) {
+                this.setState({
+                    showModal: !this.state.showModal
+                });
             }
 
-            // Loop through each item in the array
-            for (var i = 0; i < this.length; i++) {
-                // Determine if the current item matches the filter criteria
-                if (matchesFilter(this[i])) {
-                    matches.push(this[i]);
+            Array.prototype.flexFilter = function (info) {
+
+                // Set our variables
+                var matchesFilter, matches = [], count;
+
+                // Helper function to loop through the filter criteria to find matching values
+                // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
+                // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
+                matchesFilter = function (item) {
+                    count = 0
+                    for (var n = 0; n < info.length; n++) {
+
+                        if (info[n]["Values"] === '00') {
+                            if (item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]) {
+                                count++;
+                            }
+                        }
+                        else if (info[n]["Values"] === '?') {
+                            if (item[info[n]["Field"]] !== '00' && !item[info[n]["Field"]]) {
+                                count++;
+                            }
+                        }
+                        else {
+                            if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
+                                count++;
+                            }
+                        }
+                    }
+                    // If TRUE, then the current item in the array meets all the filter criteria
+                    return count === info.length;
                 }
+
+                // Loop through each item in the array
+                for (var i = 0; i < this.length; i++) {
+                    // Determine if the current item matches the filter criteria
+                    if (matchesFilter(this[i])) {
+                        matches.push(this[i]);
+                    }
+                }
+
+                // Give us a new array containing the objects matching the filter criteria
+                return matches;
             }
-
-            // Give us a new array containing the objects matching the filter criteria
-            return matches;
+            console.log(this.state.data);
+            var result = modalClosed[1].filter(m => m.Values !== '*');
+            this.setState({ data: this.state.data.flexFilter(result) });
         }
-        console.log(this.state.data);
-        var result = modalClosed[1].filter(m => m.Values !== '*');
-        this.setState({data:this.state.data.flexFilter(result)});
 
-        if (modalClosed[0]) {
-            this.setState({
-                showModal: !this.state.showModal
-            });
+        else {
+            if (modalClosed) {
+                this.setState({
+                    showModal: !this.state.showModal
+                });
+            }
         }
+
     }
 
     render() {
@@ -111,6 +122,12 @@ class SearchResult extends Component {
 
                 {/* <Link to="/FilterResult" class="nav-link">Compare Pages</Link> */}
                 <span className="floatLeft"> <button type="button" className="btn btn-link">Download Results</button></span>
+                <div class="alert alert-info" role="alert">
+                    <strong>Showing Results for Search-Tag: </strong> <br />Camps_00_SUM_ITV_7-18_1-12_00_LAN-COR_ABROAD_AS_AU_CDA_AUC_00
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
                 <ReactTable
                     data={this.state.data}
                     minRows={0}

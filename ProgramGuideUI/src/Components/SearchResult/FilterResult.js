@@ -11,10 +11,12 @@ class FilterResult extends Component {
         this.state = {
             selectedValue: 'Search By URL',
             isClosed: false,
-            selectedTagValue: []
+            selectedTagValue: [],
+            isSearched: false
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleCloseClick = this.handleCloseClick.bind(this);
+        this.handleSearchClick = this.handleSearchClick.bind(this);
     }
 
     componentDidMount() {
@@ -36,9 +38,15 @@ class FilterResult extends Component {
         this.setState({ selectedTagValue: values })
     }
 
+    handleSearchClick(){
+        $('#exampleModalLong').modal('hide');
+        this.setState({ isClosed: true });
+        this.setState({isSearched: true})
+    }
+
     render() {
         let dyna = [this.state.isClosed, this.state.selectedTagValue]
-        this.state.isClosed ? this.props.callbackFromParent(dyna) : '';
+        this.state.isClosed && this.state.isSearched ? this.props.callbackFromParent(dyna) : this.props.callbackFromParent(this.state.isClosed);
         return (
             <div className="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div className="modal-dialog modal-lg" role="document">
@@ -63,7 +71,7 @@ class FilterResult extends Component {
                             <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} />
                         </div>
                         <div class="modal-footer">
-                            <button type="button" className="btn btn-primary">Search</button>
+                            <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>
                         </div>
                     </div>
                 </div>
