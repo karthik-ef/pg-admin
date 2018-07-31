@@ -45,8 +45,6 @@ class SearchResult extends Component {
     }
 
     myCallback = (modalClosed) => {
-        console.log(modalClosed[1]);
-        console.log(result);
 
         Array.prototype.flexFilter = function (info) {
 
@@ -66,7 +64,7 @@ class SearchResult extends Component {
                         }
                     }
                     else if(info[n]["Values"]==='?'){
-                        if(item[info[n]["Field"]] != '00'  && !item[info[n]["Field"]]){
+                        if(item[info[n]["Field"]] !== '00'  && !item[info[n]["Field"]]){
                             count++;
                         }
                     }
@@ -77,7 +75,7 @@ class SearchResult extends Component {
                     } 
                 }
                 // If TRUE, then the current item in the array meets all the filter criteria
-                return count == info.length;
+                return count === info.length;
             }
 
             // Loop through each item in the array
@@ -92,7 +90,7 @@ class SearchResult extends Component {
             return matches;
         }
         console.log(this.state.data);
-        var result = modalClosed[1].filter(m => m.Values != '*');
+        var result = modalClosed[1].filter(m => m.Values !== '*');
         this.setState({data:this.state.data.flexFilter(result)});
 
         if (modalClosed[0]) {

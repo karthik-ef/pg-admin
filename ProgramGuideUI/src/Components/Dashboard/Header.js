@@ -7,17 +7,17 @@ class Header extends Component {
 
         return (
             <div className="headerDiv">
-                {/* Display Brand */}
+
+                 {/* Display Brand */}
                 <div className="brandDiv">
                     <nav className="navbar navbar-light bg-light">
                         <img className="efLogo" src="//www.ef.de/sitecore/__/~/media/universal/logo/2015/black/00.svg" alt="EF Education First" />
                         <strong> Program Guide 2.0 </strong>
                     </nav>
                 </div>
-                {/* <div className="applicationNameDiv1"><h3>Program Guide 2.0</h3></div> */}
+
                 {/* Navigation Bar Menu */}
                 <div className="navItemsDiv">
-                    {/* <div className="emptyDiv"></div> */}
                     <nav className="navbar navbar-expand-lg navbar-light bg-light">
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav mr-auto">
@@ -41,20 +41,18 @@ class Header extends Component {
                             </ul>
                         </div>
                     </nav>
-                    {/* <Routes /> */}
                 </div>
+
                 {/* Display Profile Information */}
                 <div className="profileDiv">
-                <nav className="navbar navbar-light bg-light">
-                karthik.subbarayappa
-                    {/* <p>User Name <span className="floatLeft"></span ></p>
-                    <img src={LogoutIcon} alt="Logo" /> */}
-                        <img src={LogoutIcon}  alt=""/>
+                    <nav className="navbar navbar-light bg-light">
+                        karthik.subbarayappa
+                        <img src={LogoutIcon} alt="" />
                     </nav>
                 </div>
-                </div>
-                );
-            }
-        }
-        
-        export default Header;
+            </div>
+        );
+    }
+}
+
+export default Header;

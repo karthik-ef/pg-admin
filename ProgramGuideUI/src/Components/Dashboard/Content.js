@@ -7,6 +7,7 @@ import BulkUpload from '../BulkUpload';
 class Content extends Component {
   render() {
 
+    // Render the component based on URL
     const component = window.location.pathname === '/SearchResults' ? <SearchResults />
       : window.location.pathname === '/ComparePages' ? <ComparePages />
         : window.location.pathname === '/AddUser' ? <AddUser />
