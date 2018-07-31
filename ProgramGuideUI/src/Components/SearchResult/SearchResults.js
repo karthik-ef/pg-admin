@@ -108,11 +108,11 @@ class SearchResult extends Component {
         return (
             <div className="itemDiv">
                 {flag ? <FilterResult callbackFromParent={this.myCallback} /> : null}
-                <button type="button" class="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
-                <button type="button" class="btn btn-link">Clear Filter</button>
+                <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
+                <button type="button" className="btn btn-link">Clear Filter</button>
 
                 {/* <Link to="/FilterResult" class="nav-link">Compare Pages</Link> */}
-                <span className="floatLeft"> <button type="button" class="btn btn-link">Download Results</button></span>
+                <span className="floatLeft"> <button type="button" className="btn btn-link">Download Results</button></span>
                 <ReactTable
                     data={this.state.data}
                     minRows={0}

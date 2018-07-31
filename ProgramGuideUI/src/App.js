@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Login from './Components/Login';
-import Main from './Components/Main';
+import Main from './Components/Dashboard/Dashboard';
 
 class App extends Component {
   constructor() {
@@ -20,7 +20,8 @@ class App extends Component {
 
     return (
       <div >
-        {this.state.flag ? <Main /> : <Login loginDetails={this.handleReq.bind(this)} />}
+        {/* {this.state.flag ? <Main /> : <Login loginDetails={this.handleReq.bind(this)} />} */}
+        <Main/>
       </div>
     );
   }
