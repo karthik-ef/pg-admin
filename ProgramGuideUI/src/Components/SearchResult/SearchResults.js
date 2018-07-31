@@ -59,9 +59,22 @@ class SearchResult extends Component {
             matchesFilter = function (item) {
                 count = 0
                 for (var n = 0; n < info.length; n++) {
-                    if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
-                        count++;
+
+                    if(info[n]["Values"] ==='00'){
+                        if(item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]){
+                            count++;
+                        }
                     }
+                    else if(info[n]["Values"]==='?'){
+                        if(item[info[n]["Field"]] != '00'  && !item[info[n]["Field"]]){
+                            count++;
+                        }
+                    }
+                    else{
+                        if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
+                            count++;
+                        }
+                    } 
                 }
                 // If TRUE, then the current item in the array meets all the filter criteria
                 return count == info.length;
@@ -79,7 +92,7 @@ class SearchResult extends Component {
             return matches;
         }
         console.log(this.state.data);
-        var result = modalClosed[1].filter(m => m.Values != '00' && m.Values != '?' && m.Values != '*');
+        var result = modalClosed[1].filter(m => m.Values != '*');
         this.setState({data:this.state.data.flexFilter(result)});
 
         if (modalClosed[0]) {
