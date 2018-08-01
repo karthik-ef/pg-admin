@@ -12,12 +12,16 @@ class FilterCriteria extends Component {
         this.props.SearchByTagValues(values)
     }
 
+    getSearchByUrlValue = (values) => {
+        this.props.SearchByUrlValue(values)
+    }
+
     render() {
         let PageUrl = this.props.PageUrl
         return (
 
             this.props.FilterCriteria === 'Search By URL' ?
-                <SearchByUrl PageUrl = {PageUrl} />
+                <SearchByUrl PageUrl = {PageUrl} EnteredPageUrl = {this.getSearchByUrlValue} />
                 : <SearchByTag SearchByTagValues={this.getSearchByTagValues} />
         )
     }

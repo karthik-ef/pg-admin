@@ -17,7 +17,8 @@ class SearchResult extends Component {
             showModal: false,
             selectedTag: '',
             isFilterApplied: false,
-            pageUrls: []
+            pageUrls: [],
+            selectedFilterOption: ''
         };
     }
     componentDidMount() {
@@ -48,6 +49,51 @@ class SearchResult extends Component {
     }
 
     myCallback = (modalClosed) => {
+
+        Array.prototype.flexFilter = function (info) {
+
+            // Set our variables
+            var matchesFilter, matches = [], count;
+
+            // Helper function to loop through the filter criteria to find matching values
+            // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
+            // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
+            matchesFilter = function (item) {
+                count = 0
+                for (var n = 0; n < info.length; n++) {
+
+                    if (info[n]["Values"] === '00') {
+                        if (item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]) {
+                            count++;
+                        }
+                    }
+                    else if (info[n]["Values"] === '?') {
+                        if (item[info[n]["Field"]] !== '00' && !item[info[n]["Field"]]) {
+                            count++;
+                        }
+                    }
+                    else {
+                        if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
+                            count++;
+                        }
+                    }
+                }
+                // If TRUE, then the current item in the array meets all the filter criteria
+                return count === info.length;
+            }
+
+            // Loop through each item in the array
+            for (var i = 0; i < this.length; i++) {
+                // Determine if the current item matches the filter criteria
+                if (matchesFilter(this[i])) {
+                    matches.push(this[i]);
+                }
+            }
+
+            // Give us a new array containing the objects matching the filter criteria
+            return matches;
+        }
+
         if (Array.isArray(modalClosed)) {
 
             if (modalClosed[0]) {
@@ -56,53 +102,16 @@ class SearchResult extends Component {
                 });
             }
 
-            Array.prototype.flexFilter = function (info) {
 
-                // Set our variables
-                var matchesFilter, matches = [], count;
-
-                // Helper function to loop through the filter criteria to find matching values
-                // Each filter criteria is treated as "AND". So each item must match all the filter criteria to be considered a match.
-                // Multiple filter values in a filter field are treated as "OR" i.e. ["Blue", "Green"] will yield items matching a value of Blue OR Green.
-                matchesFilter = function (item) {
-                    count = 0
-                    for (var n = 0; n < info.length; n++) {
-
-                        if (info[n]["Values"] === '00') {
-                            if (item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]) {
-                                count++;
-                            }
-                        }
-                        else if (info[n]["Values"] === '?') {
-                            if (item[info[n]["Field"]] !== '00' && !item[info[n]["Field"]]) {
-                                count++;
-                            }
-                        }
-                        else {
-                            if (info[n]["Values"].indexOf(item[info[n]["Field"]]) > -1) {
-                                count++;
-                            }
-                        }
-                    }
-                    // If TRUE, then the current item in the array meets all the filter criteria
-                    return count === info.length;
-                }
-
-                // Loop through each item in the array
-                for (var i = 0; i < this.length; i++) {
-                    // Determine if the current item matches the filter criteria
-                    if (matchesFilter(this[i])) {
-                        matches.push(this[i]);
-                    }
-                }
-
-                // Give us a new array containing the objects matching the filter criteria
-                return matches;
+            if (Array.isArray(modalClosed[1])){
+                var selectedTag = modalClosed[1].map(m => {return m.Values + '_'}).join().replace(/,/g,' ');
+                selectedTag = selectedTag.substring(0, selectedTag.length-1);
+                var result = modalClosed[1].filter(m => m.Values !== '*');
+                this.setState({ data: this.state.data.flexFilter(result), selectedTag: selectedTag, isFilterApplied: true, selectedFilterOption: 'Search Tag' });
             }
-            var selectedTag = modalClosed[1].map(m => {return m.Values + '_'}).join().replace(/,/g,' ');
-            selectedTag = selectedTag.substring(0, selectedTag.length-1);
-            var result = modalClosed[1].filter(m => m.Values !== '*');
-            this.setState({ data: this.state.data.flexFilter(result), selectedTag: selectedTag, isFilterApplied: true });
+            else{
+                this.setState({ data: this.state.data.filter(m=>m.PageUrl===modalClosed[1]), selectedTag: modalClosed[1], isFilterApplied: true, selectedFilterOption: 'Search URL' });
+            }
             
         }
 
@@ -129,7 +138,7 @@ class SearchResult extends Component {
                 <span className="floatLeft"> <button type="button" className="btn btn-link">Download Results</button></span>
                
                {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
-                    <strong> Filter Applied! </strong> <br /> <strong>Search Tag:</strong> {this.state.selectedTag}
+                    <strong> Filter Applied! </strong> <br /> <strong>{this.state.selectedFilterOption}:</strong> {this.state.selectedTag}
                     {/* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button> */}

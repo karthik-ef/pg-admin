@@ -12,7 +12,8 @@ class FilterResult extends Component {
             selectedValue: 'Search By URL',
             isClosed: false,
             selectedTagValue: [],
-            isSearched: false
+            isSearched: false,
+            selectedUrlValue1: ''
         };
         this.handleClick = this.handleClick.bind(this);
         this.handleCloseClick = this.handleCloseClick.bind(this);
@@ -38,6 +39,12 @@ class FilterResult extends Component {
         this.setState({ selectedTagValue: values })
     }
 
+    getSearchByUrlValue = (values) => {
+//console.log(values)
+
+        this.setState({ selectedUrlValue1: values })
+    }
+
     handleSearchClick(){
         $('#exampleModalLong').modal('hide');
         this.setState({ isClosed: true });
@@ -45,7 +52,8 @@ class FilterResult extends Component {
     }
 
     render() {
-        let dyna = [this.state.isClosed, this.state.selectedTagValue]
+        let selectedTagOption = this.state.selectedValue === 'Search By URL' ? this.state.selectedUrlValue1 : this.state.selectedTagValue
+        let dyna = [this.state.isClosed, selectedTagOption]
         let PageUrl = this.props.PageUrl
         this.state.isClosed && this.state.isSearched ? this.props.callbackFromParent(dyna) : this.props.callbackFromParent(this.state.isClosed);
         return (
@@ -69,7 +77,7 @@ class FilterResult extends Component {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} PageUrl = {PageUrl} />
+                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} PageUrl = {PageUrl} SearchByUrlValue={this.getSearchByUrlValue}/>
                         </div>
                         <div class="modal-footer">
                             <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>

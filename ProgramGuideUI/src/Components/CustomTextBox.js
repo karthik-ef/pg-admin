@@ -124,12 +124,16 @@ class CustomTextBox extends React.Component {
     });
   };
 
+  onBlur = (event, { highlightedSuggestion }) => {
+    this.props.selectedValue(this.state.value)  }
+
   render() {
     const { value, suggestions } = this.state;
     const inputProps = {
       placeholder: "Enter Here",
       value,
-      onChange: this.onChange
+      onChange: this.onChange,
+      onBlur: this.onBlur
     };
 
     return (
