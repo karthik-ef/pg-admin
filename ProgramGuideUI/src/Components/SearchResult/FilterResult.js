@@ -46,6 +46,7 @@ class FilterResult extends Component {
 
     render() {
         let dyna = [this.state.isClosed, this.state.selectedTagValue]
+        let PageUrl = this.props.PageUrl
         this.state.isClosed && this.state.isSearched ? this.props.callbackFromParent(dyna) : this.props.callbackFromParent(this.state.isClosed);
         return (
             <div className="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -68,7 +69,7 @@ class FilterResult extends Component {
                             </button>
                         </div>
                         <div class="modal-body">
-                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} />
+                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} PageUrl = {PageUrl} />
                         </div>
                         <div class="modal-footer">
                             <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>

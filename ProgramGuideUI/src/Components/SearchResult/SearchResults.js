@@ -16,7 +16,8 @@ class SearchResult extends Component {
             data: [],
             showModal: false,
             selectedTag: '',
-            isFilterApplied: false
+            isFilterApplied: false,
+            pageUrls: []
         };
     }
     componentDidMount() {
@@ -30,8 +31,8 @@ class SearchResult extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
-                console.log(data)
-                this.setState({ data: data })
+                console.log(data.map(m=>{return {name: m.PageUrl}}))
+                this.setState({ data: data, pageUrls: data.map(m=>{return {name: m.PageUrl}}) })
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
@@ -120,7 +121,7 @@ class SearchResult extends Component {
         const flag = this.state.showModal;
         return (
             <div className="itemDiv">
-                {flag ? <FilterResult callbackFromParent={this.myCallback} /> : null}
+                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl = {this.state.pageUrls}  /> : null}
                 <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
                 <button type="button" className="btn btn-link">Clear Filter</button>
 
