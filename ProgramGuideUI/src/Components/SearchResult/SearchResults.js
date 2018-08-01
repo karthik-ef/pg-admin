@@ -14,7 +14,9 @@ class SearchResult extends Component {
 
         this.state = {
             data: [],
-            showModal: false
+            showModal: false,
+            selectedTag: '',
+            isFilterApplied: false
         };
     }
     componentDidMount() {
@@ -96,9 +98,11 @@ class SearchResult extends Component {
                 // Give us a new array containing the objects matching the filter criteria
                 return matches;
             }
-            console.log(this.state.data);
+            var selectedTag = modalClosed[1].map(m => {return m.Values + '_'}).join().replace(/,/g,' ');
+            selectedTag = selectedTag.substring(0, selectedTag.length-1);
             var result = modalClosed[1].filter(m => m.Values !== '*');
-            this.setState({ data: this.state.data.flexFilter(result) });
+            this.setState({ data: this.state.data.flexFilter(result), selectedTag: selectedTag, isFilterApplied: true });
+            
         }
 
         else {
@@ -122,12 +126,13 @@ class SearchResult extends Component {
 
                 {/* <Link to="/FilterResult" class="nav-link">Compare Pages</Link> */}
                 <span className="floatLeft"> <button type="button" className="btn btn-link">Download Results</button></span>
-                <div class="alert alert-info" role="alert">
-                    <strong>Showing Results for Search-Tag: </strong> <br />Camps_00_SUM_ITV_7-18_1-12_00_LAN-COR_ABROAD_AS_AU_CDA_AUC_00
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+               
+               {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
+                    <strong> Filter Applied! </strong> <br /> <strong>Search Tag:</strong> {this.state.selectedTag}
+                    {/* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
+                    </button> */}
+                </div> : ''}
                 <ReactTable
                     data={this.state.data}
                     minRows={0}
