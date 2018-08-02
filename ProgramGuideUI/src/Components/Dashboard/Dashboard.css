@@ -117,10 +117,20 @@ height: 10%;
 
 .imageFloatLeft {
     float: right;
-    cursor: pointer;
     padding-right: 20px;
     
 }
+
+.stlying {
+    background-color: white;
+    padding: 0;
+    border: none;
+    outline: 0;
+  }
+
+  .downloadImage{
+    cursor: pointer;
+  }
 
 .card-header p{
     cursor: pointer;

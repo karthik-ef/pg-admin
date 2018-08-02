@@ -6,6 +6,12 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import EditLog from './Edit.png';
 import Download from './Download.png';
+import ReactExport from "react-data-export";
+
+const ExcelFile = ReactExport.ExcelFile;
+const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
+const ExcelFont = ReactExport.ExcelFile.ExcelFont;
 
 class SearchResult extends Component {
     constructor() {
@@ -20,12 +26,17 @@ class SearchResult extends Component {
             isFilterApplied: false,
             pageUrls: [],
             selectedFilterOption: '',
-            gridHeight: '400px'
+            gridHeight: '400px',
+            multiDataSet:[]
         };
     }
     componentDidMount() {
 
         this.getSearchResults();
+
+        $('.stlying').click(function(){
+            document.activeElement.blur();
+        })
     }
 
     getSearchResults() {
@@ -34,7 +45,16 @@ class SearchResult extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
-                console.log(data.map(m => { return [{ name: m.PageUrl}, {name: m.MarketCode} ] }).slice(0,10))
+                this.setState({
+                    data: data.map(m => {
+                        return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                        { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
+                        { value: m.MetaTitle }, { value: m.MetaDescription }]
+                    }).slice(0, 1)
+                }, function () {
+                    this.setDataset();
+                })
+                console.log(data.map(m => { return [{ name: m.PageUrl }, { name: m.MarketCode }] }).slice(0, 10))
                 this.setState({ data: data, pageUrls: data.map(m => { return { name: m.PageUrl } }) })
             }.bind(this),
             error: function (xhr, status, err) {
@@ -127,8 +147,16 @@ class SearchResult extends Component {
 
     }
 
-    downloadImage() {
-       < FilterResult/>
+    setDataset() {
+        console.log(this.state.data);
+        const multiDataSet = [
+            {
+                columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                data: this.state.data
+            }
+        ]
+        this.setState({ multiDataSet: multiDataSet })
+
     }
 
     render() {
@@ -146,7 +174,10 @@ class SearchResult extends Component {
                 <span className="floatLeft"><img src={Download1} alt="Download" /></span>
                 <span className="floatLeft"><img src={Download2} alt="Download" /></span>
                 <span className="floatLeft"><img src={Download3} alt="Download" /></span> */}
-                <span className="imageFloatLeft"><img src={Download} alt="Download" onClick={this.downloadImage} /></span>
+                <span className="imageFloatLeft"><ExcelFile filename = "ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
+                    <ExcelSheet dataSet={this.state.multiDataSet} name="Result" />
+                </ExcelFile>
+                </span>
 
 
                 {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
@@ -212,7 +243,7 @@ class SearchResult extends Component {
                     }}
                     defaultPageSize={100}
                     style={{
-                       height: this.state.selectedFilterOption === 'Search URL' ? '23%' : '90%'  // This will force the table body to overflow and scroll, since there is not enough room
+                        height: this.state.selectedFilterOption === 'Search URL' ? '23%' : '90%'  // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                 />
