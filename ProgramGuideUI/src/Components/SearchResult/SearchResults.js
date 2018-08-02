@@ -5,6 +5,7 @@ import FilterResult from '../SearchResult/FilterResult'
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import EditLog from './Edit.png';
+import Download from './Download.png';
 
 class SearchResult extends Component {
     constructor() {
@@ -18,7 +19,8 @@ class SearchResult extends Component {
             selectedTag: '',
             isFilterApplied: false,
             pageUrls: [],
-            selectedFilterOption: ''
+            selectedFilterOption: '',
+            gridHeight: '400px'
         };
     }
     componentDidMount() {
@@ -32,8 +34,8 @@ class SearchResult extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
-                console.log(data.map(m=>{return {name: m.PageUrl}}))
-                this.setState({ data: data, pageUrls: data.map(m=>{return {name: m.PageUrl}}) })
+                console.log(data.map(m => { return [{ name: m.PageUrl}, {name: m.MarketCode} ] }).slice(0,10))
+                this.setState({ data: data, pageUrls: data.map(m => { return { name: m.PageUrl } }) })
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
@@ -103,16 +105,16 @@ class SearchResult extends Component {
             }
 
 
-            if (Array.isArray(modalClosed[1])){
-                var selectedTag = modalClosed[1].map(m => {return m.Values + '_'}).join().replace(/,/g,' ');
-                selectedTag = selectedTag.substring(0, selectedTag.length-1);
+            if (Array.isArray(modalClosed[1])) {
+                var selectedTag = modalClosed[1].map(m => { return m.Values + '_' }).join().replace(/,/g, ' ');
+                selectedTag = selectedTag.substring(0, selectedTag.length - 1);
                 var result = modalClosed[1].filter(m => m.Values !== '*');
                 this.setState({ data: this.state.data.flexFilter(result), selectedTag: selectedTag, isFilterApplied: true, selectedFilterOption: 'Search Tag' });
             }
-            else{
-                this.setState({ data: this.state.data.filter(m=>m.PageUrl===modalClosed[1]), selectedTag: modalClosed[1], isFilterApplied: true, selectedFilterOption: 'Search URL' });
+            else {
+                this.setState({ data: this.state.data.filter(m => m.PageUrl === modalClosed[1]), selectedTag: modalClosed[1], isFilterApplied: true, selectedFilterOption: 'Search URL' });
             }
-            
+
         }
 
         else {
@@ -125,19 +127,29 @@ class SearchResult extends Component {
 
     }
 
+    downloadImage() {
+       < FilterResult/>
+    }
+
     render() {
 
         const flag = this.state.showModal;
+        console.log(this.state.data)
         return (
             <div className="itemDiv">
-                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl = {this.state.pageUrls}  /> : null}
+                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.state.pageUrls} /> : null}
                 <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
                 <button type="button" className="btn btn-link">Clear Filter</button>
 
                 {/* <Link to="/FilterResult" class="nav-link">Compare Pages</Link> */}
-                <span className="floatLeft"> <button type="button" className="btn btn-link">Download Results</button></span>
-               
-               {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
+                {/* <span className="floatLeft"><img src={Download} alt="Download" /></span>
+                <span className="floatLeft"><img src={Download1} alt="Download" /></span>
+                <span className="floatLeft"><img src={Download2} alt="Download" /></span>
+                <span className="floatLeft"><img src={Download3} alt="Download" /></span> */}
+                <span className="imageFloatLeft"><img src={Download} alt="Download" onClick={this.downloadImage} /></span>
+
+
+                {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
                     <strong> Filter Applied! </strong> <br /> <strong>{this.state.selectedFilterOption}:</strong> {this.state.selectedTag}
                     {/* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -198,9 +210,9 @@ class SearchResult extends Component {
                             }
                         };
                     }}
-                    defaultPageSize={10}
+                    defaultPageSize={100}
                     style={{
-                        height: "400px" // This will force the table body to overflow and scroll, since there is not enough room
+                       height: this.state.selectedFilterOption === 'Search URL' ? '23%' : '90%'  // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                 />
