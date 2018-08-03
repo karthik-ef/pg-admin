@@ -8,33 +8,44 @@ import EditLog from './Edit.png';
 import Download from './Download.png';
 import ReactExport from "react-data-export";
 
+// Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 const ExcelFont = ReactExport.ExcelFile.ExcelFont;
+
+// Data Objects
+const UniqueContentData = []; // Hold the data returned from Database
+const PageUrlData = []; // Holds data for PageUrl Autosuggest 
+var FilteredData = []; // Holds filtered Data
+var ExcelData = [];
+
+// Flags
+var IsFiltered = false; // True if any filter criteria is applied
+
+//Apply Filter Variables
+var FilterCriteria = ''; //Filter Criteria applied on UniqueContentData
+var FilteredBy = ''; // Search By Tag or Search By URL
 
 class SearchResult extends Component {
     constructor() {
         super();
         this.handleClick = this.handleClick.bind(this);
         this.myCallback = this.myCallback.bind(this);
+        this.FilteredData = [];
+        this.IsFiltered = false;
 
         this.state = {
-            data: [],
             showModal: false,
-            selectedTag: '',
-            isFilterApplied: false,
-            pageUrls: [],
-            selectedFilterOption: '',
-            gridHeight: '400px',
-            multiDataSet:[]
         };
     }
     componentDidMount() {
 
+        // Initialization of Data objects
         this.getSearchResults();
 
-        $('.stlying').click(function(){
+        // Lose the focus on Download button after click
+        $('.stlying').click(function () {
             document.activeElement.blur();
         })
     }
@@ -45,17 +56,19 @@ class SearchResult extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
-                this.setState({
-                    data: data.map(m => {
-                        return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
-                        { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
-                        { value: m.MetaTitle }, { value: m.MetaDescription }]
-                    }).slice(0, 1)
-                }, function () {
-                    this.setDataset();
-                })
-                console.log(data.map(m => { return [{ name: m.PageUrl }, { name: m.MarketCode }] }).slice(0, 10))
-                this.setState({ data: data, pageUrls: data.map(m => { return { name: m.PageUrl } }) })
+                this.UniqueContentData = data
+                this.PageUrlData = this.UniqueContentData.map(m => { return { name: m.PageUrl } });
+                this.ExcelData = [
+                    {
+                        columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                        data: this.UniqueContentData.map(m => {
+                            return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                            { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
+                            { value: m.MetaTitle }, { value: m.MetaDescription }]
+                        })
+                    }
+                ]
+                this.setState({ showModal: false });
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
@@ -117,24 +130,25 @@ class SearchResult extends Component {
         }
 
         if (Array.isArray(modalClosed)) {
-
+            if (Array.isArray(modalClosed[1])) {
+                var buildSelectedTag = modalClosed[1].map(m => { return m.Values + '_' }).join().replace(/,/g, ' ');
+                this.IsFiltered = true;
+                this.FilterCriteria = buildSelectedTag.substring(0, buildSelectedTag.length - 1);
+                this.FilteredBy = 'Search Tag';
+                this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+            }
+            else {
+                this.FilteredData = this.UniqueContentData.filter(m => m.PageUrl === modalClosed[1]);
+                this.IsFiltered = true;
+                this.FilterCriteria = modalClosed[1];
+                this.FilteredBy = 'Search URL';
+            }
             if (modalClosed[0]) {
                 this.setState({
                     showModal: !this.state.showModal
                 });
             }
-
-
-            if (Array.isArray(modalClosed[1])) {
-                var selectedTag = modalClosed[1].map(m => { return m.Values + '_' }).join().replace(/,/g, ' ');
-                selectedTag = selectedTag.substring(0, selectedTag.length - 1);
-                var result = modalClosed[1].filter(m => m.Values !== '*');
-                this.setState({ data: this.state.data.flexFilter(result), selectedTag: selectedTag, isFilterApplied: true, selectedFilterOption: 'Search Tag' });
-            }
-            else {
-                this.setState({ data: this.state.data.filter(m => m.PageUrl === modalClosed[1]), selectedTag: modalClosed[1], isFilterApplied: true, selectedFilterOption: 'Search URL' });
-            }
-
+            this.setDataset(); // Call to update the Excel dataset with filtered results
         }
 
         else {
@@ -148,46 +162,56 @@ class SearchResult extends Component {
     }
 
     setDataset() {
-        console.log(this.state.data);
-        const multiDataSet = [
+        this.ExcelData = [
             {
                 columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
-                data: this.state.data
+                data: this.FilteredData.map(m => {
+                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                    { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
+                    { value: m.MetaTitle }, { value: m.MetaDescription }]
+                })
             }
         ]
-        this.setState({ multiDataSet: multiDataSet })
+    }
 
+    clearFilter() {
+        this.IsFiltered = false;
+        this.FilteredData = [];
+        this.FilteredBy = '';
+        this.ExcelData = [
+            {
+                columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                data: this.UniqueContentData.map(m => {
+                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                    { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
+                    { value: m.MetaTitle }, { value: m.MetaDescription }]
+                })
+            }
+        ];
+        this.setState({showModal: this.state.showModal});
     }
 
     render() {
 
         const flag = this.state.showModal;
-        console.log(this.state.data)
+        console.log(this.IsFiltered);
         return (
             <div className="itemDiv">
-                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.state.pageUrls} /> : null}
-                <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
-                <button type="button" className="btn btn-link">Clear Filter</button>
 
-                {/* <Link to="/FilterResult" class="nav-link">Compare Pages</Link> */}
-                {/* <span className="floatLeft"><img src={Download} alt="Download" /></span>
-                <span className="floatLeft"><img src={Download1} alt="Download" /></span>
-                <span className="floatLeft"><img src={Download2} alt="Download" /></span>
-                <span className="floatLeft"><img src={Download3} alt="Download" /></span> */}
-                <span className="imageFloatLeft"><ExcelFile filename = "ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
-                    <ExcelSheet dataSet={this.state.multiDataSet} name="Result" />
+                {this.IsFiltered ? <div class="alert alert-info" role="alert">
+                    <strong> Filter Applied! </strong> <br /> <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
+                </div> : ''}
+
+                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
+                <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
+                <button type="button" className="btn btn-link" onClick={this.clearFilter.bind(this)}>Clear Filter</button>
+                <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
+                    <ExcelSheet dataSet={this.ExcelData} name="Result" />
                 </ExcelFile>
                 </span>
 
-
-                {this.state.isFilterApplied ? <div class="alert alert-info" role="alert">
-                    <strong> Filter Applied! </strong> <br /> <strong>{this.state.selectedFilterOption}:</strong> {this.state.selectedTag}
-                    {/* <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button> */}
-                </div> : ''}
                 <ReactTable
-                    data={this.state.data}
+                    data={this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData}
                     minRows={0}
                     columns={[
                         {
@@ -243,7 +267,7 @@ class SearchResult extends Component {
                     }}
                     defaultPageSize={100}
                     style={{
-                        height: this.state.selectedFilterOption === 'Search URL' ? '23%' : '90%'  // This will force the table body to overflow and scroll, since there is not enough room
+                        height: this.FilteredBy === 'Search URL' ? '23%' : this.FilteredBy === 'Search Tag' ? '77%' : '92%'  // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                 />
