@@ -7,6 +7,8 @@ import "react-table/react-table.css";
 import EditLog from './Edit.png';
 import Download from './Download.png';
 import ReactExport from "react-data-export";
+import ApplyFilter from './ApplyFilter.png';
+import ClearFilter from './ClearFilter.png';
 
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
@@ -56,6 +58,7 @@ class SearchResult extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
+                console.log(data);
                 this.UniqueContentData = data
                 this.PageUrlData = this.UniqueContentData.map(m => { return { name: m.PageUrl } });
                 this.ExcelData = [
@@ -188,7 +191,7 @@ class SearchResult extends Component {
                 })
             }
         ];
-        this.setState({showModal: this.state.showModal});
+        this.setState({ showModal: this.state.showModal });
     }
 
     render() {
@@ -203,18 +206,25 @@ class SearchResult extends Component {
                 </div> : ''}
 
                 {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
-                <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
-                <button type="button" className="btn btn-link" onClick={this.clearFilter.bind(this)}>Clear Filter</button>
-                <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
+                {/* <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
+                <button type="button" className="btn btn-link" onClick={this.clearFilter.bind(this)}>Clear Filter</button> */}
+                {/* <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
                     <ExcelSheet dataSet={this.ExcelData} name="Result" />
                 </ExcelFile>
-                </span>
+                </span> */}
 
                 <ReactTable
                     data={this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData}
                     minRows={0}
                     columns={[
                         {
+                            Header: <div>  
+                                <img className="divApplyFilter" src={ApplyFilter} alt="Apply Filter" onClick={this.handleClick} data-toggle="tooltip" data-placement="top" title="Apply Filter" />
+                                <img className="divClearFilter" src={ClearFilter} alt="Clear Filter" onClick={this.clearFilter.bind(this)} data-toggle="tooltip" data-placement="top" title="Clear Filter" />
+                                <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button data-toggle="tooltip" data-placement="top" title="Download" className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
+                                    <ExcelSheet dataSet={this.ExcelData} name="Result" />
+                                </ExcelFile>
+                                </span></div>,
                             columns: [
                                 {
                                     Header: "Page URL",
@@ -267,7 +277,7 @@ class SearchResult extends Component {
                     }}
                     defaultPageSize={100}
                     style={{
-                        height: this.FilteredBy === 'Search URL' ? '23%' : this.FilteredBy === 'Search Tag' ? '77%' : '92%'  // This will force the table body to overflow and scroll, since there is not enough room
+                        height: this.FilteredBy === 'Search URL' ? '27%' : this.FilteredBy === 'Search Tag' ? '80%' : '98%'  // This will force the table body to overflow and scroll, since there is not enough room
                     }}
                     className="-striped -highlight"
                 />
