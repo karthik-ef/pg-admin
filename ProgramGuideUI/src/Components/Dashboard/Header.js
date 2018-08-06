@@ -1,14 +1,50 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import LogoutIcon from './Logout.png';
+import $ from 'jquery';
 
 class Header extends Component {
+    constructor() {
+        super();
+        this.state = {
+            userMarkets: []
+        }
+    }
+
+    componentDidMount() {
+        this.getUserMarkets();
+    }
+
+    getUserMarkets() {
+        $.ajax({
+            url: 'http://ctdev.ef.com:3001/userMarkets/?userName=Hao.peng',
+            type: 'GET',
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                console.log('');
+                this.setState({ userMarkets: data });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+
+    }
+
+    bindUserMarkets(){
+        if(this.state.userMarkets){
+         return this.state.userMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m=>{return <option key= {m.MarketCode} value={m.MarketCode}>{m.Name}</option>});
+        }
+      }
+    
+
     render() {
 
         return (
             <div className="headerDiv">
 
-                 {/* Display Brand */}
+                {/* Display Brand */}
                 <div className="brandDiv">
                     <nav className="navbar navbar-light bg-light">
                         <img className="efLogo" src="//www.ef.de/sitecore/__/~/media/universal/logo/2015/black/00.svg" alt="EF Education First" />
@@ -35,7 +71,8 @@ class Header extends Component {
                                 </li>
                                 <li className="nav-item">
                                     <select className="form-control" id="exampleFormControlSelect1">
-                                        <option value="select">---Choose---</option>
+                                        <option value="select">---Choose Market---</option>
+                                        {this.bindUserMarkets()}
                                     </select>
                                 </li>
                             </ul>
