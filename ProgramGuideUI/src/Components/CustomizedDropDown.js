@@ -75,7 +75,7 @@ var MultiSelectField = createClass({
 	},
 
 	render() {
-		let Market, Tags = [];
+		let Market = [];
 		if (this.props.Roles) {
 			this.state.IdentifyName = 'Role'
 			this.state.dispalyText = 'Select Role';
