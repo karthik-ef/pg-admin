@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import Dropdowm from './CustomizedDropDown';
 import $ from 'jquery';
 
+var isVisible = true;
+const MarketsList = [];
+
 class AddUser extends Component {
   constructor() {
     super();
+    this.isVisible = true;
+    this.MarketsList = [];
     this.state = {
       roles: [],
       markets: [],
@@ -20,6 +25,7 @@ class AddUser extends Component {
       dataType: 'json',
       cache: false,
       success: function (data) {
+        this.MarketsList = data;
         this.setState({ markets: data.map(m => { return { label: m.Name, value: m.MarketCode } }) });
       }.bind(this),
       error: function (xhr, status, err) {
@@ -29,17 +35,17 @@ class AddUser extends Component {
 
   }
 
-//POST request to register user to PG-admin
+  //POST request to register user to PG-admin
   registerUser() {
     $.ajax({
       url: 'http://ctdev.ef.com:3001/register',
-      type:'POST',
+      type: 'POST',
       dataType: 'TEXT',
       data: this.state.saveUserDetails,
       cache: false,
       success: function (data) {
         console.log(data);
-          console.log('');
+        console.log('');
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(err);
@@ -67,7 +73,15 @@ class AddUser extends Component {
   }
 
   getRoles1(value) {
-    this.setState({ selectedRoles: value });
+
+    if (value === 'Admin') {
+      this.isVisible = false;
+      this.setState({selectedRoles: value, selectedMarkets: this.MarketsList.map(m => { return m.MarketCode }).toLocaleString()})
+    }
+    else {
+      this.isVisible = true;
+      this.setState({ selectedRoles: value });
+    }
   }
 
 
@@ -75,16 +89,16 @@ class AddUser extends Component {
 
     var userDetails = {};
     userDetails.userName = this.refs.userName.value;
-    userDetails.marketCodeXml = '<userpermission xmlns="">' + this.state.selectedMarkets.split(',').map(m => {return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g,' ') + '</userpermission>'
-    userDetails.rolesXml = '<userpermission xmlns=""> <role rolename ="' +this.state.selectedRoles +'"/> </userpermission>';
+    userDetails.marketCodeXml = '<userpermission xmlns="">' + this.state.selectedMarkets.split(',').map(m => { return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g, ' ') + '</userpermission>'
+    userDetails.rolesXml = '<userpermission xmlns=""> <role rolename ="' + this.state.selectedRoles + '"/> </userpermission>';
 
 
-    this.setState({saveUserDetails:userDetails},function(){
+    this.setState({ saveUserDetails: userDetails }, function () {
       this.registerUser();
     });
 
     e.preventDefault();
-   
+
   }
 
   render() {
@@ -105,11 +119,12 @@ class AddUser extends Component {
             </div>
           </div>
 
-          <div className="form-group row">
-            <div className="col-sm-12">
-              <Dropdowm Markets={this.state.markets} multiSelect={true} bindedMarketValue={this.getMarket1.bind(this)} />
-            </div>
-          </div>
+          {this.isVisible ?
+            <div className="form-group row">
+              <div className="col-sm-12">
+                <Dropdowm Markets={this.state.markets} multiSelect={true} bindedMarketValue={this.getMarket1.bind(this)} />
+              </div>
+            </div> : ''}
 
           <div className="col-sm-12 text-center">
             <input type="submit" value="Register" className="btn btn-primary" />
