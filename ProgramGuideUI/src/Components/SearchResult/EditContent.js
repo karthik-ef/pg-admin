@@ -8,8 +8,10 @@ class EditContent extends Component {
 
     constructor() {
         super();
+        this.handleCloseClick = this.handleCloseClick.bind(this);
         this.state = {
-            collapseIcon: ExpandIcon
+            collapseIcon: ExpandIcon,
+            isClosed: false
         }
     }
 
@@ -25,7 +27,13 @@ class EditContent extends Component {
         });
     }
 
+    handleCloseClick(){
+        this.setState({ isClosed: true });
+    }
+
     render() {
+
+        this.props.callbackFromEditContent(this.state.isClosed)
         return (
             <div>
                 <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">

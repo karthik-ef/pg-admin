@@ -9,6 +9,7 @@ import Download from './Download.png';
 import ReactExport from "react-data-export";
 import ApplyFilter from './ApplyFilter.png';
 import ClearFilter from './ClearFilter.png';
+import EditContent from './EditContent';
 
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
@@ -39,6 +40,7 @@ class SearchResult extends Component {
 
         this.state = {
             showModal: false,
+            showEditContentModal: false
         };
     }
     componentDidMount() {
@@ -65,7 +67,7 @@ class SearchResult extends Component {
                     {
                         columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
                         data: this.UniqueContentData.map(m => {
-                            return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                            return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
                             { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
                             { value: m.MetaTitle }, { value: m.MetaDescription }]
                         })
@@ -169,7 +171,7 @@ class SearchResult extends Component {
             {
                 columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
                 data: this.FilteredData.map(m => {
-                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
                     { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
                     { value: m.MetaTitle }, { value: m.MetaDescription }]
                 })
@@ -185,7 +187,7 @@ class SearchResult extends Component {
             {
                 columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
                 data: this.UniqueContentData.map(m => {
-                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, , { value: m.VisibleIntroText },
+                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
                     { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
                     { value: m.MetaTitle }, { value: m.MetaDescription }]
                 })
@@ -194,25 +196,24 @@ class SearchResult extends Component {
         this.setState({ showModal: this.state.showModal });
     }
 
+    dataFromEditContent = (value) => {
+        if (value){
+            this.setState({showEditContentModal: !this.state.showEditContentModal})
+        }
+    }
+
     render() {
 
         const flag = this.state.showModal;
-        console.log(this.IsFiltered);
+        console.log(this.ExcelData);
         return (
             <div className="itemDiv">
 
                 {this.IsFiltered ? <div class="alert alert-info" role="alert">
                     <strong> Filter Applied! </strong> <br /> <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
                 </div> : ''}
-
                 {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
-                {/* <button type="button" className="btn btn-link" onClick={this.handleClick}>Apply Filter</button>
-                <button type="button" className="btn btn-link" onClick={this.clearFilter.bind(this)}>Clear Filter</button> */}
-                {/* <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
-                    <ExcelSheet dataSet={this.ExcelData} name="Result" />
-                </ExcelFile>
-                </span> */}
-
+                {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent}/>:null}
                 <ReactTable
                     data={this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData}
                     minRows={0}
@@ -255,9 +256,7 @@ class SearchResult extends Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
-                                this.setState({
-                                    showModal: !this.state.showModal
-                                });
+                                this.setState({showEditContentModal: true})
                                 console.log("A Td Element was clicked!");
                                 console.log("it produced this event:", e);
                                 console.log("It was in this column:", column);
