@@ -3,21 +3,25 @@ import { Link } from "react-router-dom";
 import LogoutIcon from './Logout.png';
 import $ from 'jquery';
 
+const UserName = '';
+
 class Header extends Component {
     constructor() {
         super();
+        this.userMarkets = '';
         this.state = {
             userMarkets: []
         }
     }
 
     componentDidMount() {
+        this.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
         this.getUserMarkets();
     }
 
     getUserMarkets() {
         $.ajax({
-            url: 'http://ctdev.ef.com:3001/userMarkets/?userName=Hao.peng',
+            url: 'http://ctdev.ef.com:3001/userMarkets/?userName=' + this.UserName,
             type: 'GET',
             cache: false,
             success: function (data) {
@@ -40,7 +44,6 @@ class Header extends Component {
     
 
     render() {
-
         return (
             <div className="headerDiv">
 
@@ -71,7 +74,7 @@ class Header extends Component {
                                 </li>
                                 <li className="nav-item">
                                     <select className="form-control" id="exampleFormControlSelect1">
-                                        <option value="select">---Choose Market---</option>
+                                       {this.state.userMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
                                         {this.bindUserMarkets()}
                                     </select>
                                 </li>

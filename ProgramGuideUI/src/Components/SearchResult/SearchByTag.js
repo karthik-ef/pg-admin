@@ -40,7 +40,7 @@ class SearchByTag extends Component {
     }
     getTagData() {
         $.ajax({
-            url: 'http://ctdev.ef.com:3001/SearchByTag',
+            url: 'http://ctdev.ef.com:3001/SearchByTag/?MarketCode=ES',
             dataType: 'json',
             cache: false,
             success: function (data) {

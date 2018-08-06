@@ -58,7 +58,8 @@ class Login extends Component {
             },
             cache: false,
             success: function (data) {
-                console.log(data)
+                  console.log(data)
+                sessionStorage.setItem('Login', JSON.stringify(data));
                 if (data['AuthenticationResponse']) {
                     $('#exampleModalCenter').modal('hide');
                     this.setState({ isAuthenticUser: true }, function () {
