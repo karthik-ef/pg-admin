@@ -40,7 +40,8 @@ class SearchResult extends Component {
 
         this.state = {
             showModal: false,
-            showEditContentModal: false
+            showEditContentModal: false,
+            columnName: ["Page ID", "ParentPage ID", "Page Url", "Market Code", "Banner Image", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "Breadcrumb Text", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "Page Title", "Meta Title", "Meta Description"],
         };
     }
     componentDidMount() {
@@ -65,12 +66,12 @@ class SearchResult extends Component {
                 this.PageUrlData = this.UniqueContentData.map(m => { return { name: m.PageUrl } });
                 this.ExcelData = [
                     {
-                        columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                        columns: this.state.columnName,
                         data: this.UniqueContentData.map(m => {
-                            return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
-                            { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
-                            { value: m.MetaTitle }, { value: m.MetaDescription }]
-                        })
+                            return [{ value: m.UniqueContent_ID.toString() }, { value: m.ParentPageID.toString() }, { value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
+                                { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                                { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 }, { value: m.PageTitle }, { value: m.MetaTitle }, { value: m.MetaDescription }]
+                            })
                     }
                 ]
                 this.setState({ showModal: false });
@@ -169,12 +170,12 @@ class SearchResult extends Component {
     setDataset() {
         this.ExcelData = [
             {
-                columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                columns: this.state.columnName,
                 data: this.FilteredData.map(m => {
-                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
-                    { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
-                    { value: m.MetaTitle }, { value: m.MetaDescription }]
-                })
+                    return [{ value: m.UniqueContent_ID.toString() }, { value: m.ParentPageID.toString() }, { value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
+                        { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                        { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 }, { value: m.PageTitle }, { value: m.MetaTitle }, { value: m.MetaDescription }]
+                    })
             }
         ]
     }
@@ -185,12 +186,12 @@ class SearchResult extends Component {
         this.FilteredBy = '';
         this.ExcelData = [
             {
-                columns: ["PageUrl", "MarketCode", "BannerImage", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "PageTitle", "MetaTitle", "MetaDescription"],
+                columns: this.state.columnName,
                 data: this.UniqueContentData.map(m => {
-                    return [{ value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
-                    { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.PageTitle },
-                    { value: m.MetaTitle }, { value: m.MetaDescription }]
-                })
+                    return [{ value: m.UniqueContent_ID.toString() }, { value: m.ParentPageID.toString() }, { value: m.PageUrl }, { value: m.MarketCode }, { value: m.BannerImage }, { value: m.VisibleIntroText },
+                        { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                        { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 }, { value: m.PageTitle }, { value: m.MetaTitle }, { value: m.MetaDescription }]
+                    })
             }
         ];
         this.setState({ showModal: this.state.showModal });
@@ -205,7 +206,7 @@ class SearchResult extends Component {
     render() {
 
         const flag = this.state.showModal;
-        console.log(this.ExcelData);
+        console.log(this.UniqueContentData);
         return (
             <div className="itemDiv">
 
