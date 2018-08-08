@@ -151,3 +151,13 @@ height: 10%;
 .ReactTable .rt-th{
    text-align: left;
 }
+
+.form-check-inline .form-check-input {
+    margin-left: 20%;
+}
+
+.form-control {
+    display: initial;
+    margin-left: 3%;
+    width: 70%;
+}

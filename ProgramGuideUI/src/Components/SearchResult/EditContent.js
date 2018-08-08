@@ -3,6 +3,7 @@ import $ from 'jquery';
 import '../Dashboard/Dashboard.css'
 import ExpandIcon from './Plus.png';
 import ShrinkIcon from './Minus.png';
+import SearchByTag from '../SearchResult/SearchByTag';
 
 class EditContent extends Component {
 
@@ -19,15 +20,15 @@ class EditContent extends Component {
     componentDidMount() {
         $('#exampleModalLong').modal('show');
         $('.card').on('shown.bs.collapse', function () {
-            $(this).find('img').attr("src",ShrinkIcon)
+            $(this).find('img').attr("src", ShrinkIcon)
         });
 
         $('.card').on('hidden.bs.collapse', function () {
-            $(this).find('img').attr("src",ExpandIcon)
+            $(this).find('img').attr("src", ExpandIcon)
         });
     }
 
-    handleCloseClick(){
+    handleCloseClick() {
         this.setState({ isClosed: true });
     }
 
@@ -48,71 +49,87 @@ class EditContent extends Component {
                             </div>
                             <div class="modal-body">
                                 <div class="accordion" id="accordionExample">
+
                                     <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <p data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Edit Meta Information  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
+                                                Page Tag section   <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
 
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
-                                        </div>
+                                            <SearchByTag/>
+                                            </div>
                                         </div>
                                     </div>
+
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
-                                            <p data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Edit Page Content <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
+                                            <p data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <strong >
+                                                Parent Page URL & Family tree   <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
+
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                             <div class="card-body">
-                                             </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-header" id="headingThree">
-                                            <p data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Edit Page Alternate Tag  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
+                                            <p data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"> <strong >
+                                                Meta Information  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
+
                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                             <div class="card-body">
-                                              </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-header" id="headingFour">
-                                            <p data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Edit Page Canonical Tag  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
+                                            <p data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour"> <strong >
+                                                Page Content <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
-                                        <div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                             <div class="card-body">
-                                              </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-header" id="headingFive">
-                                            <p data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Edit Robots Field  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
+                                            <p data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive"> <strong >
+                                                Drill down  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
-                                        <div id="collapseFive" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                                             <div class="card-body">
-                                              </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card">
                                         <div class="card-header" id="headingSix">
-                                            <p data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseOne"> <strong >
-                                                Active  
+                                            <p data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix"> <strong >
+                                                Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                                             </strong></p>
                                         </div>
-                                        <div id="collapseSix" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                        <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
                                             <div class="card-body">
-                                              </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="headingSeven">
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineCheckbox2"><strong>Active</strong></label>
+                                                <input type="checkbox" id="activeCheckBox" class="form-check-input" id="exampleCheck1" checked />
+                                            </div>
+                                            <br />
+                                            <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
+                                            <input type="text" class="form-control"/>
                                         </div>
                                     </div>
                                 </div>

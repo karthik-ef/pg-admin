@@ -15,7 +15,7 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        this.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        this.UserName = 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
         this.getUserMarkets();
     }
 

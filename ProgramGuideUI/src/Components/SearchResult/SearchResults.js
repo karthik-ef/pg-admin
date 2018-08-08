@@ -229,13 +229,13 @@ class SearchResult extends Component {
                                 </span></div>,
                             columns: [
                                 {
-                                    Header: "Page URL",
+                                    Header: <strong>Page URL</strong>,
                                     id: "PageUrl",
                                     accessor: d => d.PageUrl,
                                     sortable: false
                                 },
                                 {
-                                    Header: "Page Title",
+                                    Header: <strong>Page Title</strong>,
                                     id: "PageTitle",
                                     accessor: d => d.PageTitle,
                                     sortable: false
