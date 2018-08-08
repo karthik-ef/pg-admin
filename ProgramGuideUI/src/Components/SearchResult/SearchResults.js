@@ -30,6 +30,8 @@ var IsFiltered = false; // True if any filter criteria is applied
 var FilterCriteria = ''; //Filter Criteria applied on UniqueContentData
 var FilteredBy = ''; // Search By Tag or Search By URL
 
+const EditPageUrl = '';
+
 class SearchResult extends Component {
     constructor() {
         super();
@@ -37,6 +39,7 @@ class SearchResult extends Component {
         this.myCallback = this.myCallback.bind(this);
         this.FilteredData = [];
         this.IsFiltered = false;
+        this.EditPageUrl = '';
 
         this.state = {
             showModal: false,
@@ -214,7 +217,7 @@ class SearchResult extends Component {
                     <strong> Filter Applied! </strong> <br /> <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
                 </div> : ''}
                 {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
-                {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent}/>:null}
+                {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent} PageUrl = {this.EditPageUrl}/>:null}
                 <ReactTable
                     data={this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData}
                     minRows={0}
@@ -257,11 +260,12 @@ class SearchResult extends Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
+                                this.EditPageUrl = rowInfo['row']['PageUrl'];
                                 this.setState({showEditContentModal: true})
                                 console.log("A Td Element was clicked!");
                                 console.log("it produced this event:", e);
                                 console.log("It was in this column:", column);
-                                console.log("It was in this row:", rowInfo);
+                                console.log("It was in this row:", rowInfo['row']['PageUrl']);
                                 console.log("It was in this table instance:", instance);
 
                                 // IMPORTANT! React-Table uses onClick internally to trigger
