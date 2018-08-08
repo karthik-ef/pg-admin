@@ -59,7 +59,7 @@ class EditContent extends Component {
 
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
-                                            <SearchByTag/>
+                                                <SearchByTag />
                                             </div>
                                         </div>
                                     </div>
@@ -128,8 +128,18 @@ class EditContent extends Component {
                                                 <input type="checkbox" id="activeCheckBox" class="form-check-input" id="exampleCheck1" checked />
                                             </div>
                                             <br />
-                                            <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
-                                            <input type="text" class="form-control"/>
+                                            {/* <div className="form-inline">
+                                                <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
+                                                <input type="text" class="form-control input-lg" />
+                                            </div> */}
+                                            <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="input-group input-group-sm">
+                                                    <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
+                                                        <input type="text" class="form-control" />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
