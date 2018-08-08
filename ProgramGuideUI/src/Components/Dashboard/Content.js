@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SearchResults from '../SearchResult/SearchResults';
 import ComparePages from '../ComparePages';
-import AddUser from '../AddUser';
+import AddUser from '../UserManagement/UserDashBoard';
 import BulkUpload from '../BulkUpload';
 
 class Content extends Component {
