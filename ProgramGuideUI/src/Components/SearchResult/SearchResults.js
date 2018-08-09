@@ -22,6 +22,7 @@ const UniqueContentData = []; // Hold the data returned from Database
 const PageUrlData = []; // Holds data for PageUrl Autosuggest 
 var FilteredData = []; // Holds filtered Data
 var ExcelData = [];
+var SearchResultsData = [];
 
 // Flags
 var IsFiltered = false; // True if any filter criteria is applied
@@ -40,6 +41,7 @@ class SearchResult extends Component {
         this.FilteredData = [];
         this.IsFiltered = false;
         this.EditPageRow = [];
+        this.SearchResultsData = [];
 
         this.state = {
             showModal: false,
@@ -209,6 +211,7 @@ class SearchResult extends Component {
     render() {
 
         const flag = this.state.showModal;
+        this.SearchResultsData = this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData;
         console.log(this.UniqueContentData);
         return (
             <div className="itemDiv">
@@ -219,7 +222,7 @@ class SearchResult extends Component {
                 {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
                 {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent} EditPageRow = {this.EditPageRow}/>:null}
                 <ReactTable
-                    data={this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData}
+                    data={this.SearchResultsData}
                     minRows={0}
                     columns={[
                         {
@@ -280,9 +283,11 @@ class SearchResult extends Component {
                         };
                     }}
                     defaultPageSize={100}
-                    style={{
-                        height: this.FilteredBy === 'Search URL' ? '27%' : this.FilteredBy === 'Search Tag' ? '80%' : '98%'  // This will force the table body to overflow and scroll, since there is not enough room
-                    }}
+                    style={
+                        this.SearchResultsData === undefined ? '' :
+                        this.SearchResultsData.length < 10 ? '' : {
+                            height: '98%'  // This will force the table body to overflow and scroll, since there is not enough room
+                        }}
                     className="-striped -highlight"
                 />
             </div>
