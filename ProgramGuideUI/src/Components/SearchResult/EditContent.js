@@ -4,6 +4,7 @@ import '../Dashboard/Dashboard.css'
 import ExpandIcon from './Plus.png';
 import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
+import RichTextEditor from '../CustomRichTextEditor';
 
 class EditContent extends Component {
 
@@ -73,12 +74,12 @@ class EditContent extends Component {
 
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                             <div class="card-body">
-                                            <strong> Parent Page URL: </strong>
+                                                <strong> Parent Page URL: </strong>
                                                 <br />
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <input type="text" class="form-control input-sm" id="search-church" />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Show Family Tree</button>
                                                             </span>
@@ -106,9 +107,9 @@ class EditContent extends Component {
 
                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                             <div class="card-body">
-                                            <strong> Meta Title: </strong>
+                                                <strong> Meta Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control"/>
+                                                <input type="text" class="form-control" />
                                                 <br />
                                                 <strong> Meta Description: </strong>
                                                 <textarea class="form-control" rows="5"></textarea>
@@ -126,6 +127,37 @@ class EditContent extends Component {
                                         </div>
                                         <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                                             <div class="card-body">
+                                                <strong> Page Title: </strong>
+                                                <br />
+                                                <input type="text" class="form-control" />
+                                                <br />
+                                                <strong> Visible Intro Text: </strong>
+                                                <br />
+                                                <RichTextEditor />
+                                                <br />
+                                                <strong> Hidden Intro Text: </strong>
+                                                <br />
+                                                <RichTextEditor />
+                                                <br />
+                                                <strong> Page Sub Header 1: </strong>
+                                                <br />
+                                                <input type="text" class="form-control" />
+                                                <br />
+                                                <strong> Page Content Part 1: </strong>
+                                                <br />
+                                                <RichTextEditor />
+                                                <br />
+                                                <strong> Page Sub Header 2: </strong>
+                                                <br />
+                                                <input type="text" class="form-control" />
+                                                <br />
+                                                <strong> Page Content Part 2: </strong>
+                                                <br />
+                                                <RichTextEditor />
+                                                <br />
+                                                <strong> Breadcrumb Text: </strong>
+                                                <br />
+                                                <input type="text" class="form-control" />
                                             </div>
                                         </div>
                                     </div>
@@ -142,7 +174,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <input type="text" class="form-control input-sm" id="search-church" />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Preview</button>
                                                             </span>
@@ -156,7 +188,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <input type="text" class="form-control input-sm" id="search-church" />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Preview</button>
                                                             </span>
@@ -164,8 +196,10 @@ class EditContent extends Component {
                                                     </div>
                                                 </div>
                                                 {/* Feature Tag 2 Content */}
-                                                <br/>
+                                                <br />
                                                 <strong> Feature Tag Page 3: </strong>
+                                                <br/>
+                                                <button class="btn btn-primary btn-sm" type="submit">Show Customized Tags</button>
                                             </div>
                                         </div>
                                     </div>
@@ -177,9 +211,9 @@ class EditContent extends Component {
                                         </div>
                                         <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
                                             <div class="card-body">
-                                            <strong> Banner Image Path: </strong>
-                                            <br/>
-                                                <input type="text" class="form-control input-sm"/>
+                                                <strong> Banner Image Path: </strong>
+                                                <br />
+                                                <input type="text" class="form-control input-sm" />
                                             </div>
                                         </div>
                                     </div>
