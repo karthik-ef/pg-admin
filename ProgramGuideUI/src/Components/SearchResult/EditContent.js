@@ -73,6 +73,27 @@ class EditContent extends Component {
 
                                         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                                             <div class="card-body">
+                                            <strong> Parent Page URL: </strong>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="submit">Show Family Tree</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <br />
+                                                <strong> Family Tree: </strong>
+                                                <nav aria-label="breadcrumb">
+                                                    <ol class="breadcrumb">
+                                                        <li class="breadcrumb-item"><a href="#">/pg/</a></li>
+                                                        <li class="breadcrumb-item"><a href="#">/pg/high-school/</a></li>
+                                                        <li class="breadcrumb-item active" aria-current="page">high-school-usa</li>
+                                                    </ol>
+                                                </nav>
                                             </div>
                                         </div>
                                     </div>
@@ -85,6 +106,15 @@ class EditContent extends Component {
 
                                         <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                                             <div class="card-body">
+                                            <strong> Meta Title: </strong>
+                                                <br />
+                                                <input type="text" class="form-control"/>
+                                                <br />
+                                                <strong> Meta Description: </strong>
+                                                <textarea class="form-control" rows="5"></textarea>
+                                                <br />
+                                                <strong> Meta Robot: </strong>
+                                                <input type="text" class="form-control" readOnly={true} />
                                             </div>
                                         </div>
                                     </div>
@@ -107,6 +137,35 @@ class EditContent extends Component {
                                         </div>
                                         <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#accordionExample">
                                             <div class="card-body">
+                                                <strong> Feature Tag Page 1: </strong>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="submit">Preview</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* Feature Tag 1 Content */}
+                                                <br />
+                                                <strong> Feature Tag Page 2: </strong>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-sm-12">
+                                                        <div class="input-group input-group-sm">
+                                                            <input type="text" class="form-control input-sm" id="search-church"/>
+                                                            <span class="input-group-btn">
+                                                                <button class="btn btn-primary btn-sm" type="submit">Preview</button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {/* Feature Tag 2 Content */}
+                                                <br/>
+                                                <strong> Feature Tag Page 3: </strong>
                                             </div>
                                         </div>
                                     </div>
@@ -118,6 +177,9 @@ class EditContent extends Component {
                                         </div>
                                         <div id="collapseSix" class="collapse" aria-labelledby="headingSix" data-parent="#accordionExample">
                                             <div class="card-body">
+                                            <strong> Banner Image Path: </strong>
+                                            <br/>
+                                                <input type="text" class="form-control input-sm"/>
                                             </div>
                                         </div>
                                     </div>
@@ -126,19 +188,6 @@ class EditContent extends Component {
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label" for="inlineCheckbox2"><strong>Active</strong></label>
                                                 <input type="checkbox" id="activeCheckBox" class="form-check-input" id="exampleCheck1" checked />
-                                            </div>
-                                            <br />
-                                            {/* <div className="form-inline">
-                                                <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
-                                                <input type="text" class="form-control input-lg" />
-                                            </div> */}
-                                            <div class="row">
-                                                <div class="col-lg-12">
-                                                    <div class="input-group input-group-sm">
-                                                    <label class="form-check-label" for="inlineCheckbox2"><strong>Redirected Page:</strong></label>
-                                                        <input type="text" class="form-control" />
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
