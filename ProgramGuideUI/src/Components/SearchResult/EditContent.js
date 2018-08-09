@@ -6,6 +6,7 @@ import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
 import RichTextEditor from '../CustomRichTextEditor';
 
+
 class EditContent extends Component {
 
     constructor() {
@@ -33,8 +34,13 @@ class EditContent extends Component {
         this.setState({ isClosed: true });
     }
 
-    render() {
+    BannerImageTextChange(e){
+        alert(e.target.value);
+    }
 
+    render() {
+    const EditPage = this.props.EditPageRow;
+        console.log(EditPage);
         this.props.callbackFromEditContent(this.state.isClosed)
         return (
             <div>
@@ -42,7 +48,7 @@ class EditContent extends Component {
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <strong> URL: {this.props.PageUrl} </strong>
+                                <strong> URL: {EditPage['PageUrl']} </strong>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.handleCloseClick}>
                                     <span aria-hidden="true">&times;</span>
@@ -79,7 +85,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" />
+                                                            <input type="text" class="form-control input-sm" id="search-church" value = {''} />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Show Family Tree</button>
                                                             </span>
@@ -109,13 +115,13 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Meta Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" defaultValue = {EditPage['MetaTitle']} />
                                                 <br />
                                                 <strong> Meta Description: </strong>
-                                                <textarea class="form-control" rows="5"></textarea>
+                                                <textarea class="form-control" rows="5" defaultValue={EditPage['MetaDescription']}></textarea>
                                                 <br />
                                                 <strong> Meta Robot: </strong>
-                                                <input type="text" class="form-control" readOnly={true} />
+                                                <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']}/>
                                             </div>
                                         </div>
                                     </div>
@@ -129,7 +135,7 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Page Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" defaultValue = {EditPage['PageTitle']}/>
                                                 <br />
                                                 <strong> Visible Intro Text: </strong>
                                                 <br />
@@ -141,7 +147,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Sub Header 1: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" defaultValue = {EditPage['SubHeader1']}/>
                                                 <br />
                                                 <strong> Page Content Part 1: </strong>
                                                 <br />
@@ -149,7 +155,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Sub Header 2: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" defaultValue = {EditPage['SubHeader2']}/>
                                                 <br />
                                                 <strong> Page Content Part 2: </strong>
                                                 <br />
@@ -157,7 +163,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Breadcrumb Text: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" />
+                                                <input type="text" class="form-control" defaultValue={EditPage['BreadcrumbText']} />
                                             </div>
                                         </div>
                                     </div>
@@ -174,7 +180,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" />
+                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag1']} />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Preview</button>
                                                             </span>
@@ -188,7 +194,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" />
+                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']}/>
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Preview</button>
                                                             </span>
@@ -213,7 +219,7 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Banner Image Path: </strong>
                                                 <br />
-                                                <input type="text" class="form-control input-sm" />
+                                                <input type="text" class="form-control input-sm" defaultValue = {EditPage['BannerImage']}/>
                                             </div>
                                         </div>
                                     </div>
