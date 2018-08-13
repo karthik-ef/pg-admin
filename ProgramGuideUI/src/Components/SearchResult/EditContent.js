@@ -39,8 +39,8 @@ class EditContent extends Component {
     componentDidMount() {
 
         this.isFamilyTreeVisible = false;
-        this.EditPage = this.props.EditPageRow['EditRowData'];
-        this.UniqueContentData = this.props.EditPageRow['UniqueContentData'];
+        this.EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        this.UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
 
         this.setState({ ParentPageID: 0 });
 
@@ -82,8 +82,8 @@ class EditContent extends Component {
     }
 
     render() {
-        const EditPage = this.props.EditPageRow['EditRowData'];
-        const UniqueContentData = this.props.EditPageRow['UniqueContentData'];
+        const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
         this.props.callbackFromEditContent(this.state.isClosed)
         return (
             <div>
