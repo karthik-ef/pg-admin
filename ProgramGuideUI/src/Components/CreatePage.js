@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class CreatePages extends Component {
+class CreatePage extends Component {
 
   render() {
 
     return (
       <div className="container">
-      Create Pages
+      Create Page
       </div>
     );
   }
 }
 
-export default CreatePages;
+export default CreatePage;
