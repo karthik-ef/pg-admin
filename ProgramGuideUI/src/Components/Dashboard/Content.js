@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import SearchResults from '../SearchResult/SearchResults';
-import ComparePages from '../ComparePages';
+import CreatePages from '../CreatePages';
 import AddUser from '../UserManagement/UserDashBoard';
 import BulkUpload from '../BulkUpload';
 
@@ -9,7 +9,7 @@ class Content extends Component {
 
     // Render the component based on URL
     const component = window.location.pathname === '/SearchResults' ? <SearchResults />
-      : window.location.pathname === '/ComparePages' ? <ComparePages />
+      : window.location.pathname === '/CreatePages' ? <CreatePages />
         : window.location.pathname === '/AddUser' ? <AddUser />
           : window.location.pathname === '/BulkUpload' ? <BulkUpload />
             : '';

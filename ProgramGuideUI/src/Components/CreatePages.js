@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 
-class ComparePages extends Component {
+class CreatePages extends Component {
 
   render() {
 
     return (
       <div className="container">
-      Compare Pages
+      Create Pages
       </div>
     );
   }
 }
 
-export default ComparePages;
+export default CreatePages;

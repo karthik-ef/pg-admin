@@ -64,7 +64,7 @@ class Header extends Component {
                                     <Link to="/SearchResults" className="nav-link" >Search Results <span className="sr-only">(current)</span></Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to="/ComparePages" className="nav-link">Compare Pages</Link>
+                                    <Link to="/ComparePages" className="nav-link">Create Pages</Link>
                                 </li>
                                 <li className="nav-item">
                                     <Link to="/AddUser" className="nav-link">Add User</Link>
