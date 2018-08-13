@@ -158,4 +158,10 @@ height: 10%;
 
 .breadcrumb-item+.breadcrumb-item::before {
     content: ">";
+    padding-right: 0;
+    color: black;
+}
+
+.breadcrumb-item+.breadcrumb-item {
+    padding-left: 0;
 }

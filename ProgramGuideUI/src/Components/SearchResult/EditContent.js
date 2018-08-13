@@ -6,20 +6,45 @@ import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
 import RichTextEditor from '../CustomRichTextEditor';
 
+const ParentPageID = 0;
+const EditPage = [];
+var ParentPageUrl = '';
+const UniqueContentData = [];
+const isFamilyTreeVisible = false;
+var FamilyTreeHierarchy = [];
+
 
 class EditContent extends Component {
 
     constructor() {
         super();
+        this.ParentPageID = 0;
+        this.ParentPageUrl = '';
+        this.EditPage = [];
+        this.UniqueContentData = [];
+        this.FamilyTreeHierarchy = [];
+
+
         this.handleCloseClick = this.handleCloseClick.bind(this);
+        this.ShowFamilyTree = this.ShowFamilyTree.bind(this);
+        this.getFamilyTreeHierarchy = this.getFamilyTreeHierarchy.bind(this);
         this.state = {
             collapseIcon: ExpandIcon,
-            isClosed: false
+            isClosed: false,
+            ParentPageID: 0,
         }
     }
 
 
     componentDidMount() {
+
+        this.isFamilyTreeVisible = false;
+        this.EditPage = this.props.EditPageRow['EditRowData'];
+        this.UniqueContentData = this.props.EditPageRow['UniqueContentData'];
+
+        this.setState({ ParentPageID: 0 });
+
+
         $('#exampleModalLong').modal('show');
         $('.card').on('shown.bs.collapse', function () {
             $(this).find('img').attr("src", ShrinkIcon)
@@ -34,13 +59,31 @@ class EditContent extends Component {
         this.setState({ isClosed: true });
     }
 
-    BannerImageTextChange(e){
+    BannerImageTextChange(e) {
         alert(e.target.value);
     }
 
+    ShowFamilyTree() {
+        this.FamilyTreeHierarchy = [];
+        this.ParentPageUrl = this.refs.ParentPageUrl.value;
+        this.ParentPageID = Number(this.UniqueContentData.filter(m => m.PageUrl === this.ParentPageUrl).map(m => m.ParentPageID));
+        this.getFamilyTreeHierarchy(this.ParentPageID);
+        this.setState({ isFamilyTreeVisible: true });
+    }
+
+    getFamilyTreeHierarchy(ParentPageID) {
+        let filteredContentData = this.UniqueContentData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
+        if (filteredContentData.length > 0) {
+            this.FamilyTreeHierarchy.push(filteredContentData.map(m => {
+                return <li class="breadcrumb-item"><a href="#">{m.PageUrl}</a></li>
+            }))
+            this.getFamilyTreeHierarchy(filteredContentData.map(m => m.ParentPageID));
+        }
+    }
+
     render() {
-    const EditPage = this.props.EditPageRow;
-        console.log(EditPage);
+        const EditPage = this.props.EditPageRow['EditRowData'];
+        const UniqueContentData = this.props.EditPageRow['UniqueContentData'];
         this.props.callbackFromEditContent(this.state.isClosed)
         return (
             <div>
@@ -85,22 +128,26 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" value = {''} />
+                                                            <input type="text" class="form-control input-sm" id="search-church" ref="ParentPageUrl"
+                                                                defaultValue={UniqueContentData.filter(m => m.UniqueContent_ID === EditPage['ParentPageID']).map(m => m.PageUrl)} required />
                                                             <span class="input-group-btn">
-                                                                <button class="btn btn-primary btn-sm" type="submit">Show Family Tree</button>
+                                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.ShowFamilyTree}>Show Family Tree</button>
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <br />
-                                                <strong> Family Tree: </strong>
-                                                <nav aria-label="breadcrumb">
-                                                    <ol class="breadcrumb">
-                                                        <li class="breadcrumb-item"><a href="#">/pg/</a></li>
-                                                        <li class="breadcrumb-item"><a href="#">/pg/high-school/</a></li>
-                                                        <li class="breadcrumb-item active" aria-current="page">high-school-usa</li>
-                                                    </ol>
-                                                </nav>
+                                                {this.state.isFamilyTreeVisible ?
+                                                    <div>
+                                                        <strong> Family Tree: </strong>
+                                                        <nav aria-label="breadcrumb">
+                                                            <ol class="breadcrumb">
+                                                                {this.FamilyTreeHierarchy.length > 0 ? this.FamilyTreeHierarchy.reverse() : ''}
+                                                                {this.FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{this.ParentPageUrl} </li> : 'No Parent' }
+                                                            </ol>
+                                                        </nav>
+                                                    </div>
+                                                    : ''}
                                             </div>
                                         </div>
                                     </div>
@@ -115,13 +162,13 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Meta Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue = {EditPage['MetaTitle']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['MetaTitle']} />
                                                 <br />
                                                 <strong> Meta Description: </strong>
                                                 <textarea class="form-control" rows="5" defaultValue={EditPage['MetaDescription']}></textarea>
                                                 <br />
                                                 <strong> Meta Robot: </strong>
-                                                <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']}/>
+                                                <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']} />
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +182,7 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Page Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue = {EditPage['PageTitle']}/>
+                                                <input type="text" class="form-control" defaultValue={EditPage['PageTitle']} />
                                                 <br />
                                                 <strong> Visible Intro Text: </strong>
                                                 <br />
@@ -147,7 +194,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Sub Header 1: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue = {EditPage['SubHeader1']}/>
+                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader1']} />
                                                 <br />
                                                 <strong> Page Content Part 1: </strong>
                                                 <br />
@@ -155,7 +202,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Sub Header 2: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue = {EditPage['SubHeader2']}/>
+                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader2']} />
                                                 <br />
                                                 <strong> Page Content Part 2: </strong>
                                                 <br />
@@ -194,7 +241,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']}/>
+                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']} />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit">Preview</button>
                                                             </span>
@@ -204,7 +251,7 @@ class EditContent extends Component {
                                                 {/* Feature Tag 2 Content */}
                                                 <br />
                                                 <strong> Feature Tag Page 3: </strong>
-                                                <br/>
+                                                <br />
                                                 <button class="btn btn-primary btn-sm" type="submit">Show Customized Tags</button>
                                             </div>
                                         </div>
@@ -219,7 +266,7 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Banner Image Path: </strong>
                                                 <br />
-                                                <input type="text" class="form-control input-sm" defaultValue = {EditPage['BannerImage']}/>
+                                                <input type="text" class="form-control input-sm" defaultValue={EditPage['BannerImage']} />
                                             </div>
                                         </div>
                                     </div>

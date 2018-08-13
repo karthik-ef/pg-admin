@@ -263,7 +263,10 @@ class SearchResult extends Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
-                                this.EditPageRow = rowInfo['original'];
+                                let objContent = {};
+                                objContent.UniqueContentData = this.SearchResultsData;
+                                objContent.EditRowData = rowInfo['original'];
+                                this.EditPageRow = objContent;
                                 this.setState({showEditContentModal: true})
                                 console.log("A Td Element was clicked!");
                                 console.log("it produced this event:", e);
