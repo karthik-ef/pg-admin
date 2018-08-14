@@ -23,10 +23,13 @@ var MultiSelectField = createClass({
 			rtl: false,
 			multiValues: true,
 			dispalyText: '',
-			IdentifyName: ''
+			IdentifyName: '',
+			flag: true,
+			SelectedValue: ''
 		};
 	},
 	handleSelectChange(value) {
+		this.setState({flag: false, SelectedValue: value});
 		if (value) {
 			if (value.includes("Select All")) {
 				var difficult_tasks = [];
@@ -91,6 +94,9 @@ var MultiSelectField = createClass({
 
 			this.props.Tags.map(m => {if (m.label.includes('Any value except blank')) {return true} }).includes(true)? '': this.props.Tags.push({label: 'Any value except blank', value: '?'});
 			Roles = this.props.Tags.map((m) => { return m});
+
+			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
+			this.state.multiValues = false;
 			// console.log('Roles')
 		}
 

@@ -6,6 +6,7 @@ import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
 import RichTextEditor from '../CustomRichTextEditor';
 
+
 const ParentPageID = 0;
 const EditPage = [];
 var ParentPageUrl = '';
@@ -81,6 +82,10 @@ class EditContent extends Component {
         }
     }
 
+    getSearchByTagValues = (values) => {
+        // this.props.SearchByTagValues(values)
+    }
+
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
@@ -109,7 +114,7 @@ class EditContent extends Component {
 
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
-                                                <SearchByTag />
+                                                <SearchByTag SearchByTagValues={this.getSearchByTagValues} ValueFromDb = {EditPage}/>
                                             </div>
                                         </div>
                                     </div>
