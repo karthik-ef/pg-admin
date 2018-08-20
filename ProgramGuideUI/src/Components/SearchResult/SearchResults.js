@@ -30,6 +30,7 @@ var IsFiltered = false; // True if any filter criteria is applied
 //Apply Filter Variables
 var FilterCriteria = ''; //Filter Criteria applied on UniqueContentData
 var FilteredBy = ''; // Search By Tag or Search By URL
+var FilteredResultsCount = 0;
 
 const EditPageRow = [];
 
@@ -147,9 +148,11 @@ class SearchResult extends Component {
                 this.FilterCriteria = buildSelectedTag.substring(0, buildSelectedTag.length - 1);
                 this.FilteredBy = 'Search Tag';
                 this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                this.FilteredResultsCount = this.FilteredData.length;
             }
             else {
                 this.FilteredData = this.UniqueContentData.filter(m => m.PageUrl === modalClosed[1]);
+                this.FilteredResultsCount = this.FilteredData.length;
                 this.IsFiltered = true;
                 this.FilterCriteria = modalClosed[1];
                 this.FilteredBy = 'Search URL';
@@ -217,7 +220,9 @@ class SearchResult extends Component {
             <div className="itemDiv">
 
                 {this.IsFiltered ? <div class="alert alert-info" role="alert">
-                    <strong> Filter Applied! </strong> <br /> <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
+                    <strong> Filter Applied! </strong> <br />
+                    <strong> Number of Pages returned: </strong> {this.FilteredResultsCount} <br/>
+                    <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
                 </div> : ''}
                 {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
                 {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent} EditPageRow = {this.EditPageRow}/>:null}
