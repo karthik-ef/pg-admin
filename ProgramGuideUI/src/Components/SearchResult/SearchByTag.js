@@ -248,47 +248,49 @@ class SearchByTag extends Component {
                 <div>
                     <strong>Seleted Tags:</strong>
                     <br />
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
-                        : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
+                    <label id="selectedTags">
+                        {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
+                            : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
-                        : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
+                            : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When']
-                        : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
+                            : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_CourseType']
-                        : this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
+                            : this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange']
-                        : this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
+                            : this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration']
-                        : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
+                            : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LocalOffice']
-                        : this.state.tagLocaloffice === '' ? '00' : '00'}_
+                            : this.state.tagLocaloffice === '' ? '00' : '00'}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Language']
-                        : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
+                            : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform']
-                        : this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
+                            : this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent']
-                        : this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
+                            : this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country']
-                        : this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
+                            : this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State']
-                        : this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
+                            : this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City']
-                        : this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
-                        
+                            : this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
+
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature']
-                        : this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
+                            : this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
+                    </label>
                 </div>
                 <div>
                 </div>
