@@ -148,13 +148,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_Experience</strong></label>
-                            <Dropdown Tags={this.state.tagExperienceData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Experience')} />
+                            <Dropdown Tags={this.state.tagExperienceData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Experience')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_KeywordTopic</strong></label>
-                            <Dropdown Tags={this.state.tagKeywordTopicData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_KeywordTopic']: ''} bindedValue={this.bindVal.bind(this, 'Tag_KeywordTopic')} />
+                            <Dropdown Tags={this.state.tagKeywordTopicData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_KeywordTopic'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_KeywordTopic')} />
                         </div>
                     </div>
                 </div>
@@ -163,13 +163,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_When</strong></label>
-                            <Dropdown Tags={this.state.tagWhenData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When']: ''} bindedValue={this.bindVal.bind(this, 'Tag_When')} />
+                            <Dropdown Tags={this.state.tagWhenData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_When')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_CourseType</strong></label>
-                            <Dropdown Tags={this.state.tagCourseTypeData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_CourseType']: ''} bindedValue={this.bindVal.bind(this, 'Tag_CourseType')} />
+                            <Dropdown Tags={this.state.tagCourseTypeData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_CourseType'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_CourseType')} />
                         </div>
                     </div>
                 </div>
@@ -178,13 +178,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_AgeRange</strong></label>
-                            <Dropdown Tags={this.state.tagAgeRangeData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange']: ''} bindedValue={this.bindVal.bind(this, 'Tag_AgeRange')} />
+                            <Dropdown Tags={this.state.tagAgeRangeData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_AgeRange')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_Duration</strong></label>
-                            <Dropdown Tags={this.state.tagDurationData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration']: ''} bindedValue={this.bindVal.bind(this, 'Tag_Duration')} />
+                            <Dropdown Tags={this.state.tagDurationData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Duration')} />
                         </div>
                     </div>
                 </div>
@@ -193,13 +193,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_Language</strong></label>
-                            <Dropdown Tags={this.state.tagLanguageData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Language']:''} bindedValue={this.bindVal.bind(this, 'Tag_Language')} />
+                            <Dropdown Tags={this.state.tagLanguageData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Language'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Language')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_Platform</strong></label>
-                            <Dropdown Tags={this.state.tagPlatformData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Platform')} />
+                            <Dropdown Tags={this.state.tagPlatformData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Platform')} />
                         </div>
                     </div>
                 </div>
@@ -208,13 +208,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_Continent</strong></label>
-                            <Dropdown Tags={this.state.tagContinentData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent']: ''} bindedValue={this.bindVal.bind(this, 'Tag_Continent')} />
+                            <Dropdown Tags={this.state.tagContinentData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Continent')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_Country</strong></label>
-                            <Dropdown Tags={this.state.tagCountryData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Country')} />
+                            <Dropdown Tags={this.state.tagCountryData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Country')} />
                         </div>
                     </div>
                 </div>
@@ -223,13 +223,13 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_State</strong></label>
-                            <Dropdown Tags={this.state.tagStateData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State']:''}  bindedValue={this.bindVal.bind(this, 'Tag_State')} />
+                            <Dropdown Tags={this.state.tagStateData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_State')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
                             <label for="exampleInputEmail1"><strong>Tag_City</strong></label>
-                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City']:''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
+                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
                         </div>
                     </div>
                 </div>
@@ -238,38 +238,57 @@ class SearchByTag extends Component {
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
                             <label for="exampleInputEmail1"><strong>Tag_Feature</strong></label>
-                            <Dropdown Tags={this.state.tagFeatureData} multiSelect={true} SetInitalValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature']:''} bindedValue={this.bindVal.bind(this, 'Tag_Feature')} />
+                            <Dropdown Tags={this.state.tagFeatureData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Feature')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
                     </div>
                 </div>
                 <br />
-                <div class="row">
-                    <div class="col-md-8 ml-auto">
-                        <div class="col-sm-12">
-                            <label for="exampleInputEmail1"><strong>Seleted Tags:</strong></label>
-                            <br />
-                            <label id="selectedTags">
-                                {this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
-                                    {this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
-                                    {this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
-                                    {this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
-                                    {this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
-                                    {this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
-                                    {this.state.tagLocaloffice === '' ? '00' : '00'}_
-                                    {this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
-                                    {this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
-                                    {this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
-                                    {this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
-                                    {this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
-                                    {this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
-                                    {this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-md-1 ml-auto">
-                    </div>
+                <div>
+                    <strong>Seleted Tags:</strong>
+                    <br />
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
+                        : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
+                        : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When']
+                        : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_CourseType']
+                        : this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange']
+                        : this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration']
+                        : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LocalOffice']
+                        : this.state.tagLocaloffice === '' ? '00' : '00'}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Language']
+                        : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform']
+                        : this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent']
+                        : this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country']
+                        : this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State']
+                        : this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
+
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City']
+                        : this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
+                        
+                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature']
+                        : this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
                 </div>
                 <div>
                 </div>
