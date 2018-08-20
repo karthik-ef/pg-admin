@@ -96,7 +96,7 @@ class EditContent extends Component {
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <strong> URL: {EditPage['PageUrl']} </strong>
+                                <strong> URL: {EditPage['PageUrl'] === undefined ? this.props.PageUrl : EditPage['PageUrl']} </strong>
 
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.handleCloseClick}>
                                     <span aria-hidden="true">&times;</span>
