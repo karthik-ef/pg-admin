@@ -86,13 +86,33 @@ class EditContent extends Component {
         // this.props.SearchByTagValues(values)
     }
 
+    CustomizedTag(){
+        $('#exampleModalLong').modal('hide');
+        $('#anotherModal').modal('show');
+    }
+    test(){
+        $('#exampleModalLong').modal('show');
+    }
+
+    AddLinkingPage(){
+
+    }
+
+    Save(){
+
+    }
+
+    SaveAndPublish(){
+        
+    }
+
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
         this.props.callbackFromEditContent(this.state.isClosed)
         return (
             <div>
-                <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                <div class="modal hide fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -114,7 +134,7 @@ class EditContent extends Component {
 
                                         <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                                             <div class="card-body">
-                                                <SearchByTag SearchByTagValues={this.getSearchByTagValues} ValueFromDb = {EditPage}/>
+                                                <SearchByTag SearchByTagValues={this.getSearchByTagValues} ValueFromDb={EditPage} />
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +168,7 @@ class EditContent extends Component {
                                                         <nav aria-label="breadcrumb">
                                                             <ol class="breadcrumb">
                                                                 {this.FamilyTreeHierarchy.length > 0 ? this.FamilyTreeHierarchy.reverse() : ''}
-                                                                {this.FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{this.ParentPageUrl} </li> : 'No Parent' }
+                                                                {this.FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{this.ParentPageUrl} </li> : 'No Parent'}
                                                             </ol>
                                                         </nav>
                                                     </div>
@@ -257,7 +277,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Feature Tag Page 3: </strong>
                                                 <br />
-                                                <button class="btn btn-primary btn-sm" type="submit">Show Customized Tags</button>
+                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag}>Show Customized Tags</button>
                                             </div>
                                         </div>
                                     </div>
@@ -293,6 +313,29 @@ class EditContent extends Component {
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="anotherModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">Feature Page Tag 3</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.test}>
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" onClick={this.AddLinkingPage}>Add linking page</button>
+                                <button type="button" class="btn btn-primary" onClick={this.SaveAndPublish}>Save and Publish</button>
+                                <button type="button" class="btn btn-primary" onClick={this.Save}>Save </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
         );
     }
