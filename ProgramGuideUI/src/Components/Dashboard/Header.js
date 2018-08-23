@@ -21,7 +21,7 @@ class Header extends Component {
 
     getUserMarkets() {
         $.ajax({
-            url: 'http://ctdev.ef.com:3001/userMarkets/?userName=' + this.UserName,
+            url: 'http://ctdev.ef.com:3000/userMarkets/?userName=' + this.UserName,
             type: 'GET',
             cache: false,
             success: function (data) {
