@@ -213,11 +213,11 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Visible Intro Text: </strong>
                                                 <br />
-                                                <RichTextEditor />
+                                                <RichTextEditor defaultValue={EditPage['VisibleIntroText']} />
                                                 <br />
                                                 <strong> Hidden Intro Text: </strong>
                                                 <br />
-                                                <RichTextEditor />
+                                                <RichTextEditor defaultValue={EditPage['HiddenIntroText']}/>
                                                 <br />
                                                 <strong> Page Sub Header 1: </strong>
                                                 <br />
@@ -225,7 +225,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Content Part 1: </strong>
                                                 <br />
-                                                <RichTextEditor />
+                                                <RichTextEditor defaultValue={EditPage['ContentText1']}/>
                                                 <br />
                                                 <strong> Page Sub Header 2: </strong>
                                                 <br />
@@ -233,7 +233,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Page Content Part 2: </strong>
                                                 <br />
-                                                <RichTextEditor />
+                                                <RichTextEditor defaultValue={EditPage['ContentText2']}/>
                                                 <br />
                                                 <strong> Breadcrumb Text: </strong>
                                                 <br />
