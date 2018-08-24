@@ -252,9 +252,6 @@ class SearchByTag extends Component {
                         {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
                             : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
-                            : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
-
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When']
                             : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
 
