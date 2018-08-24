@@ -33,6 +33,7 @@ class EditContent extends Component {
             collapseIcon: ExpandIcon,
             isClosed: false,
             ParentPageID: 0,
+            FeatureTagType: ''
         }
     }
 
@@ -86,24 +87,25 @@ class EditContent extends Component {
         // this.props.SearchByTagValues(values)
     }
 
-    CustomizedTag(){
+    CustomizedTag(e, a) {
+        this.setState({ FeatureTagType: e })
         $('#exampleModalLong').modal('hide');
         $('#anotherModal').modal('show');
     }
-    test(){
+    test() {
         $('#exampleModalLong').modal('show');
     }
 
-    AddLinkingPage(){
+    AddLinkingPage() {
 
     }
 
-    Save(){
+    Save() {
 
     }
 
-    SaveAndPublish(){
-        
+    SaveAndPublish() {
+
     }
 
     render() {
@@ -254,7 +256,7 @@ class EditContent extends Component {
                                                         <div class="input-group input-group-sm">
                                                             <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag1']} />
                                                             <span class="input-group-btn">
-                                                                <button class="btn btn-primary btn-sm" type="submit">Preview</button>
+                                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 1')}>Preview</button>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -268,7 +270,7 @@ class EditContent extends Component {
                                                         <div class="input-group input-group-sm">
                                                             <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']} />
                                                             <span class="input-group-btn">
-                                                                <button class="btn btn-primary btn-sm" type="submit">Preview</button>
+                                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 2')}>Preview</button>
                                                             </span>
                                                         </div>
                                                     </div>
@@ -277,7 +279,7 @@ class EditContent extends Component {
                                                 <br />
                                                 <strong> Feature Tag Page 3: </strong>
                                                 <br />
-                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag}>Show Customized Tags</button>
+                                                <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 3')}>Show Customized Tags</button>
                                             </div>
                                         </div>
                                     </div>
@@ -318,13 +320,16 @@ class EditContent extends Component {
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLongTitle">Feature Page Tag 3</h5>
+                                <h5 class="modal-title" id="exampleModalLongTitle">{this.state.FeatureTagType}</h5>
+                                <br />
+                                {this.state.FeatureTagType === 'Feature Page Tag 3'
+                                    ? EditPage['PageUrl'] === undefined ? this.props.PageUrl : EditPage['PageUrl'] : ''}
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close" onClick={this.test}>
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary" onClick={this.AddLinkingPage}>Add linking page</button>

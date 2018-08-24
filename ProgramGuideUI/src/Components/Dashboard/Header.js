@@ -4,6 +4,7 @@ import LogoutIcon from './Logout.png';
 import $ from 'jquery';
 
 const UserName = '';
+const Role = 'General';
 
 class Header extends Component {
     constructor() {
@@ -15,7 +16,8 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        this.UserName = 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        this.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        this.Role =  JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'] ;
         this.getUserMarkets();
     }
 
@@ -36,12 +38,12 @@ class Header extends Component {
 
     }
 
-    bindUserMarkets(){
-        if(this.state.userMarkets){
-         return this.state.userMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m=>{return <option key= {m.MarketCode} value={m.MarketCode}>{m.Name}</option>});
+    bindUserMarkets() {
+        if (this.state.userMarkets) {
+            return this.state.userMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m => { return <option key={m.MarketCode} value={m.MarketCode}>{m.Name}</option> });
         }
-      }
-    
+    }
+
 
     render() {
         return (
@@ -66,15 +68,15 @@ class Header extends Component {
                                 <li className="nav-item">
                                     <Link to="/CreatePage" className="nav-link">Create Page</Link>
                                 </li>
-                                <li className="nav-item">
+                                {this.Role !== 'Admin' ? '' : <li className="nav-item">
                                     <Link to="/AddUser" className="nav-link">Add User</Link>
-                                </li>
+                                </li>}
                                 <li className="nav-item">
                                     <Link to="/BulkUpload" className="nav-link">Bulk Upload</Link>
                                 </li>
                                 <li className="nav-item">
                                     <select className="form-control" id="exampleFormControlSelect1">
-                                       {this.state.userMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
+                                        {this.state.userMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
                                         {this.bindUserMarkets()}
                                     </select>
                                 </li>
@@ -86,8 +88,9 @@ class Header extends Component {
                 {/* Display Profile Information */}
                 <div className="profileDiv">
                     <nav className="navbar navbar-light bg-light">
-                        karthik.subbarayappa
-                        <img src={LogoutIcon} alt="" />
+                    {this.UserName }
+                        {/* karthik.subbarayappa
+                        <img src={LogoutIcon} alt="" /> */}
                     </nav>
                 </div>
             </div>

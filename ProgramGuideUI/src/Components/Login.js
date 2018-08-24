@@ -49,18 +49,19 @@ class Login extends Component {
 
     getAuth() {
         $.ajax({
-            url: 'http://localhost:53181/api/user/PostUserForPg',
+            url: 'http://ctdev.ef.com:3002/api/user/',
             type: 'POST',
             dataType: 'json',
             data: {
                 "userName": this.refs.emailId.value,
-                "password": this.refs.password.value
+                "password": this.refs.password.value,
+                "applicationName": "PROGRAMGUIDE"
             },
             cache: false,
             success: function (data) {
                   console.log(data)
-                sessionStorage.setItem('Login', JSON.stringify(data));
-                if (data['AuthenticationResponse']) {
+                if (data['AuthenticationResponse'] && data['UserName']) {
+                    sessionStorage.setItem('Login', JSON.stringify(data));
                     $('#exampleModalCenter').modal('hide');
                     this.setState({ isAuthenticUser: true }, function () {
                         this.props.loginDetails(this.state.isAuthenticUser);

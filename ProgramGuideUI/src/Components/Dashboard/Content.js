@@ -6,11 +6,11 @@ import BulkUpload from '../BulkUpload';
 
 class Content extends Component {
   render() {
-
+    var Role = JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'];
     // Render the component based on URL
     const component = window.location.pathname === '/SearchResults' ? <SearchResults />
       : window.location.pathname === '/CreatePage' ? <CreatePage />
-        : window.location.pathname === '/AddUser' ? <AddUser />
+        : Role === 'Admin' && window.location.pathname === '/AddUser' ? <AddUser /> 
           : window.location.pathname === '/BulkUpload' ? <BulkUpload />
             : '';
     return (
