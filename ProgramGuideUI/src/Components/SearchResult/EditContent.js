@@ -14,6 +14,14 @@ const UniqueContentData = [];
 const isFamilyTreeVisible = false;
 var FamilyTreeHierarchy = [];
 
+var VisibleIntroText = '';
+var HiddenIntroText = '';
+var ContentText1 = '';
+var ContentText2 = '';
+var UpdatedUniqueContentData = {}
+
+var isParentPageUrlModified = false;
+
 
 class EditContent extends Component {
 
@@ -24,16 +32,27 @@ class EditContent extends Component {
         this.EditPage = [];
         this.UniqueContentData = [];
         this.FamilyTreeHierarchy = [];
+        this.isParentPageUrlModified = false;
+        this.active = false;
+        this.UpdatedUniqueContentData = {};
+
 
 
         this.handleCloseClick = this.handleCloseClick.bind(this);
         this.ShowFamilyTree = this.ShowFamilyTree.bind(this);
         this.getFamilyTreeHierarchy = this.getFamilyTreeHierarchy.bind(this);
+        this.IsActiveChanged = this.IsActiveChanged.bind(this);
+        this.SavetoDb = this.SavetoDb.bind(this);
+
         this.state = {
             collapseIcon: ExpandIcon,
             isClosed: false,
             ParentPageID: 0,
-            FeatureTagType: ''
+            FeatureTagType: '',
+            updatedTagSectionData: [],
+            isTagSectionModified: false,
+            isUpdated: false,
+            isActive: false
         }
     }
 
@@ -43,8 +62,7 @@ class EditContent extends Component {
         this.isFamilyTreeVisible = false;
         this.EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         this.UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
-
-        this.setState({ ParentPageID: 0 });
+        this.setState({ ParentPageID: 0, isActive: this.EditPage['IsActive'] });
 
 
         $('#exampleModalLong').modal('show');
@@ -66,6 +84,7 @@ class EditContent extends Component {
     }
 
     ShowFamilyTree() {
+        this.isParentPageUrlModified = true;
         this.FamilyTreeHierarchy = [];
         this.ParentPageUrl = this.refs.ParentPageUrl.value;
         this.ParentPageID = Number(this.UniqueContentData.filter(m => m.PageUrl === this.ParentPageUrl).map(m => m.ParentPageID));
@@ -84,7 +103,24 @@ class EditContent extends Component {
     }
 
     getSearchByTagValues = (values) => {
+        this.setState({ updatedTagSectionData: values, isTagSectionModified: true });
         // this.props.SearchByTagValues(values)
+        console.log(values);
+    }
+
+    getRichTextValue = (component, value) => {
+        if (component === 'VisibleIntroText') {
+            this.VisibleIntroText = value;
+        }
+        else if (component === 'HiddenIntroText') {
+            this.HiddenIntroText = value;
+        }
+        else if (component === 'ContentText1') {
+            this.ContentText1 = value;
+        }
+        else if (component === 'ContentText2') {
+            this.ContentText2 = value;
+        }
     }
 
     CustomizedTag(e, a) {
@@ -104,8 +140,115 @@ class EditContent extends Component {
 
     }
 
+    SavetoDb() {
+
+
+        this.UpdatedUniqueContentData.UniqueContent_ID = this.EditPage['UniqueContent_ID'];
+        this.UpdatedUniqueContentData.MarketCode = this.EditPage['MarketCode'];
+        this.UpdatedUniqueContentData.PageURL = this.EditPage['PageUrl'];
+
+        this.UpdatedUniqueContentData.TagExperience = this.state.isTagSectionModified
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Experience'];
+
+        this.UpdatedUniqueContentData.TagKeywordTopic = this.state.isTagSectionModified
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_KeywordTopic'];
+
+        this.UpdatedUniqueContentData.TagWhen = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_When'];
+
+        this.UpdatedUniqueContentData.TagCourseType = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_CourseType'];
+
+        this.UpdatedUniqueContentData.TagAgeRange = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_AgeRange'];
+
+        this.UpdatedUniqueContentData.TagDuration = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Duration'];
+
+        this.UpdatedUniqueContentData.TagLocalOffice = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_LocalOffice'];
+
+        this.UpdatedUniqueContentData.TagLanguage = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Language'];
+
+        this.UpdatedUniqueContentData.TagPlatform = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Platform'];
+
+        this.UpdatedUniqueContentData.TagContinent = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Continent'];
+
+        this.UpdatedUniqueContentData.TagCountry = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Country'];
+
+        this.UpdatedUniqueContentData.TagState = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_State'];
+
+        this.UpdatedUniqueContentData.TagCity = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_City'];
+
+        this.UpdatedUniqueContentData.TagFeature = this.state.isTagSectionModified
+        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
+        : this.EditPage['Tag_Feature'];
+
+        this.UpdatedUniqueContentData.BannerImage = this.refs.BannerImage.value;
+        this.UpdatedUniqueContentData.MetaTitle = this.refs.MetaTitle.value;
+        this.UpdatedUniqueContentData.MetaDescription =this.refs.MetaDescription.value;
+        this.UpdatedUniqueContentData.MetaRobot = this.refs.MetaRobot.value;
+        this.UpdatedUniqueContentData.PageTitle = this.refs.PageTitle.value;
+        this.UpdatedUniqueContentData.VisibleIntroText = this.VisibleIntroText;
+        this.UpdatedUniqueContentData.HiddenIntroText =this.HiddenIntroText;
+        this.UpdatedUniqueContentData.SubHeader1 = this.refs.SubHeader1.value;
+        this.UpdatedUniqueContentData.SubHeader2 = this.refs.SubHeader2.value;
+        this.UpdatedUniqueContentData.ContentText1 = this.ContentText1;
+        this.UpdatedUniqueContentData.ContentText2 = this.ContentText2;
+        this.UpdatedUniqueContentData.BreadcrumbText = this.refs.BreadcrumbText.value;
+        this.UpdatedUniqueContentData.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
+        this.UpdatedUniqueContentData.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
+        this.UpdatedUniqueContentData.FeaturePageTag3 = '';
+        this.UpdatedUniqueContentData.ParentPageID = !this.isParentPageUrlModified ?  this.EditPage['ParentPageID'] : this.ParentPageID;
+        this.UpdatedUniqueContentData.IsActive = this.state.isActive;
+        this.UpdatedUniqueContentData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+
+        //API call to update the record
+        this.UpdatedUniqueContent();
+    }
+
+    IsActiveChanged() {
+        this.setState({ isActive: $('#IsActive').is(':checked') });
+    }
+
     SaveAndPublish() {
 
+    }
+
+    UpdatedUniqueContent() {
+        console.log(this.UpdatedUniqueContentData)
+        // $.ajax({
+        //     url: 'http://localhost:3001/updateUniqueContent',
+        //     type: 'POST',
+        //     dataType: 'TEXT',
+        //     data: this.UpdatedUniqueContentData,
+        //     cache: false,
+        //     success: function (data) {
+        //         console.log(data);
+        //     }.bind(this),
+        //     error: function (xhr, status, err) {
+        //       console.log(err);
+        //     }
+        //   });
     }
 
     render() {
@@ -189,13 +332,13 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Meta Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue={EditPage['MetaTitle']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['MetaTitle']} ref="MetaTitle" />
                                                 <br />
                                                 <strong> Meta Description: </strong>
-                                                <textarea class="form-control" rows="5" defaultValue={EditPage['MetaDescription']}></textarea>
+                                                <textarea class="form-control" rows="5" defaultValue={EditPage['MetaDescription']} ref="MetaDescription"></textarea>
                                                 <br />
                                                 <strong> Meta Robot: </strong>
-                                                <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']} />
+                                                <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']} ref="MetaRobot" />
                                             </div>
                                         </div>
                                     </div>
@@ -209,35 +352,35 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Page Title: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue={EditPage['PageTitle']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['PageTitle']} ref="PageTitle" />
                                                 <br />
                                                 <strong> Visible Intro Text: </strong>
                                                 <br />
-                                                <RichTextEditor defaultValue={EditPage['VisibleIntroText']} />
+                                                <RichTextEditor defaultValue={EditPage['VisibleIntroText']} getRichTextEditorValue={this.getRichTextValue.bind(this, 'VisibleIntroText')} />
                                                 <br />
                                                 <strong> Hidden Intro Text: </strong>
                                                 <br />
-                                                <RichTextEditor defaultValue={EditPage['HiddenIntroText']}/>
+                                                <RichTextEditor defaultValue={EditPage['HiddenIntroText']} getRichTextEditorValue={this.getRichTextValue.bind(this, 'HiddenIntroText')} />
                                                 <br />
                                                 <strong> Page Sub Header 1: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader1']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader1']} ref="SubHeader1" />
                                                 <br />
                                                 <strong> Page Content Part 1: </strong>
                                                 <br />
-                                                <RichTextEditor defaultValue={EditPage['ContentText1']}/>
+                                                <RichTextEditor defaultValue={EditPage['ContentText1']} getRichTextEditorValue={this.getRichTextValue.bind(this, 'ContentText1')} />
                                                 <br />
                                                 <strong> Page Sub Header 2: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader2']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['SubHeader2']} ref="SubHeader2" />
                                                 <br />
                                                 <strong> Page Content Part 2: </strong>
                                                 <br />
-                                                <RichTextEditor defaultValue={EditPage['ContentText2']}/>
+                                                <RichTextEditor defaultValue={EditPage['ContentText2']} getRichTextEditorValue={this.getRichTextValue.bind(this, 'ContentText2')} />
                                                 <br />
                                                 <strong> Breadcrumb Text: </strong>
                                                 <br />
-                                                <input type="text" class="form-control" defaultValue={EditPage['BreadcrumbText']} />
+                                                <input type="text" class="form-control" defaultValue={EditPage['BreadcrumbText']} ref="BreadcrumbText" />
                                             </div>
                                         </div>
                                     </div>
@@ -254,7 +397,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag1']} />
+                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag1']} ref="FeaturePageTag1" />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 1')}>Preview</button>
                                                             </span>
@@ -268,7 +411,7 @@ class EditContent extends Component {
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <div class="input-group input-group-sm">
-                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']} />
+                                                            <input type="text" class="form-control input-sm" id="search-church" defaultValue={EditPage['FeaturePageTag2']} ref="FeaturePageTag2" />
                                                             <span class="input-group-btn">
                                                                 <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 2')}>Preview</button>
                                                             </span>
@@ -293,7 +436,7 @@ class EditContent extends Component {
                                             <div class="card-body">
                                                 <strong> Banner Image Path: </strong>
                                                 <br />
-                                                <input type="text" class="form-control input-sm" defaultValue={EditPage['BannerImage']} />
+                                                <input type="text" class="form-control input-sm" defaultValue={EditPage['BannerImage']} ref="BannerImage" />
                                             </div>
                                         </div>
                                     </div>
@@ -301,7 +444,7 @@ class EditContent extends Component {
                                         <div class="card-header" id="headingSeven">
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label" for="inlineCheckbox2"><strong>Active</strong></label>
-                                                <input type="checkbox" id="activeCheckBox" class="form-check-input" id="exampleCheck1" checked />
+                                                <input type="checkbox" id="activeCheckBox" class="form-check-input" id="IsActive" defaultChecked={EditPage['IsActive']} onChange={this.IsActiveChanged} />
                                             </div>
                                         </div>
                                     </div>
@@ -310,7 +453,7 @@ class EditContent extends Component {
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-primary">Cancel</button>
                                 <button type="button" class="btn btn-primary">Save and Publish</button>
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-primary" onClick={this.SavetoDb.bind(this)}>Save</button>
                             </div>
                         </div>
                     </div>

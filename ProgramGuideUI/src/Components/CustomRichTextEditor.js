@@ -26,12 +26,11 @@ class CustomRichTextEditor extends Component {
 
 
   render() {
-
     let Value = this.state.value
     if (this.props.defaultValue !== undefined && this.state.setDefaultText) {
       Value = RichTextEditor.createValueFromString(this.props.defaultValue, 'html');
     }
-
+    this.props.getRichTextEditorValue(Value.toString('html'))
     return (
       <RichTextEditor
         value={Value}

@@ -3,10 +3,39 @@ import $ from 'jquery';
 import Dropdown from '../CustomizedDropDown';
 import FilterCriteria from './FilterCriteria';
 
+var isTagExperienceChanged = false;
+var isTagKeywordTopicChanged = false;
+var isTagWhenChanged = false;
+var isTagCourseTypeChanged = false;
+var isTagAgeRangeChanged = false;
+var isTagDurationChanged = false;
+var isTagLanguageChanged = false;
+var isTagPlatformChanged = false;
+var isTagContinentChanged = false;
+var isTagCountryChanged = false;
+var isTagStateChanged = false;
+var isTagCityChanged = false;
+var isTagFeatureChanged = false;
 
 class SearchByTag extends Component {
     constructor() {
         super();
+
+       this.isTagExperienceChanged = false;
+       this.isTagKeywordTopicChanged = false
+       this.isTagWhenChanged = false;
+       this.isTagCourseTypeChanged = false;
+       this.isTagAgeRangeChanged = false;
+       this.isTagDurationChanged = false;
+       this.isTagLanguageChanged = false;
+       this.isTagPlatformChanged = false;
+       this.isTagContinentChanged = false;
+       this.isTagCountryChanged = false;
+       this.isTagStateChanged = false;
+       this.isTagCityChanged = false;
+       this.isTagFeatureChanged = false;
+
+
         this.state = {
             tagExperienceData: [],
             tagKeywordTopicData: [],
@@ -75,42 +104,55 @@ class SearchByTag extends Component {
 
     bindVal(TagName, value) {
         if (TagName === 'Tag_Experience') {
+            this.isTagExperienceChanged = true;
             this.setState({ tagExperienceValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_KeywordTopic') {
+            this.isTagKeywordTopicChanged = true;
             this.setState({ tagKeywordTopicValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_When') {
+            this.isTagWhenChanged = true;
             this.setState({ tagWhenValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_CourseType') {
+            this.isTagCourseTypeChanged = true;
             this.setState({ tagCourseTypeValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_AgeRange') {
+            this.isTagAgeRangeChanged = true;
             this.setState({ tagAgeRangeValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Duration') {
+            this.isTagDurationChanged = true;
             this.setState({ tagDurationValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Language') {
+            this.isTagLanguageChanged = true;
             this.setState({ tagLanguageValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Platform') {
+            this.isTagPlatformChanged = true;
             this.setState({ tagPlatformValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Continent') {
+            this.isTagContinentChanged = true;
             this.setState({ tagContinentValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Country') {
+            this.isTagCountryChanged = true;
             this.setState({ tagCountryValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_State') {
+            this.isTagStateChanged = true;
             this.setState({ tagStateValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_City') {
+            this.isTagCityChanged = true;
             this.setState({ tagCityValue: value }, function () { this.selectedTags() });
         }
         else if (TagName === 'Tag_Feature') {
+            this.isTagFeatureChanged = true;
             this.setState({ tagFeatureValue: value }, function () { this.selectedTags() });
         }
 
@@ -249,43 +291,46 @@ class SearchByTag extends Component {
                     <strong>Seleted Tags:</strong>
                     <br />
                     <label id="selectedTags">
-                        {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Experience']
+                        {this.props.ValueFromDb && !this.isTagExperienceChanged ? this.props.ValueFromDb['Tag_Experience']
                             : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_When']
+                   {this.props.ValueFromDb && !this.isTagKeywordTopicChanged ? this.props.ValueFromDb['Tag_KeywordTopic']
+                            : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
+
+                    {this.props.ValueFromDb && !this.isTagWhenChanged ? this.props.ValueFromDb['Tag_When']
                             : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_CourseType']
+                    {this.props.ValueFromDb && !this.isTagCourseTypeChanged ? this.props.ValueFromDb['Tag_CourseType']
                             : this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange']
+                    {this.props.ValueFromDb && !this.isTagAgeRangeChanged ? this.props.ValueFromDb['Tag_AgeRange']
                             : this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration']
+                    {this.props.ValueFromDb && !this.isTagDurationChanged ? this.props.ValueFromDb['Tag_Duration']
                             : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
 
                     {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LocalOffice']
                             : this.state.tagLocaloffice === '' ? '00' : '00'}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Language']
+                    {this.props.ValueFromDb && !this.isTagLanguageChanged ? this.props.ValueFromDb['Tag_Language']
                             : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform']
+                    {this.props.ValueFromDb && !this.isTagPlatformChanged ? this.props.ValueFromDb['Tag_Platform']
                             : this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent']
+                    {this.props.ValueFromDb && !this.isTagContinentChanged ? this.props.ValueFromDb['Tag_Continent']
                             : this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country']
+                    {this.props.ValueFromDb && !this.isTagCountryChanged ? this.props.ValueFromDb['Tag_Country']
                             : this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State']
+                    {this.props.ValueFromDb && !this.isTagStateChanged ? this.props.ValueFromDb['Tag_State']
                             : this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City']
+                    {this.props.ValueFromDb && !this.isTagCityChanged ? this.props.ValueFromDb['Tag_City']
                             : this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature']
+                    {this.props.ValueFromDb && !this.isTagFeatureChanged ? this.props.ValueFromDb['Tag_Feature']
                             : this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
                     </label>
                 </div>
