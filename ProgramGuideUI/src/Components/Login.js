@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import 'bootstrap';
-import Header from './Header';
 import ReactDOM from 'react-dom';
 
 class Login extends Component {
