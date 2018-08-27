@@ -103,11 +103,11 @@ class EditContent extends Component {
         }
     }
 
-    getSearchByTagValues = (values) => {
-        this.setState({ updatedTagSectionData: values, isTagSectionModified: true });
-        // this.props.SearchByTagValues(values)
-        console.log(values);
-    }
+    // getSearchByTagValues = (values) => {
+    //     this.setState({ updatedTagSectionData: values, isTagSectionModified: true });
+    //     // this.props.SearchByTagValues(values)
+    //     console.log(values);
+    // }
 
     getRichTextValue = (component, value) => {
         if (component === 'VisibleIntroText') {

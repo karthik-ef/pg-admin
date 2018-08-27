@@ -5,12 +5,12 @@ import SearchByTag from '../SearchResult/SearchByTag';
 
 class PageTagSection extends Component {
 
+    //SearchByTag drop down value change event
     getSearchByTagValues = (values) => {
         this.props.SelectedValue(values);
     }
 
     render() {
-
         return (
             <div class="card">
                 <div class="card-header" id="PageTagSection">
