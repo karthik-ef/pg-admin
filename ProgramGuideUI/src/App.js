@@ -20,8 +20,8 @@ class App extends Component {
 
     return (
       <div >
-        {this.state.flag ? <Main /> : <Login loginDetails={this.handleReq.bind(this)} />}
-        {/* <Main/> */}
+        {/* {this.state.flag ? <Main /> : <Login loginDetails={this.handleReq.bind(this)} />} */}
+        <Main/>
       </div>
     );
   }

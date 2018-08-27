@@ -5,6 +5,7 @@ import ExpandIcon from './Plus.png';
 import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
 import RichTextEditor from '../CustomRichTextEditor';
+import PageTagSection from '../PageEditor/PageTagSection'
 
 
 const ParentPageID = 0;
@@ -156,60 +157,60 @@ class EditContent extends Component {
             : this.EditPage['Tag_KeywordTopic'];
 
         this.UpdatedUniqueContentData.TagWhen = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_When'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_When'];
 
         this.UpdatedUniqueContentData.TagCourseType = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_CourseType'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_CourseType'];
 
         this.UpdatedUniqueContentData.TagAgeRange = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_AgeRange'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_AgeRange'];
 
         this.UpdatedUniqueContentData.TagDuration = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Duration'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Duration'];
 
         this.UpdatedUniqueContentData.TagLocalOffice = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_LocalOffice'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_LocalOffice'];
 
         this.UpdatedUniqueContentData.TagLanguage = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Language'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Language'];
 
         this.UpdatedUniqueContentData.TagPlatform = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Platform'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Platform'];
 
         this.UpdatedUniqueContentData.TagContinent = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Continent'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Continent'];
 
         this.UpdatedUniqueContentData.TagCountry = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Country'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Country'];
 
         this.UpdatedUniqueContentData.TagState = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_State'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_State'];
 
         this.UpdatedUniqueContentData.TagCity = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_City'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_City'];
 
         this.UpdatedUniqueContentData.TagFeature = this.state.isTagSectionModified
-        ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
-        : this.EditPage['Tag_Feature'];
+            ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
+            : this.EditPage['Tag_Feature'];
 
         this.UpdatedUniqueContentData.BannerImage = this.refs.BannerImage.value;
         this.UpdatedUniqueContentData.MetaTitle = this.refs.MetaTitle.value;
-        this.UpdatedUniqueContentData.MetaDescription =this.refs.MetaDescription.value;
+        this.UpdatedUniqueContentData.MetaDescription = this.refs.MetaDescription.value;
         this.UpdatedUniqueContentData.MetaRobot = this.refs.MetaRobot.value;
         this.UpdatedUniqueContentData.PageTitle = this.refs.PageTitle.value;
         this.UpdatedUniqueContentData.VisibleIntroText = this.VisibleIntroText;
-        this.UpdatedUniqueContentData.HiddenIntroText =this.HiddenIntroText;
+        this.UpdatedUniqueContentData.HiddenIntroText = this.HiddenIntroText;
         this.UpdatedUniqueContentData.SubHeader1 = this.refs.SubHeader1.value;
         this.UpdatedUniqueContentData.SubHeader2 = this.refs.SubHeader2.value;
         this.UpdatedUniqueContentData.ContentText1 = this.ContentText1;
@@ -218,7 +219,7 @@ class EditContent extends Component {
         this.UpdatedUniqueContentData.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
         this.UpdatedUniqueContentData.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
         this.UpdatedUniqueContentData.FeaturePageTag3 = '';
-        this.UpdatedUniqueContentData.ParentPageID = !this.isParentPageUrlModified ?  this.EditPage['ParentPageID'] : this.ParentPageID;
+        this.UpdatedUniqueContentData.ParentPageID = !this.isParentPageUrlModified ? this.EditPage['ParentPageID'] : this.ParentPageID;
         this.UpdatedUniqueContentData.IsActive = this.state.isActive;
         this.UpdatedUniqueContentData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
 
@@ -246,9 +247,13 @@ class EditContent extends Component {
                 console.log(data);
             }.bind(this),
             error: function (xhr, status, err) {
-              console.log(err);
+                console.log(err);
             }
-          });
+        });
+    }
+
+    PageTagSection = (value) => {
+        this.setState({ updatedTagSectionData: value, isTagSectionModified: true });
     }
 
     render() {
@@ -270,7 +275,10 @@ class EditContent extends Component {
                             <div class="modal-body">
                                 <div class="accordion" id="accordionExample">
 
-                                    <div class="card">
+                                    <PageTagSection data = {EditPage} SelectedValue = {this.PageTagSection.bind(this)}/>
+
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingOne">
                                             <p data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> <strong >
                                                 Page Tag section   <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -282,7 +290,7 @@ class EditContent extends Component {
                                                 <SearchByTag SearchByTagValues={this.getSearchByTagValues} ValueFromDb={EditPage} />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <div class="card">
                                         <div class="card-header" id="headingTwo">
