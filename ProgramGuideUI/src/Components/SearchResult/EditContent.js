@@ -5,7 +5,10 @@ import ExpandIcon from './Plus.png';
 import ShrinkIcon from './Minus.png';
 import SearchByTag from '../SearchResult/SearchByTag';
 import RichTextEditor from '../CustomRichTextEditor';
-import PageTagSection from '../PageEditor/PageTagSection'
+
+
+import PageTagSection from '../PageEditor/PageTagSection';
+import MetaInformation from '../PageEditor/MetaInformation';
 
 
 const ParentPageID = 0;
@@ -22,6 +25,11 @@ var ContentText2 = '';
 var UpdatedUniqueContentData = {}
 
 var isParentPageUrlModified = false;
+
+// New Structure
+var objMetaInformation = {}
+var isMetaInformationModified = false;
+
 
 
 class EditContent extends Component {
@@ -144,6 +152,7 @@ class EditContent extends Component {
     SavetoDb() {
 
 
+       // console.log(this.objMetaInformation);
         this.UpdatedUniqueContentData.UniqueContent_ID = this.EditPage['UniqueContent_ID'];
         this.UpdatedUniqueContentData.MarketCode = this.EditPage['MarketCode'];
         this.UpdatedUniqueContentData.PageURL = this.EditPage['PageUrl'];
@@ -205,9 +214,11 @@ class EditContent extends Component {
             : this.EditPage['Tag_Feature'];
 
         this.UpdatedUniqueContentData.BannerImage = this.refs.BannerImage.value;
-        this.UpdatedUniqueContentData.MetaTitle = this.refs.MetaTitle.value;
-        this.UpdatedUniqueContentData.MetaDescription = this.refs.MetaDescription.value;
-        this.UpdatedUniqueContentData.MetaRobot = this.refs.MetaRobot.value;
+
+        this.UpdatedUniqueContentData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] :  this.EditPage['MetaTitle'];
+        this.UpdatedUniqueContentData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] :  this.EditPage['MetaDescription'];
+        this.UpdatedUniqueContentData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] :  this.EditPage['MetaRobot'];
+
         this.UpdatedUniqueContentData.PageTitle = this.refs.PageTitle.value;
         this.UpdatedUniqueContentData.VisibleIntroText = this.VisibleIntroText;
         this.UpdatedUniqueContentData.HiddenIntroText = this.HiddenIntroText;
@@ -252,8 +263,15 @@ class EditContent extends Component {
         });
     }
 
+    // New Structure
+
     PageTagSection = (value) => {
         this.setState({ updatedTagSectionData: value, isTagSectionModified: true });
+    }
+
+    MetaInformationSection = (value) => {
+        this.isMetaInformationModified = true;
+        this.objMetaInformation = value;
     }
 
     render() {
@@ -275,7 +293,7 @@ class EditContent extends Component {
                             <div class="modal-body">
                                 <div class="accordion" id="accordionExample">
 
-                                    <PageTagSection data = {EditPage} SelectedValue = {this.PageTagSection.bind(this)}/>
+                                    <PageTagSection data={EditPage} SelectedValue={this.PageTagSection.bind(this)} />
 
 
                                     {/* <div class="card">
@@ -329,7 +347,10 @@ class EditContent extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+
+                                    <MetaInformation data = {EditPage} MetaInformation = {this.MetaInformationSection.bind(this)}/>
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingThree">
                                             <p data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree"> <strong >
                                                 Meta Information  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -349,7 +370,8 @@ class EditContent extends Component {
                                                 <input type="text" class="form-control" readOnly={true} defaultValue={EditPage['MetaRobot']} ref="MetaRobot" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+
                                     <div class="card">
                                         <div class="card-header" id="headingFour">
                                             <p data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour"> <strong >
