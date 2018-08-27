@@ -9,6 +9,7 @@ import RichTextEditor from '../CustomRichTextEditor';
 
 import PageTagSection from '../PageEditor/PageTagSection';
 import MetaInformation from '../PageEditor/MetaInformation';
+import BannerImage from '../PageEditor/BannerImage';
 
 
 const ParentPageID = 0;
@@ -28,7 +29,10 @@ var isParentPageUrlModified = false;
 
 // New Structure
 var objMetaInformation = {}
+var objBannerImage = {}
+
 var isMetaInformationModified = false;
+this.isBannerImageModified = false;
 
 
 
@@ -152,7 +156,7 @@ class EditContent extends Component {
     SavetoDb() {
 
 
-       // console.log(this.objMetaInformation);
+        // console.log(this.objMetaInformation);
         this.UpdatedUniqueContentData.UniqueContent_ID = this.EditPage['UniqueContent_ID'];
         this.UpdatedUniqueContentData.MarketCode = this.EditPage['MarketCode'];
         this.UpdatedUniqueContentData.PageURL = this.EditPage['PageUrl'];
@@ -213,11 +217,11 @@ class EditContent extends Component {
             ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
             : this.EditPage['Tag_Feature'];
 
-        this.UpdatedUniqueContentData.BannerImage = this.refs.BannerImage.value;
+        this.UpdatedUniqueContentData.BannerImage = this.isBannerImageModified ? this.objBannerImage['BannerImage'] : this.EditPage['BannerImage'];
 
-        this.UpdatedUniqueContentData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] :  this.EditPage['MetaTitle'];
-        this.UpdatedUniqueContentData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] :  this.EditPage['MetaDescription'];
-        this.UpdatedUniqueContentData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] :  this.EditPage['MetaRobot'];
+        this.UpdatedUniqueContentData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] : this.EditPage['MetaTitle'];
+        this.UpdatedUniqueContentData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] : this.EditPage['MetaDescription'];
+        this.UpdatedUniqueContentData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] : this.EditPage['MetaRobot'];
 
         this.UpdatedUniqueContentData.PageTitle = this.refs.PageTitle.value;
         this.UpdatedUniqueContentData.VisibleIntroText = this.VisibleIntroText;
@@ -272,6 +276,11 @@ class EditContent extends Component {
     MetaInformationSection = (value) => {
         this.isMetaInformationModified = true;
         this.objMetaInformation = value;
+    }
+
+    BannerImageSection = (value) => {
+        this.isBannerImageModified = true;
+        this.objBannerImage = value;
     }
 
     render() {
@@ -348,7 +357,7 @@ class EditContent extends Component {
                                         </div>
                                     </div>
 
-                                    <MetaInformation data = {EditPage} MetaInformation = {this.MetaInformationSection.bind(this)}/>
+                                    <MetaInformation data={EditPage} MetaInformation={this.MetaInformationSection.bind(this)} />
 
                                     {/* <div class="card">
                                         <div class="card-header" id="headingThree">
@@ -456,7 +465,9 @@ class EditContent extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card">
+
+                                    <BannerImage setBannerImageData={EditPage['BannerImage']} getBannerImageData={this.BannerImageSection.bind(this)} />
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingSix">
                                             <p data-toggle="collapse" data-target="#collapseSix" aria-expanded="true" aria-controls="collapseSix"> <strong >
                                                 Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -469,7 +480,8 @@ class EditContent extends Component {
                                                 <input type="text" class="form-control input-sm" defaultValue={EditPage['BannerImage']} ref="BannerImage" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
+                                    
                                     <div class="card">
                                         <div class="card-header" id="headingSeven">
                                             <div class="form-check form-check-inline">
