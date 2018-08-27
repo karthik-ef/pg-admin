@@ -236,19 +236,19 @@ class EditContent extends Component {
 
     UpdatedUniqueContent() {
         console.log(this.UpdatedUniqueContentData)
-        // $.ajax({
-        //     url: 'http://localhost:3001/updateUniqueContent',
-        //     type: 'POST',
-        //     dataType: 'TEXT',
-        //     data: this.UpdatedUniqueContentData,
-        //     cache: false,
-        //     success: function (data) {
-        //         console.log(data);
-        //     }.bind(this),
-        //     error: function (xhr, status, err) {
-        //       console.log(err);
-        //     }
-        //   });
+        $.ajax({
+            url: 'http://localhost:3001/updateUniqueContent',
+            type: 'POST',
+            dataType: 'TEXT',
+            data: this.UpdatedUniqueContentData,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+              console.log(err);
+            }
+          });
     }
 
     render() {
