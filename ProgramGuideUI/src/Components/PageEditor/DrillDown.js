@@ -2,20 +2,15 @@ import React, { Component } from 'react';
 import ExpandIcon from '../Icons/Plus.png';
 import ShrinkIcon from '../Icons/Minus.png';
 
-var objDrillDown = {}
+let objDrillDown = {}
 
 class DrillDown extends Component {
 
-    constructor(){
-        super();
-        this.objDrillDown = {};
-    }
-
     // Pass MetaInformation data to parent component 
     onChange() {
-        this.objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
-        this.objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
-        this.props.getDrillDownData(this.objDrillDown);
+        objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
+        objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
+        this.props.getDrillDownData(objDrillDown);
     }
 
     CustomizedTag(e, a) {

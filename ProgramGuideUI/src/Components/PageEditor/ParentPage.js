@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import ExpandIcon from '../Icons/Plus.png';
 import ShrinkIcon from '../Icons/Minus.png';
 
-var FamilyTreeHierarchy = [];
-var ParentPageUrl = '';
-var ParentPageID = 0;
+let FamilyTreeHierarchy = [];
+let ParentPageUrl = '';
+let ParentPageID = 0;
 
 class ParentPage extends Component {
 
@@ -17,10 +17,10 @@ class ParentPage extends Component {
 
     // Get ParentPageURL and generate Family Hierarchy
     FamilyTree() {
-        this.FamilyTreeHierarchy = [];
-        this.ParentPageUrl = this.refs.ParentPageUrl.value;
-        this.ParentPageID = Number(this.props.getParentPageData.filter(m => m.PageUrl === this.ParentPageUrl).map(m => m.ParentPageID));
-        this.createFamilyTreeHierarchy(this.ParentPageID);
+        FamilyTreeHierarchy = [];
+        ParentPageUrl = this.refs.ParentPageUrl.value;
+        ParentPageID = Number(this.props.getParentPageData.filter(m => m.PageUrl === ParentPageUrl).map(m => m.ParentPageID));
+        this.createFamilyTreeHierarchy(ParentPageID);
         this.setState({ showFamilyTree: true });
     }
 
@@ -28,7 +28,7 @@ class ParentPage extends Component {
     createFamilyTreeHierarchy(ParentPageID) {
         let filteredContentData = this.props.getParentPageData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
         if (filteredContentData.length > 0) {
-            this.FamilyTreeHierarchy.push(filteredContentData.map(m => {
+            FamilyTreeHierarchy.push(filteredContentData.map(m => {
                 return <li class="breadcrumb-item"><a href="#">{m.PageUrl}</a></li>
             }))
             this.createFamilyTreeHierarchy(filteredContentData.map(m => m.ParentPageID));
@@ -65,8 +65,8 @@ class ParentPage extends Component {
                             <strong> Family Tree: </strong>
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    {this.FamilyTreeHierarchy.length > 0 ? this.FamilyTreeHierarchy.reverse() : ''}
-                                    {this.FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{this.ParentPageUrl} </li> : 'No Parent'}
+                                    {FamilyTreeHierarchy.length > 0 ? FamilyTreeHierarchy.reverse() : ''}
+                                    {FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{ParentPageUrl} </li> : 'No Parent'}
                                 </ol>
                             </nav>
                         </div>
