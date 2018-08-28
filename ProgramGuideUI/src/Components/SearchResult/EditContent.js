@@ -12,6 +12,7 @@ import MetaInformation from '../PageEditor/MetaInformation';
 import BannerImage from '../PageEditor/BannerImage';
 import ParentPage from '../PageEditor/ParentPage';
 import PageContent from '../PageEditor/PageContent';
+import DrillDown from '../PageEditor/DrillDown';
 
 
 const ParentPageID = 0;
@@ -33,10 +34,12 @@ var isParentPageUrlModified = false;
 var objMetaInformation = {}
 var objBannerImage = {}
 var objPageContent = {}
+var objDrillDown = {}
 
 var isMetaInformationModified = false;
 var isBannerImageModified = false;
 var isPageContentModified = false;
+var isDrillDownModified = true;
 
 
 
@@ -237,9 +240,10 @@ class EditContent extends Component {
         this.UpdatedUniqueContentData.BreadcrumbText = this.isPageContentModified && this.objPageContent['BreadcrumbText'] !== undefined ? this.objPageContent['BreadcrumbText'] : this.EditPage['BreadcrumbText'];
 
 
-        this.UpdatedUniqueContentData.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
-        this.UpdatedUniqueContentData.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
+        this.UpdatedUniqueContentData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : this.EditPage['FeaturePageTag1'];
+        this.UpdatedUniqueContentData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : this.EditPage['FeaturePageTag2'];
         this.UpdatedUniqueContentData.FeaturePageTag3 = '';
+
         this.UpdatedUniqueContentData.ParentPageID = !this.isParentPageUrlModified ? this.EditPage['ParentPageID'] : this.ParentPageID;
         this.UpdatedUniqueContentData.IsActive = this.state.isActive;
         this.UpdatedUniqueContentData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
@@ -294,6 +298,11 @@ class EditContent extends Component {
         this.objPageContent = value;
     }
 
+    DrillDownSection = (value) => {
+        this.isDrillDownModified = true;
+        this.objDrillDown = value;
+    }
+
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
@@ -330,7 +339,7 @@ class EditContent extends Component {
                                         </div>
                                     </div> */}
 
-                                    <ParentPage getParentPageData = {UniqueContentData} currentParentPageID = {EditPage['ParentPageID']}/>
+                                    <ParentPage getParentPageData={UniqueContentData} currentParentPageID={EditPage['ParentPageID']} />
 
                                     {/* <div class="card">
                                         <div class="card-header" id="headingTwo">
@@ -395,7 +404,7 @@ class EditContent extends Component {
                                         </div>
                                     </div> */}
 
-                                    <PageContent setPageContentData = {EditPage} getPageContentData={this.PageContentSection.bind(this)}/>
+                                    <PageContent setPageContentData={EditPage} getPageContentData={this.PageContentSection.bind(this)} />
 
                                     {/* <div class="card">
                                         <div class="card-header" id="headingFour">
@@ -439,7 +448,10 @@ class EditContent extends Component {
                                             </div>
                                         </div>
                                     </div> */}
-                                    <div class="card">
+
+                                    <DrillDown setDrillDownData={EditPage} getDrillDownData={this.DrillDownSection.bind(this)} />
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingFive">
                                             <p data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive"> <strong >
                                                 Drill down  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -459,7 +471,6 @@ class EditContent extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* Feature Tag 1 Content */}
                                                 <br />
                                                 <strong> Feature Tag Page 2: </strong>
                                                 <br />
@@ -473,14 +484,13 @@ class EditContent extends Component {
                                                         </div>
                                                     </div>
                                                 </div>
-                                                {/* Feature Tag 2 Content */}
                                                 <br />
                                                 <strong> Feature Tag Page 3: </strong>
                                                 <br />
                                                 <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this, 'Feature Page Tag 3')}>Show Customized Tags</button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <BannerImage setBannerImageData={EditPage['BannerImage']} getBannerImageData={this.BannerImageSection.bind(this)} />
                                     {/* <div class="card">
@@ -497,7 +507,7 @@ class EditContent extends Component {
                                             </div>
                                         </div>
                                     </div> */}
-                                    
+
                                     <div class="card">
                                         <div class="card-header" id="headingSeven">
                                             <div class="form-check form-check-inline">
