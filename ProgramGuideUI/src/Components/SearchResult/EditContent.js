@@ -33,16 +33,16 @@ var isParentPageUrlModified = false;
 
 // New Structure
 var objMetaInformation = {}
-var objBannerImage = {}
+let objBannerImage;
 var objPageContent = {}
 var objDrillDown = {}
-let objPageStatus;
+let objPageStatus, isPageStatusModified;
 
 var isMetaInformationModified = false;
 var isBannerImageModified = false;
 var isPageContentModified = false;
 var isDrillDownModified = true;
-let isPageStatusModified = false;
+// let isPageStatusModified = false;
 
 
 
@@ -131,20 +131,20 @@ class EditContent extends Component {
     //     console.log(values);
     // }
 
-    getRichTextValue = (component, value) => {
-        if (component === 'VisibleIntroText') {
-            this.VisibleIntroText = value;
-        }
-        else if (component === 'HiddenIntroText') {
-            this.HiddenIntroText = value;
-        }
-        else if (component === 'ContentText1') {
-            this.ContentText1 = value;
-        }
-        else if (component === 'ContentText2') {
-            this.ContentText2 = value;
-        }
-    }
+    // getRichTextValue = (component, value) => {
+    //     if (component === 'VisibleIntroText') {
+    //         this.VisibleIntroText = value;
+    //     }
+    //     else if (component === 'HiddenIntroText') {
+    //         this.HiddenIntroText = value;
+    //     }
+    //     else if (component === 'ContentText1') {
+    //         this.ContentText1 = value;
+    //     }
+    //     else if (component === 'ContentText2') {
+    //         this.ContentText2 = value;
+    //     }
+    // }
 
     CustomizedTag(e, a) {
         this.setState({ FeatureTagType: e })
@@ -164,7 +164,6 @@ class EditContent extends Component {
     }
 
     SavetoDb() {
-
 
         // console.log(this.objMetaInformation);
         this.UpdatedUniqueContentData.UniqueContent_ID = this.EditPage['UniqueContent_ID'];
@@ -227,7 +226,7 @@ class EditContent extends Component {
             ? this.state.updatedTagSectionData.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
             : this.EditPage['Tag_Feature'];
 
-        this.UpdatedUniqueContentData.BannerImage = this.isBannerImageModified ? this.objBannerImage['BannerImage'] : this.EditPage['BannerImage'];
+        this.UpdatedUniqueContentData.BannerImage = this.isBannerImageModified ? objBannerImage['BannerImage'] : this.EditPage['BannerImage'];
 
         this.UpdatedUniqueContentData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] : this.EditPage['MetaTitle'];
         this.UpdatedUniqueContentData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] : this.EditPage['MetaDescription'];
@@ -253,7 +252,7 @@ class EditContent extends Component {
 
         //API call to update the record
         this.UpdatedUniqueContent();
-    }
+}
 
     // IsActiveChanged() {
     //     this.setState({ isActive: $('#IsActive').is(':checked') });
@@ -293,7 +292,7 @@ class EditContent extends Component {
 
     BannerImageSection = (value) => {
         this.isBannerImageModified = true;
-        this.objBannerImage = value;
+        objBannerImage = value;
     }
 
     PageContentSection = (value) => {
@@ -312,7 +311,7 @@ class EditContent extends Component {
     }
 
     render() {
-        const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
         this.props.callbackFromEditContent(this.state.isClosed)
         return (

@@ -28,7 +28,7 @@ class DrillDown extends Component {
                     </strong></p>
                 </div>
 
-                <div id="collapseDrillDown" class="collapse" aria-labelledby="DrillDown" data-parent="#accordionExample">
+                <div id="collapseDrillDown" class="collapse" aria-labelledby="DrillDown" data-parent="#pageEditorSection">
                     <div class="card-body">
                         {/* Feature Tag 1 Content */}
                         <strong> Feature Tag Page 1: </strong>

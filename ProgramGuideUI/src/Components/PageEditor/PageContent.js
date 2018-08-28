@@ -51,7 +51,7 @@ class PageContent extends Component {
                         Page Content <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                     </strong></p>
                 </div>
-                <div id="collapsePageContent" class="collapse" aria-labelledby="PageContent" data-parent="#accordionExample">
+                <div id="collapsePageContent" class="collapse" aria-labelledby="PageContent" data-parent="#pageEditorSection">
                     <div class="card-body">
 
                         <strong> Page Title: </strong>

@@ -24,7 +24,7 @@ class MetaInformation extends Component {
                 </strong></p>
             </div>
 
-            <div id="collapseMetaInformation" class="collapse" aria-labelledby="MetaInformation" data-parent="#accordionExample">
+            <div id="collapseMetaInformation" class="collapse" aria-labelledby="MetaInformation" data-parent="#pageEditorSection">
                 <div class="card-body">
                     <strong> Meta Title: </strong>
                     <br />

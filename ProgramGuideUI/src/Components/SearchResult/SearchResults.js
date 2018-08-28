@@ -9,7 +9,7 @@ import Download from './Download.png';
 import ReactExport from "react-data-export";
 import ApplyFilter from './ApplyFilter.png';
 import ClearFilter from './ClearFilter.png';
-import EditContent from './EditContent';
+import EditContent from '../PageEditor/PageEditor';
 
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;

@@ -20,7 +20,7 @@ class BannerImage extends Component {
                         Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                     </strong></p>
                 </div>
-                <div id="collapseBannerImage" class="collapse" aria-labelledby="BannerImage" data-parent="#accordionExample">
+                <div id="collapseBannerImage" class="collapse" aria-labelledby="BannerImage" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <strong> Banner Image Path: </strong>
                         <br />

@@ -8,25 +8,29 @@ let ParentPageID = 0;
 
 class ParentPage extends Component {
 
-    constructor(){
+    constructor() {
         super();
         this.state = {
             showFamilyTree: false
         }
     }
 
+    onChange() {
+        this.props.getParentPageData( Number(this.props.UniqueContentData.filter(m => m.PageUrl === this.refs.ParentPageUrl.value).map(m => m.UniqueContent_ID)));
+    }
+
     // Get ParentPageURL and generate Family Hierarchy
     FamilyTree() {
         FamilyTreeHierarchy = [];
         ParentPageUrl = this.refs.ParentPageUrl.value;
-        ParentPageID = Number(this.props.getParentPageData.filter(m => m.PageUrl === ParentPageUrl).map(m => m.ParentPageID));
+        ParentPageID = Number(this.props.UniqueContentData.filter(m => m.PageUrl === ParentPageUrl).map(m => m.ParentPageID));
         this.createFamilyTreeHierarchy(ParentPageID);
         this.setState({ showFamilyTree: true });
     }
 
     // Recursive Function to genertate FamilyTree for the PageURL
     createFamilyTreeHierarchy(ParentPageID) {
-        let filteredContentData = this.props.getParentPageData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
+        let filteredContentData = this.props.UniqueContentData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
         if (filteredContentData.length > 0) {
             FamilyTreeHierarchy.push(filteredContentData.map(m => {
                 return <li class="breadcrumb-item"><a href="#">{m.PageUrl}</a></li>
@@ -44,15 +48,15 @@ class ParentPage extends Component {
                     </strong></p>
                 </div>
 
-                <div id="collapseParentPage" class="collapse" aria-labelledby="ParentPage" data-parent="#accordionExample">
+                <div id="collapseParentPage" class="collapse" aria-labelledby="ParentPage" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <strong> Parent Page URL: </strong>
                         <br />
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="input-group input-group-sm">
-                                    <input type="text" class="form-control input-sm" id="txtPparentPageUrl" ref="ParentPageUrl"
-                                        defaultValue={this.props.getParentPageData.filter(m => m.UniqueContent_ID === this.props.currentParentPageID).map(m => m.PageUrl)} required />
+                                    <input type="text" class="form-control input-sm" id="txtPparentPageUrl" ref="ParentPageUrl" onChange={this.onChange.bind(this)}
+                                        defaultValue={this.props.UniqueContentData.filter(m => m.UniqueContent_ID === this.props.setParentPageData).map(m => m.PageUrl)} required />
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary btn-sm" type="submit" onClick={this.FamilyTree.bind(this)}>Show Family Tree</button>
                                     </span>
@@ -61,16 +65,16 @@ class ParentPage extends Component {
                         </div>
                         <br />
                         {this.state.showFamilyTree ?
-                        <div>
-                            <strong> Family Tree: </strong>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    {FamilyTreeHierarchy.length > 0 ? FamilyTreeHierarchy.reverse() : ''}
-                                    {FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{ParentPageUrl} </li> : 'No Parent'}
-                                </ol>
-                            </nav>
-                        </div>
-                        : ''}
+                            <div>
+                                <strong> Family Tree: </strong>
+                                <nav aria-label="breadcrumb">
+                                    <ol class="breadcrumb">
+                                        {FamilyTreeHierarchy.length > 0 ? FamilyTreeHierarchy.reverse() : ''}
+                                        {FamilyTreeHierarchy.length > 0 ? <li class="breadcrumb-item active" aria-current="page">{ParentPageUrl} </li> : 'No Parent'}
+                                    </ol>
+                                </nav>
+                            </div>
+                            : ''}
                     </div>
                 </div>
             </div>

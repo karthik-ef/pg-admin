@@ -19,7 +19,7 @@ class PageTagSection extends Component {
                     </strong></p>
                 </div>
 
-                <div id="collapsePageTagSection" class="collapse" aria-labelledby="PageTagSection" data-parent="#accordionExample">
+                <div id="collapsePageTagSection" class="collapse" aria-labelledby="PageTagSection" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <SearchByTag SearchByTagValues={this.getSearchByTagValues} ValueFromDb={this.props.data} />
                     </div>
