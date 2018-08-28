@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ExpandIcon from '../Icons/Plus.png';
 import ShrinkIcon from '../Icons/Minus.png';
-import SearchByTag from '../SearchResult/SearchByTag';
 
 let objMetaInformation = {}
 

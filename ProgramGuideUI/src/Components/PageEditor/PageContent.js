@@ -12,6 +12,7 @@ class PageContent extends Component {
         this.objPageContent = {};
     }
 
+    // TextEditor onChange event
     getRichTextValue = (component, value) => {
         if (component === 'VisibleIntroText') {
             this.objPageContent.VisibleIntroText = value;
@@ -25,18 +26,20 @@ class PageContent extends Component {
         else if (component === 'ContentText2') {
             this.objPageContent.ContentText2 = value;
         }
-        this.passData();
+        this.StorePageContentValue();
     }
 
+    //Textbox onChangeEvent
     onChange(){
         this.objPageContent.PageTitle = this.refs.PageTitle.value;
         this.objPageContent.SubHeader1 = this.refs.SubHeader1.value;
         this.objPageContent.SubHeader2 = this.refs.SubHeader2.value;
         this.objPageContent.BreadcrumbText = this.refs.BreadcrumbText.value;
-        this.passData();
+        this.StorePageContentValue();
     }
 
-    passData(){
+    // Store the Modified data 
+    StorePageContentValue(){
         this.props.getPageContentData(this.objPageContent);
     }
 
