@@ -10,6 +10,7 @@ import RichTextEditor from '../CustomRichTextEditor';
 import PageTagSection from '../PageEditor/PageTagSection';
 import MetaInformation from '../PageEditor/MetaInformation';
 import BannerImage from '../PageEditor/BannerImage';
+import ParentPage from '../PageEditor/ParentPage';
 
 
 const ParentPageID = 0;
@@ -52,8 +53,8 @@ class EditContent extends Component {
 
 
         this.handleCloseClick = this.handleCloseClick.bind(this);
-        this.ShowFamilyTree = this.ShowFamilyTree.bind(this);
-        this.getFamilyTreeHierarchy = this.getFamilyTreeHierarchy.bind(this);
+        //this.ShowFamilyTree = this.ShowFamilyTree.bind(this);
+        //this.getFamilyTreeHierarchy = this.getFamilyTreeHierarchy.bind(this);
         this.IsActiveChanged = this.IsActiveChanged.bind(this);
         this.SavetoDb = this.SavetoDb.bind(this);
 
@@ -96,24 +97,24 @@ class EditContent extends Component {
         alert(e.target.value);
     }
 
-    ShowFamilyTree() {
-        this.isParentPageUrlModified = true;
-        this.FamilyTreeHierarchy = [];
-        this.ParentPageUrl = this.refs.ParentPageUrl.value;
-        this.ParentPageID = Number(this.UniqueContentData.filter(m => m.PageUrl === this.ParentPageUrl).map(m => m.ParentPageID));
-        this.getFamilyTreeHierarchy(this.ParentPageID);
-        this.setState({ isFamilyTreeVisible: true });
-    }
+    // ShowFamilyTree() {
+    //     this.isParentPageUrlModified = true;
+    //     this.FamilyTreeHierarchy = [];
+    //     this.ParentPageUrl = this.refs.ParentPageUrl.value;
+    //     this.ParentPageID = Number(this.UniqueContentData.filter(m => m.PageUrl === this.ParentPageUrl).map(m => m.ParentPageID));
+    //     this.getFamilyTreeHierarchy(this.ParentPageID);
+    //     this.setState({ isFamilyTreeVisible: true });
+    // }
 
-    getFamilyTreeHierarchy(ParentPageID) {
-        let filteredContentData = this.UniqueContentData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
-        if (filteredContentData.length > 0) {
-            this.FamilyTreeHierarchy.push(filteredContentData.map(m => {
-                return <li class="breadcrumb-item"><a href="#">{m.PageUrl}</a></li>
-            }))
-            this.getFamilyTreeHierarchy(filteredContentData.map(m => m.ParentPageID));
-        }
-    }
+    // getFamilyTreeHierarchy(ParentPageID) {
+    //     let filteredContentData = this.UniqueContentData.filter(m => m.UniqueContent_ID === Number(ParentPageID));
+    //     if (filteredContentData.length > 0) {
+    //         this.FamilyTreeHierarchy.push(filteredContentData.map(m => {
+    //             return <li class="breadcrumb-item"><a href="#">{m.PageUrl}</a></li>
+    //         }))
+    //         this.getFamilyTreeHierarchy(filteredContentData.map(m => m.ParentPageID));
+    //     }
+    // }
 
     // getSearchByTagValues = (values) => {
     //     this.setState({ updatedTagSectionData: values, isTagSectionModified: true });
@@ -319,7 +320,9 @@ class EditContent extends Component {
                                         </div>
                                     </div> */}
 
-                                    <div class="card">
+                                    <ParentPage getParentPageData = {UniqueContentData} currentParentPageID = {EditPage['ParentPageID']}/>
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingTwo">
                                             <p data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo"> <strong >
                                                 Parent Page URL & Family tree   <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -342,6 +345,7 @@ class EditContent extends Component {
                                                     </div>
                                                 </div>
                                                 <br />
+                                                
                                                 {this.state.isFamilyTreeVisible ?
                                                     <div>
                                                         <strong> Family Tree: </strong>
@@ -355,7 +359,7 @@ class EditContent extends Component {
                                                     : ''}
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
                                     <MetaInformation data={EditPage} MetaInformation={this.MetaInformationSection.bind(this)} />
 
