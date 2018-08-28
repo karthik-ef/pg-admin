@@ -13,6 +13,7 @@ import BannerImage from '../PageEditor/BannerImage';
 import ParentPage from '../PageEditor/ParentPage';
 import PageContent from '../PageEditor/PageContent';
 import DrillDown from '../PageEditor/DrillDown';
+import PageStatus from '../PageEditor/PageStatus';
 
 
 const ParentPageID = 0;
@@ -35,11 +36,13 @@ var objMetaInformation = {}
 var objBannerImage = {}
 var objPageContent = {}
 var objDrillDown = {}
+let objPageStatus;
 
 var isMetaInformationModified = false;
 var isBannerImageModified = false;
 var isPageContentModified = false;
 var isDrillDownModified = true;
+let isPageStatusModified = false;
 
 
 
@@ -61,7 +64,7 @@ class EditContent extends Component {
         this.handleCloseClick = this.handleCloseClick.bind(this);
         //this.ShowFamilyTree = this.ShowFamilyTree.bind(this);
         //this.getFamilyTreeHierarchy = this.getFamilyTreeHierarchy.bind(this);
-        this.IsActiveChanged = this.IsActiveChanged.bind(this);
+        // this.IsActiveChanged = this.IsActiveChanged.bind(this);
         this.SavetoDb = this.SavetoDb.bind(this);
 
         this.state = {
@@ -245,16 +248,16 @@ class EditContent extends Component {
         this.UpdatedUniqueContentData.FeaturePageTag3 = '';
 
         this.UpdatedUniqueContentData.ParentPageID = !this.isParentPageUrlModified ? this.EditPage['ParentPageID'] : this.ParentPageID;
-        this.UpdatedUniqueContentData.IsActive = this.state.isActive;
+        this.UpdatedUniqueContentData.IsActive = isPageStatusModified ? objPageStatus : this.EditPage['IsActive'];
         this.UpdatedUniqueContentData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
 
         //API call to update the record
         this.UpdatedUniqueContent();
     }
 
-    IsActiveChanged() {
-        this.setState({ isActive: $('#IsActive').is(':checked') });
-    }
+    // IsActiveChanged() {
+    //     this.setState({ isActive: $('#IsActive').is(':checked') });
+    // }
 
     SaveAndPublish() {
 
@@ -301,6 +304,11 @@ class EditContent extends Component {
     DrillDownSection = (value) => {
         this.isDrillDownModified = true;
         this.objDrillDown = value;
+    }
+
+    PageStatusSection = (value) => {
+        isPageStatusModified = true;
+        objPageStatus = value;
     }
 
     render() {
@@ -508,14 +516,16 @@ class EditContent extends Component {
                                         </div>
                                     </div> */}
 
-                                    <div class="card">
+                                    <PageStatus setPageStatusData={EditPage['IsActive']} getPageStatusData={this.PageStatusSection.bind(this)} />
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingSeven">
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label" for="inlineCheckbox2"><strong>Active</strong></label>
                                                 <input type="checkbox" id="activeCheckBox" class="form-check-input" id="IsActive" defaultChecked={EditPage['IsActive']} onChange={this.IsActiveChanged} />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                             <div class="modal-footer">
