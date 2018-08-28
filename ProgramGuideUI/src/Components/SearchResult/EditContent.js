@@ -11,6 +11,7 @@ import PageTagSection from '../PageEditor/PageTagSection';
 import MetaInformation from '../PageEditor/MetaInformation';
 import BannerImage from '../PageEditor/BannerImage';
 import ParentPage from '../PageEditor/ParentPage';
+import PageContent from '../PageEditor/PageContent';
 
 
 const ParentPageID = 0;
@@ -31,9 +32,11 @@ var isParentPageUrlModified = false;
 // New Structure
 var objMetaInformation = {}
 var objBannerImage = {}
+var objPageContent = {}
 
 var isMetaInformationModified = false;
-this.isBannerImageModified = false;
+var isBannerImageModified = false;
+var isPageContentModified = false;
 
 
 
@@ -224,14 +227,16 @@ class EditContent extends Component {
         this.UpdatedUniqueContentData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] : this.EditPage['MetaDescription'];
         this.UpdatedUniqueContentData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] : this.EditPage['MetaRobot'];
 
-        this.UpdatedUniqueContentData.PageTitle = this.refs.PageTitle.value;
-        this.UpdatedUniqueContentData.VisibleIntroText = this.VisibleIntroText;
-        this.UpdatedUniqueContentData.HiddenIntroText = this.HiddenIntroText;
-        this.UpdatedUniqueContentData.SubHeader1 = this.refs.SubHeader1.value;
-        this.UpdatedUniqueContentData.SubHeader2 = this.refs.SubHeader2.value;
-        this.UpdatedUniqueContentData.ContentText1 = this.ContentText1;
-        this.UpdatedUniqueContentData.ContentText2 = this.ContentText2;
-        this.UpdatedUniqueContentData.BreadcrumbText = this.refs.BreadcrumbText.value;
+        this.UpdatedUniqueContentData.PageTitle = this.isPageContentModified && this.objPageContent['PageTitle'] !== undefined ? this.objPageContent['PageTitle'] : this.EditPage['PageTitle'];
+        this.UpdatedUniqueContentData.VisibleIntroText = this.isPageContentModified && this.objPageContent['VisibleIntroText'] !== undefined ? this.objPageContent['VisibleIntroText'] : this.EditPage['VisibleIntroText'];
+        this.UpdatedUniqueContentData.HiddenIntroText = this.isPageContentModified && this.objPageContent['HiddenIntroText'] !== undefined ? this.objPageContent['HiddenIntroText'] : this.EditPage['HiddenIntroText'];
+        this.UpdatedUniqueContentData.SubHeader1 = this.isPageContentModified && this.objPageContent['SubHeader1'] !== undefined ? this.objPageContent['SubHeader1'] : this.EditPage['SubHeader1'];
+        this.UpdatedUniqueContentData.SubHeader2 = this.isPageContentModified && this.objPageContent['SubHeader2'] !== undefined ? this.objPageContent['SubHeader2'] : this.EditPage['SubHeader2'];
+        this.UpdatedUniqueContentData.ContentText1 = this.isPageContentModified && this.objPageContent['ContentText1'] !== undefined ? this.objPageContent['ContentText1'] : this.EditPage['ContentText1'];
+        this.UpdatedUniqueContentData.ContentText2 = this.isPageContentModified && this.objPageContent['ContentText2'] !== undefined ? this.objPageContent['ContentText2'] : this.EditPage['ContentText2'];
+        this.UpdatedUniqueContentData.BreadcrumbText = this.isPageContentModified && this.objPageContent['BreadcrumbText'] !== undefined ? this.objPageContent['BreadcrumbText'] : this.EditPage['BreadcrumbText'];
+
+
         this.UpdatedUniqueContentData.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
         this.UpdatedUniqueContentData.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
         this.UpdatedUniqueContentData.FeaturePageTag3 = '';
@@ -282,6 +287,11 @@ class EditContent extends Component {
     BannerImageSection = (value) => {
         this.isBannerImageModified = true;
         this.objBannerImage = value;
+    }
+
+    PageContentSection = (value) => {
+        this.isPageContentModified = true;
+        this.objPageContent = value;
     }
 
     render() {
@@ -385,7 +395,9 @@ class EditContent extends Component {
                                         </div>
                                     </div> */}
 
-                                    <div class="card">
+                                    <PageContent setPageContentData = {EditPage} getPageContentData={this.PageContentSection.bind(this)}/>
+
+                                    {/* <div class="card">
                                         <div class="card-header" id="headingFour">
                                             <p data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour"> <strong >
                                                 Page Content <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
@@ -426,7 +438,7 @@ class EditContent extends Component {
                                                 <input type="text" class="form-control" defaultValue={EditPage['BreadcrumbText']} ref="BreadcrumbText" />
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                     <div class="card">
                                         <div class="card-header" id="headingFive">
                                             <p data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive"> <strong >

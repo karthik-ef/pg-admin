@@ -13,7 +13,10 @@ class CustomRichTextEditor extends Component {
   }
 
   onChange = (value) => {
-    this.setState({ value, setDefaultText: false });
+    this.setState({ value, setDefaultText: false }, function(){
+    // Pass the entered text value to calling component
+    this.props.getRichTextEditorValue(value.toString('html'))
+    });
   };
 
 
@@ -24,9 +27,6 @@ class CustomRichTextEditor extends Component {
     if (this.props.defaultValue !== undefined && this.state.setDefaultText) {
       Value = RichTextEditor.createValueFromString(this.props.defaultValue, 'html');
     }
-
-    // Pass the entered text value to calling component
-    this.props.getRichTextEditorValue(Value.toString('html'))
     
     return (
       <RichTextEditor
