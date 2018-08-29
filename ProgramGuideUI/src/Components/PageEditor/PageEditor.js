@@ -131,6 +131,8 @@ class PageEditor extends Component {
         if (EditPage['PageUrl'] === '/test/'){
             this.APICall();
         }
+        $('#pageEditor').modal('hide');
+        this.props.callbackFromEditContent(true);
     }
 
     //Update the modified data to LIVE

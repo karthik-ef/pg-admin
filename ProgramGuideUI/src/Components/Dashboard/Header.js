@@ -97,6 +97,7 @@ class Header extends Component {
                                 <li className="nav-item">
                                     <select className="form-control" id="exampleFormControlSelect1" ref="SelectedMarket" onChange= {this.onChange.bind(this)}>
                                         {this.state.availableMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
+                                        {this.state.availableMarkets.length === 1 ? localStorage.setItem('Market', this.state.availableMarkets.map(m => {return m.MarketCode})) : ''}
                                         {this.bindUserMarkets()}
                                     </select>
                                 </li>
