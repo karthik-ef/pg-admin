@@ -167,7 +167,7 @@ class SearchByTag extends Component {
             { Field: "Tag_CourseType", Values: arrSelectedTags[3] },
             { Field: "Tag_AgeRange", Values: arrSelectedTags[4] },
             { Field: "Tag_Duration", Values: arrSelectedTags[5] },
-            { Field: "Tag_localoffice", Values: arrSelectedTags[6] },
+            { Field: "Tag_LocalOffice", Values: arrSelectedTags[6] },
             { Field: "Tag_Language", Values: arrSelectedTags[7] },
             { Field: "Tag_Platform", Values: arrSelectedTags[8] },
             { Field: "Tag_Continent", Values: arrSelectedTags[9] },
