@@ -63,7 +63,7 @@ class SearchResult extends Component {
 
     getSearchResults() {
         $.ajax({
-            url: 'http://ctdev.ef.com:3000/getUniqueContentResults/?marketCode=es',
+            url: 'http://ctdev.ef.com:3000/getUniqueContentResults/?marketCode=' + localStorage.getItem('Market'),
             type: 'GET',
             cache: false,
             success: function (data) {

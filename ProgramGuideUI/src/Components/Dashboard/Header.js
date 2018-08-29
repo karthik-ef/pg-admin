@@ -51,7 +51,8 @@ class Header extends Component {
 
     bindUserMarkets() {
         if (this.state.availableMarkets) {
-            return this.state.availableMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m => { return <option key={m.MarketCode} value={m.MarketCode}>{m.Name}</option> });
+            return this.state.availableMarkets.sort((a, b) => a.Name.localeCompare(b.Name))
+            .map(m => { return <option key={m.MarketCode} value={m.MarketCode} selected = {localStorage.getItem('Market') === m.MarketCode ? true : false}>{m.Name} </option> });
         }
     }
 
