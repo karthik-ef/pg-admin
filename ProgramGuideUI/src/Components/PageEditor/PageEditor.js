@@ -141,7 +141,7 @@ class PageEditor extends Component {
     APICall() {
         console.log(modifiedData);
         $.ajax({
-            url: 'http://localhost:3001/updateUniqueContent',
+            url: 'http://ctdev.ef.com:3000/updateUniqueContent',
             type: 'POST',
             dataType: 'TEXT',
             data: modifiedData,
