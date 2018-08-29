@@ -128,7 +128,9 @@ class PageEditor extends Component {
         modifiedData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
 
         //API call to update the record
-        this.APICall();
+        if (EditPage['PageUrl'] === '/test/'){
+            this.APICall();
+        }
     }
 
     //Update the modified data to LIVE
