@@ -269,7 +269,7 @@ class SearchResult extends Component {
                         return {
                             onClick: (e, handleOriginal) => {
                                 let objContent = {};
-                                objContent.UniqueContentData = this.SearchResultsData;
+                                objContent.UniqueContentData = this.UniqueContentData;
                                 objContent.EditRowData = rowInfo['original'];
                                 this.EditPageRow = objContent;
                                 this.setState({showEditContentModal: true})

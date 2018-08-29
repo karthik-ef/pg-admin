@@ -122,9 +122,8 @@ class PageEditor extends Component {
 
         modifiedData.FeaturePageTag1 = isDrillDownModified && objDrillDown['FeaturePageTag1'] !== undefined ? objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
         modifiedData.FeaturePageTag2 = isDrillDownModified && objDrillDown['FeaturePageTag2'] !== undefined ? objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
-        modifiedData.FeaturePageTag3 = '';
 
-        modifiedData.ParentPageID = !isParentPageModified ? EditPage['ParentPageID'] : objParentPageUrl;
+        modifiedData.ParentPageID = isParentPageModified ? objParentPageUrl : EditPage['ParentPageID'] ;
         modifiedData.IsActive = isPageStatusModified ? objPageStatus : EditPage['IsActive'];
         modifiedData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
 
@@ -139,6 +138,19 @@ class PageEditor extends Component {
 
     APICall() {
         console.log(modifiedData);
+        $.ajax({
+            url: 'http://localhost:3001/updateUniqueContent',
+            type: 'POST',
+            dataType: 'TEXT',
+            data: modifiedData,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
     }
 
     // Call back methods from page section
