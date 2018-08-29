@@ -3,49 +3,69 @@ import { Link } from "react-router-dom";
 import LogoutIcon from './Logout.png';
 import $ from 'jquery';
 
-const UserName = '';
-const Role = 'General';
+let uniqueContentMarkets, userMarkets, userName = '', role = 'General';
 
 class Header extends Component {
     constructor() {
         super();
-        this.userMarkets = '';
         this.state = {
-            userMarkets: []
+            availableMarkets: [],
         }
     }
 
     componentDidMount() {
-        this.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
-        this.Role =  JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'] ;
-        this.getUserMarkets();
+        userName = JSON.parse(sessionStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        role = JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'];
+        this.getAvailableMarket();
     }
 
     getUserMarkets() {
         $.ajax({
-            url: 'http://ctdev.ef.com:3000/userMarkets/?userName=' + this.UserName,
+            url: 'http://ctdev.ef.com:3000/userMarkets/?userName=' + userName ,
             type: 'GET',
             cache: false,
             success: function (data) {
-                console.log(data);
-                console.log('');
-                this.setState({ userMarkets: data });
+                userMarkets = data;
+                this.setState({availableMarkets: userMarkets.filter(m => uniqueContentMarkets.map(m => {return m.MarketCode}).includes(m.MarketCode))});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
             }
         });
+    }
 
+    getAvailableMarket() {
+        $.ajax({
+            url: 'http://ctdev.ef.com:3000/getUniqueContentMarkets',
+            type: 'GET',
+            cache: false,
+            success: function (data) {
+                uniqueContentMarkets = data;
+                this.getUserMarkets();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
     }
 
     bindUserMarkets() {
-        if (this.state.userMarkets) {
-            return this.state.userMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m => { return <option key={m.MarketCode} value={m.MarketCode}>{m.Name}</option> });
+        if (this.state.availableMarkets) {
+            return this.state.availableMarkets.sort((a, b) => a.Name.localeCompare(b.Name)).map(m => { return <option key={m.MarketCode} value={m.MarketCode}>{m.Name}</option> });
+        }
+    }
+
+    onChange(){
+        sessionStorage.setItem('Market', this.refs.SelectedMarket.value);
+        if (window.location.pathname === '/SearchResults'){
+            //window.location.reload();
+            // this.props.Pass('a');
         }
     }
 
 
     render() {
+        console.log(this.state.availableMarkets);
         return (
             <div className="headerDiv">
 
@@ -68,15 +88,15 @@ class Header extends Component {
                                 <li className="nav-item">
                                     <Link to="/CreatePage" className="nav-link">Create Page</Link>
                                 </li>
-                                {this.Role !== 'Admin' ? '' : <li className="nav-item">
+                                {role !== 'Admin' ? '' : <li className="nav-item">
                                     <Link to="/AddUser" className="nav-link">Add User</Link>
                                 </li>}
                                 <li className="nav-item">
                                     <Link to="/BulkUpload" className="nav-link">Bulk Upload</Link>
                                 </li>
                                 <li className="nav-item">
-                                    <select className="form-control" id="exampleFormControlSelect1">
-                                        {this.state.userMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
+                                    <select className="form-control" id="exampleFormControlSelect1" ref="SelectedMarket" onChange= {this.onChange.bind(this)}>
+                                        {this.state.availableMarkets.length !== 1 ? <option value="select">---Choose Market---</option> : ''}
                                         {this.bindUserMarkets()}
                                     </select>
                                 </li>
@@ -88,7 +108,7 @@ class Header extends Component {
                 {/* Display Profile Information */}
                 <div className="profileDiv">
                     <nav className="navbar navbar-light bg-light">
-                    {this.UserName }
+                        {userName}
                         {/* karthik.subbarayappa
                         <img src={LogoutIcon} alt="" /> */}
                     </nav>
