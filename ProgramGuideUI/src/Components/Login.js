@@ -58,15 +58,17 @@ class Login extends Component {
             },
             cache: false,
             success: function (data) {
-                  console.log(data)
+                console.log(data)
                 if (data['AuthenticationResponse'] && data['UserName']) {
-                    sessionStorage.setItem('Login', JSON.stringify(data));
+
+                    if (localStorage.getItem('LoggedInTime') === null) {
+                        console.log(new Date());
+                        localStorage.setItem('LoggedInTime', Date.now());
+                        localStorage.setItem('Login', JSON.stringify(data));
+                    }
                     $('#exampleModalCenter').modal('hide');
-                    this.setState({ isAuthenticUser: true }, function () {
-                        this.props.loginDetails(this.state.isAuthenticUser);
-                    });
                 }
-                else{
+                else {
                     $('.alert').show();
                 }
 

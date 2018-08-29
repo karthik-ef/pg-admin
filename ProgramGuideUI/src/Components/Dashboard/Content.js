@@ -6,7 +6,7 @@ import BulkUpload from '../BulkUpload';
 
 class Content extends Component {
   render() {
-    var Role = JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'];
+    var Role = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
     // Render the component based on URL
     const component = window.location.pathname === '/SearchResults' ? <SearchResults />
       : window.location.pathname === '/CreatePage' ? <CreatePage />

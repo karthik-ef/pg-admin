@@ -125,7 +125,7 @@ class PageEditor extends Component {
 
         modifiedData.ParentPageID = isParentPageModified ? objParentPageUrl : EditPage['ParentPageID'] ;
         modifiedData.IsActive = isPageStatusModified ? objPageStatus : EditPage['IsActive'];
-        modifiedData.UserName = JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
 
         //API call to update the record
         if (EditPage['PageUrl'] === '/test/'){

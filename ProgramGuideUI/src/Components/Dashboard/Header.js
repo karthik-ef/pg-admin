@@ -14,8 +14,8 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        userName = JSON.parse(sessionStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
-        role = JSON.parse(sessionStorage.getItem('Login'))['Roles']['RoleName'];
+        userName = JSON.parse(localStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        role = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
         this.getAvailableMarket();
     }
 
@@ -56,10 +56,9 @@ class Header extends Component {
     }
 
     onChange(){
-        sessionStorage.setItem('Market', this.refs.SelectedMarket.value);
+        localStorage.setItem('Market', this.refs.SelectedMarket.value);
         if (window.location.pathname === '/SearchResults'){
-            //window.location.reload();
-            // this.props.Pass('a');
+            window.location.reload();
         }
     }
 
