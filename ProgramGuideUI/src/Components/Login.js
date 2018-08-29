@@ -61,12 +61,13 @@ class Login extends Component {
                 console.log(data)
                 if (data['AuthenticationResponse'] && data['UserName']) {
 
-                    if (localStorage.getItem('LoggedInTime') === null) {
+                    //if (localStorage.getItem('LoggedInTime') === null) {
                         console.log(new Date());
                         localStorage.setItem('LoggedInTime', Date.now());
                         localStorage.setItem('Login', JSON.stringify(data));
-                    }
+                    //}
                     $('#exampleModalCenter').modal('hide');
+                    this.props.Refresh('Refresh');
                 }
                 else {
                     $('.alert').show();

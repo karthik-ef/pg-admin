@@ -28,8 +28,9 @@ class App extends Component {
     });
   }
 
-  handleReq(projects) {
-    this.setState({ flag: projects })
+  reload() {
+    //this.setState({flag: true})
+    this.forceUpdate();
   }
 
   render() {
@@ -42,7 +43,7 @@ class App extends Component {
     return (
       <div >
         {/* <Login loginDetails={this.handleReq.bind(this)} /> */}
-        {userLoggedIn ? <Main /> : <Login />}
+        {userLoggedIn ? <Main /> : <Login Refresh = {this.reload.bind(this)}/>}
         {/* {this.state.flag ? <Main /> : <Login loginDetails={this.handleReq.bind(this)} />} */}
         {/* <Main/> */}
       </div>
