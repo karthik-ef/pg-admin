@@ -7,26 +7,6 @@ import Main from './Components/Dashboard/Dashboard';
 let sessio;
 
 class App extends Component {
-  constructor() {
-    super();
-    this.state = {
-      flag: false,
-      log: []
-    }
-  }
-
-  componentDidMount() {
-    $(function () {
-      if (new Date().getTime() - localStorage.getItem('LoggedInTime') > 300000) {
-        localStorage.clear();
-        sessio = false;
-      }
-      else {
-        // this.setState({flag: true});
-      }
-      // console.log( new Date().getTime() - localStorage.getItem('LoggedInTime') > 300000)
-    });
-  }
 
   reload() {
     //this.setState({flag: true})
@@ -35,8 +15,8 @@ class App extends Component {
 
   render() {
     //Check if local Session to identify if user session is active
-    let userLoggedIn = localStorage.getItem('LoggedInTime') !== null ? ((Date.now() - localStorage.getItem('LoggedInTime'))) / 1000 < 120 : false;
-    //If user session is active more than 2 minutes redirect to login page
+    let userLoggedIn = localStorage.getItem('LoggedInTime') !== null ? ((Date.now() - localStorage.getItem('LoggedInTime'))) / 1000 < 1800 : false;
+    //If user session is active more than 30 minutes redirect to login page
     if (!userLoggedIn)  localStorage.clear();
 
 

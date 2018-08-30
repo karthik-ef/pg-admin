@@ -219,6 +219,10 @@ class SearchResult extends Component {
         return (
             <div className="itemDiv">
 
+            {! this.IsFiltered && this.SearchResultsData !== undefined ?  <div class="alert alert-info" role="alert">
+            <strong> Showing {this.SearchResultsData.length} Page Urls </strong>
+            </div> : ''}
+
                 {this.IsFiltered ? <div class="alert alert-info" role="alert">
                     <strong> Filter Applied! </strong> <br />
                     <strong> Number of Pages returned: </strong> {this.FilteredResultsCount} <br/>
@@ -294,7 +298,7 @@ class SearchResult extends Component {
                     style={
                         this.SearchResultsData === undefined ? '' :
                         this.SearchResultsData.length < 10 ? '' : {
-                            height: '98%'  // This will force the table body to overflow and scroll, since there is not enough room
+                            height: this.IsFiltered ? '80%' : '87%'  // This will force the table body to overflow and scroll, since there is not enough room
                         }}
                     className="-striped -highlight"
                 />

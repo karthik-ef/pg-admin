@@ -37,7 +37,7 @@ class UserDashBoard extends Component {
       }
     getSearchResults() {
         $.ajax({
-            url: 'http://localhost:3001/getUserDetails/',
+            url: 'http://ctdev.ef.com:3000/getUserDetails/',
             type: 'GET',
             cache: false,
             success: function (data) {
