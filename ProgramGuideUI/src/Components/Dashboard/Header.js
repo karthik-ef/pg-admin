@@ -14,24 +14,9 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        userName = JSON.parse(localStorage.getItem('Login'))['UserName']; // 'Hao.Peng' // JSON.parse(sessionStorage.getItem('Login'))['UserName'];
+        userName = JSON.parse(localStorage.getItem('Login'))['UserName']; 
         role = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
         this.getAvailableMarket();
-    }
-
-    getUserMarkets() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/userMarkets/?userName=' + userName ,
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                userMarkets = data;
-                this.setState({availableMarkets: userMarkets.filter(m => uniqueContentMarkets.map(m => {return m.MarketCode}).includes(m.MarketCode))});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
     }
 
     getAvailableMarket() {
@@ -42,6 +27,21 @@ class Header extends Component {
             success: function (data) {
                 uniqueContentMarkets = data;
                 this.getUserMarkets();
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+    }
+
+    getUserMarkets() {
+        $.ajax({
+            url: 'http://ctdev.ef.com:3000/userMarkets/?userName=' + userName ,
+            type: 'GET',
+            cache: false,
+            success: function (data) {
+                userMarkets = data;
+                this.setState({availableMarkets: userMarkets.filter(m => uniqueContentMarkets.map(m => {return m.MarketCode}).includes(m.MarketCode))});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
