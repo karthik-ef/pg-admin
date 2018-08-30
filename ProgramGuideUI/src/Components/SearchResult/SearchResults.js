@@ -219,7 +219,8 @@ class SearchResult extends Component {
         return (
             <div className="itemDiv">
 
-            {! this.IsFiltered && this.SearchResultsData !== undefined ?  <div class="alert alert-info" role="alert">
+            {! this.IsFiltered && this.SearchResultsData !== undefined && localStorage.getItem('Market') !== null && localStorage.getItem('Market' ) !== 'select' 
+            ?  <div class="alert alert-info" role="alert">
             <strong> Showing {this.SearchResultsData.length} Page Urls </strong>
             </div> : ''}
 
