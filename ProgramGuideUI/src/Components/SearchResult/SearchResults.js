@@ -31,6 +31,7 @@ var IsFiltered = false; // True if any filter criteria is applied
 var FilterCriteria = ''; //Filter Criteria applied on UniqueContentData
 var FilteredBy = ''; // Search By Tag or Search By URL
 var FilteredResultsCount = 0;
+let objContent = {};
 
 const EditPageRow = [];
 
@@ -206,8 +207,14 @@ class SearchResult extends Component {
     }
 
     dataFromEditContent = (value) => {
-        if (value){
-            this.setState({showEditContentModal: !this.state.showEditContentModal})
+        if (value === true){
+           this.FilteredData = [];
+            this.IsFiltered = false;
+            this.getSearchResults();
+            this.setState({showEditContentModal: !this.state.showEditContentModal});
+        }
+        else if(value === 'closed') {
+            this.setState({showEditContentModal: !this.state.showEditContentModal});
         }
     }
 
@@ -273,7 +280,6 @@ class SearchResult extends Component {
                     getTdProps={(state, rowInfo, column, instance) => {
                         return {
                             onClick: (e, handleOriginal) => {
-                                let objContent = {};
                                 objContent.UniqueContentData = this.UniqueContentData;
                                 objContent.EditRowData = rowInfo['original'];
                                 this.EditPageRow = objContent;

@@ -38,7 +38,7 @@ class PageEditor extends Component {
 
     // Pass the value to parent component
     modalClosed() {
-        this.props.callbackFromEditContent(true);
+        this.props.callbackFromEditContent('closed');
     }
 
     //Update the modified data to QA
