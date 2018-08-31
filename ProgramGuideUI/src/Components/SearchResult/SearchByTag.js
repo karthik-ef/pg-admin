@@ -21,19 +21,19 @@ class SearchByTag extends Component {
     constructor() {
         super();
 
-       this.isTagExperienceChanged = false;
-       this.isTagKeywordTopicChanged = false
-       this.isTagWhenChanged = false;
-       this.isTagCourseTypeChanged = false;
-       this.isTagAgeRangeChanged = false;
-       this.isTagDurationChanged = false;
-       this.isTagLanguageChanged = false;
-       this.isTagPlatformChanged = false;
-       this.isTagContinentChanged = false;
-       this.isTagCountryChanged = false;
-       this.isTagStateChanged = false;
-       this.isTagCityChanged = false;
-       this.isTagFeatureChanged = false;
+        this.isTagExperienceChanged = false;
+        this.isTagKeywordTopicChanged = false
+        this.isTagWhenChanged = false;
+        this.isTagCourseTypeChanged = false;
+        this.isTagAgeRangeChanged = false;
+        this.isTagDurationChanged = false;
+        this.isTagLanguageChanged = false;
+        this.isTagPlatformChanged = false;
+        this.isTagContinentChanged = false;
+        this.isTagCountryChanged = false;
+        this.isTagStateChanged = false;
+        this.isTagCityChanged = false;
+        this.isTagFeatureChanged = false;
 
 
         this.state = {
@@ -180,9 +180,27 @@ class SearchByTag extends Component {
         this.setState({ selectedTagValue: filterCriteria }, function () { this.props.SearchByTagValues(this.state.selectedTagValue) })
     }
 
+    onChange() {
+
+    }
+
     render() {
         return (
             <div >
+                <div class="card">
+                    <div class="card-header" id="inActivePageCheckBox">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <strong> Include InActive Pages</strong>
+                            </div>
+                            <div class="col-sm-1">
+                                <input type="checkbox" id="inActivePageCheckBox" class="form-check-input" onChange={this.onChange.bind(this)} />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+
                 <strong>Please use the options below to specify one or more tags to start your search</strong>
                 <br />
                 <br />
