@@ -73,6 +73,10 @@ class DrillDown extends Component {
         this.setState({ showTag2Preview: true });
     }
 
+    onBlur(){
+        $('.card').attr('id', '');
+    }
+
     render() {
         return (
             <div class="card">
@@ -93,7 +97,7 @@ class DrillDown extends Component {
                                     <div class="input-group input-group-sm">
                                         <input type="text" class="form-control input-sm" id="txtFeaturePageTag1" defaultValue={this.props.setDrillDownData['FeaturePageTag1']} ref="FeaturePageTag1" onChange={this.onChange.bind(this)} />
                                         <span class="input-group-btn">
-                                            <button id="featurePageTag1Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag1" aria-expanded="true" aria-controls="collapseFeaturePageTag1" class="btn btn-primary btn-sm" type="submit" onClick={this.tag1PreviewOnClick.bind(this)} >Preview</button>
+                                            <button id="featurePageTag1Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag1" aria-expanded="true" aria-controls="collapseFeaturePageTag1" class="btn btn-primary btn-sm" type="submit" onBlur = {this.onBlur} onClick={this.tag1PreviewOnClick.bind(this)} >Preview</button>
                                         </span>
                                     </div>
                                     <div id="collapseFeaturePageTag1" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
@@ -112,7 +116,7 @@ class DrillDown extends Component {
                                 <div class="input-group input-group-sm">
                                     <input type="text" class="form-control input-sm" id="txtFeaturePageTag2" defaultValue={this.props.setDrillDownData['FeaturePageTag2']} ref="FeaturePageTag2" onChange={this.onChange.bind(this)} />
                                     <span class="input-group-btn">
-                                        <button id="featurePageTag2Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag2" aria-expanded="true" aria-controls="collapseFeaturePageTag2" class="btn btn-primary btn-sm" type="submit" onClick={this.tag2PreviewOnClick.bind(this)} >Preview</button>
+                                        <button id="featurePageTag2Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag2" aria-expanded="true" aria-controls="collapseFeaturePageTag2" class="btn btn-primary btn-sm" type="submit" onBlur = {this.onBlur} onClick={this.tag2PreviewOnClick.bind(this)} >Preview</button>
                                     </span>
                                 </div>
                                 <div id="collapseFeaturePageTag2" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
