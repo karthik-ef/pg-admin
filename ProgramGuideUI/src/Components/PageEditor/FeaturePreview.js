@@ -106,6 +106,8 @@ class FeaturePreview extends Component {
                 ]}
 
                 defaultPageSize={10}
+                showPageSizeOptions = {false}
+                showPageJump = {false}
                 className="-striped -highlight"
             />
         );
