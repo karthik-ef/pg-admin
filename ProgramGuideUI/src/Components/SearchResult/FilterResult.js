@@ -40,16 +40,21 @@ class FilterResult extends Component {
     }
 
     getSearchByUrlValue = (values) => {
-//console.log(values)
+        //console.log(values)
 
         this.setState({ selectedUrlValue1: values })
     }
 
-    handleSearchClick(){
+    handleSearchClick() {
         $('#exampleModalLong').modal('hide');
         this.setState({ isClosed: true });
-        this.setState({isSearched: true})
+        this.setState({ isSearched: true })
     }
+
+    onChange() {
+        this.props.IncludeInactivePage($('#inActive').is(':checked'));
+    }
+
 
     render() {
         let selectedTagOption = this.state.selectedValue === 'Search By URL' ? this.state.selectedUrlValue1 : this.state.selectedTagValue
@@ -72,12 +77,17 @@ class FilterResult extends Component {
                                 <label className="custom-control-label" for="defaultInline2">Search By Tag</label>
                             </div>
 
+                            <div className="custom-control custom-checkbox">
+                                <input type="checkbox" className="custom-control-input" id="inActive" name="inlineDefaultRadiosExample" onChange = {this.onChange.bind(this)}/>
+                                <label class="custom-control-label" for="inActive">Include inactive pages</label>
+                            </div>
+
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.handleCloseClick}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} PageUrl = {PageUrl} SearchByUrlValue={this.getSearchByUrlValue}/>
+                            <FilterCriteria FilterCriteria={this.state.selectedValue} SearchByTagValues={this.getSearchByTagValues} PageUrl={PageUrl} SearchByUrlValue={this.getSearchByUrlValue} />
                         </div>
                         <div class="modal-footer">
                             <button type="button" className="btn btn-primary" onClick={this.handleSearchClick}>Search</button>

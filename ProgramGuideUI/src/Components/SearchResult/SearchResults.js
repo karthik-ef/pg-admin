@@ -35,6 +35,8 @@ let objContent = {};
 
 const EditPageRow = [];
 
+let IncludeInactivePage = false;
+
 class SearchResult extends Component {
     constructor() {
         super();
@@ -70,7 +72,7 @@ class SearchResult extends Component {
             success: function (data) {
                 console.log(data);
                 this.UniqueContentData = data
-                this.PageUrlData = this.UniqueContentData.map(m => { return { name: m.PageUrl } });
+                this.PageUrlData = this.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
                 this.ExcelData = [
                     {
                         columns: this.state.columnName,
@@ -148,7 +150,12 @@ class SearchResult extends Component {
                 this.IsFiltered = true;
                 this.FilterCriteria = buildSelectedTag.substring(0, buildSelectedTag.length - 1);
                 this.FilteredBy = 'Search Tag';
-                this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                if(IncludeInactivePage){
+                    this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                }
+                else{
+                    this.FilteredData = this.UniqueContentData.filter(m => m.IsActive).flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                }
                 this.FilteredResultsCount = this.FilteredData.length;
             }
             else {
@@ -218,10 +225,14 @@ class SearchResult extends Component {
         }
     }
 
+    IncludeInactivePage = (value) => {
+        IncludeInactivePage = value;
+    }
+
     render() {
 
         const flag = this.state.showModal;
-        this.SearchResultsData = this.FilteredData.length > 0 ? this.FilteredData : this.UniqueContentData;
+        this.SearchResultsData = this.IsFiltered ? this.FilteredData : this.UniqueContentData !== undefined ? this.UniqueContentData.filter(m => m.IsActive) : this.UniqueContentData;
         console.log(this.UniqueContentData);
         return (
             <div className="itemDiv">
@@ -236,7 +247,7 @@ class SearchResult extends Component {
                     <strong> Number of Pages returned: </strong> {this.FilteredResultsCount} <br/>
                     <strong>{this.FilteredBy}:</strong> {this.FilterCriteria}
                 </div> : ''}
-                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} /> : null}
+                {flag ? <FilterResult callbackFromParent={this.myCallback} PageUrl={this.PageUrlData} IncludeInactivePage = {this.IncludeInactivePage.bind(this)}/> : null}
                 {this.state.showEditContentModal?<EditContent callbackFromEditContent={this.dataFromEditContent} EditPageRow = {this.EditPageRow}/>:null}
                 <ReactTable
                     data={this.SearchResultsData}

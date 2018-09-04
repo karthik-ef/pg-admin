@@ -187,18 +187,6 @@ class SearchByTag extends Component {
     render() {
         return (
             <div >
-                <div class="card">
-                    <div class="card-header" id="inActivePageCheckBox">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <strong> Include InActive Pages</strong>
-                            </div>
-                            <div class="col-sm-1">
-                                <input type="checkbox" id="inActivePageCheckBox" class="form-check-input" onChange={this.onChange.bind(this)} />
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <br />
 
                 <strong>Please use the options below to specify one or more tags to start your search</strong>
