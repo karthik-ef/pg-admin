@@ -169,3 +169,7 @@ height: 10%;
 .modal{
     overflow-y: auto;
 }
+
+#CustomizedLinks{
+    margin-bottom: 3px;
+}
