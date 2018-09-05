@@ -15,32 +15,32 @@ class PageContent extends Component {
     // TextEditor onChange event
     getRichTextValue = (component, value) => {
         if (component === 'VisibleIntroText') {
-            objPageContent.VisibleIntroText = value;
+            this.objPageContent.VisibleIntroText = value;
         }
         else if (component === 'HiddenIntroText') {
-            objPageContent.HiddenIntroText = value;
+            this.objPageContent.HiddenIntroText = value;
         }
         else if (component === 'ContentText1') {
-            objPageContent.ContentText1 = value;
+            this.objPageContent.ContentText1 = value;
         }
         else if (component === 'ContentText2') {
-            objPageContent.ContentText2 = value;
+            this.objPageContent.ContentText2 = value;
         }
         this.StorePageContentValue();
     }
 
     //Textbox onChangeEvent
     onChange(){
-        objPageContent.PageTitle = this.refs.PageTitle.value;
-        objPageContent.SubHeader1 = this.refs.SubHeader1.value;
-        objPageContent.SubHeader2 = this.refs.SubHeader2.value;
-        objPageContent.BreadcrumbText = this.refs.BreadcrumbText.value;
+        this.objPageContent.PageTitle = this.refs.PageTitle.value;
+        this.objPageContent.SubHeader1 = this.refs.SubHeader1.value;
+        this.objPageContent.SubHeader2 = this.refs.SubHeader2.value;
+        this.objPageContent.BreadcrumbText = this.refs.BreadcrumbText.value;
         this.StorePageContentValue();
     }
 
     // Store the Modified data 
     StorePageContentValue(){
-        this.props.getPageContentData(objPageContent);
+        this.props.getPageContentData(this.objPageContent);
     }
 
     render() {

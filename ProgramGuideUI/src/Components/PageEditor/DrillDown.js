@@ -5,12 +5,13 @@ import ReactTable from "react-table";
 import $ from 'jquery';
 import Preview from './FeaturePreview';
 
-let objDrillDown = {}, tagValue = '';
+let objDrillDown = {};
 
 class DrillDown extends Component {
 
     constructor() {
         super();
+        this.objDrillDown = {};
         this.state = {
             showTag1Preview: false,
             showTag2Preview: false
@@ -54,9 +55,9 @@ class DrillDown extends Component {
             $('#featurePageTag2Preview').text('Preview');
             this.setState({showTag2Preview: false});
         }
-        objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
-        objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
-        this.props.getDrillDownData(objDrillDown);
+        this.objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
+        this.objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
+        this.props.getDrillDownData(this.objDrillDown);
     }
 
     CustomizedTag(e, a) {
@@ -102,7 +103,7 @@ class DrillDown extends Component {
                                     </div>
                                     <div id="collapseFeaturePageTag1" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
                                         {this.state.showTag1Preview ?
-                                            <Preview UniqueContentData={this.props.UniqueContentData} setData={objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : objDrillDown.FeaturePageTag1} /> : ''}
+                                            <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : this.objDrillDown.FeaturePageTag1} /> : ''}
                                     </div>
                                 </div>
                             </div>
@@ -121,7 +122,7 @@ class DrillDown extends Component {
                                 </div>
                                 <div id="collapseFeaturePageTag2" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
                                     {this.state.showTag2Preview ?
-                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : objDrillDown.FeaturePageTag2} /> : ''}
+                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
                                 </div>
                             </div>
                         </div>

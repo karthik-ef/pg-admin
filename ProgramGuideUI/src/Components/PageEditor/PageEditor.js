@@ -25,6 +25,27 @@ let modifiedData = {};
 
 class PageEditor extends Component {
 
+    constructor(){
+        super();
+        this.modifiedData = {};
+        this.objPageTag = {};
+        this.objParentPageUrl = {};
+        this.objMetaInformation = {};
+        this.objPageContent = {};
+        this.objDrillDown = {};
+        this.objBannerImage = {};
+        this.objPageStatus = {};
+        this.isPageTagModified = false;
+        this.isParentPageModified = false;
+        this.isMetaInformationModified = false;
+        this.isPageContentModified = false;
+        this.isDrillDownModified = false;
+        this.isBannerImageModified = false;
+        this.isPageStatusModified = false;
+
+        
+    }
+
     componentDidMount() {
         $('#pageEditor').modal('show');
         $('.card').on('shown.bs.collapse', function () {
@@ -48,93 +69,94 @@ class PageEditor extends Component {
     //Update the modified data to QA
     UpdateToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
-        modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
-        modifiedData.MarketCode = EditPage['MarketCode'];
-        modifiedData.PageURL = EditPage['PageUrl'];
+        this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
+        this.modifiedData.MarketCode = EditPage['MarketCode'];
+        this.modifiedData.PageURL = EditPage['PageUrl'];
 
-        modifiedData.TagExperience = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
+        this.modifiedData.TagExperience = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
             : EditPage['Tag_Experience'];
 
-        modifiedData.TagKeywordTopic = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString()
+            this.modifiedData.TagKeywordTopic = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString()
             : EditPage['Tag_KeywordTopic'];
 
-        modifiedData.TagWhen = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
+            this.modifiedData.TagWhen = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
             : EditPage['Tag_When'];
 
-        modifiedData.TagCourseType = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
+            this.modifiedData.TagCourseType = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
             : EditPage['Tag_CourseType'];
 
-        modifiedData.TagAgeRange = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
+            this.modifiedData.TagAgeRange = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
             : EditPage['Tag_AgeRange'];
 
-        modifiedData.TagDuration = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
+            this.modifiedData.TagDuration = this.isPageTagModified
+            ?this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
             : EditPage['Tag_Duration'];
 
-        modifiedData.TagLocalOffice = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
+            this.modifiedData.TagLocalOffice = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
             : EditPage['Tag_LocalOffice'];
 
-        modifiedData.TagLanguage = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
+            this.modifiedData.TagLanguage = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
             : EditPage['Tag_Language'];
 
-        modifiedData.TagPlatform = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
+            this.modifiedData.TagPlatform = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
             : EditPage['Tag_Platform'];
 
-        modifiedData.TagContinent = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
+            this.modifiedData.TagContinent = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
             : EditPage['Tag_Continent'];
 
-        modifiedData.TagCountry = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
+            this.modifiedData.TagCountry = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
             : EditPage['Tag_Country'];
 
-        modifiedData.TagState = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
+            this.modifiedData.TagState = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
             : EditPage['Tag_State'];
 
-        modifiedData.TagCity = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
+            this.modifiedData.TagCity = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
             : EditPage['Tag_City'];
 
-        modifiedData.TagFeature = isPageTagModified
-            ? objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
+            this.modifiedData.TagFeature = this.isPageTagModified
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
             : EditPage['Tag_Feature'];
 
-        modifiedData.BannerImage = isBannerImageModified ? objBannerImage['BannerImage'] : EditPage['BannerImage'];
+            this.modifiedData.BannerImage = this.isBannerImageModified ? this.objBannerImage['BannerImage'] : EditPage['BannerImage'];
 
-        modifiedData.MetaTitle = isMetaInformationModified ? objMetaInformation['MetaTitle'] : EditPage['MetaTitle'];
-        modifiedData.MetaDescription = isMetaInformationModified ? objMetaInformation['MetaDescription'] : EditPage['MetaDescription'];
-        modifiedData.MetaRobot = isMetaInformationModified ? objMetaInformation['MetaRobot'] : EditPage['MetaRobot'];
+            this.modifiedData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] : EditPage['MetaTitle'];
+            this.modifiedData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] : EditPage['MetaDescription'];
+            this.modifiedData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] : EditPage['MetaRobot'];
 
-        modifiedData.PageTitle = isPageContentModified && objPageContent['PageTitle'] !== undefined ? objPageContent['PageTitle'] : EditPage['PageTitle'];
-        modifiedData.VisibleIntroText = isPageContentModified && objPageContent['VisibleIntroText'] !== undefined ? objPageContent['VisibleIntroText'] : EditPage['VisibleIntroText'];
-        modifiedData.HiddenIntroText = isPageContentModified && objPageContent['HiddenIntroText'] !== undefined ? objPageContent['HiddenIntroText'] : EditPage['HiddenIntroText'];
-        modifiedData.SubHeader1 = isPageContentModified && objPageContent['SubHeader1'] !== undefined ? objPageContent['SubHeader1'] : EditPage['SubHeader1'];
-        modifiedData.SubHeader2 = isPageContentModified && objPageContent['SubHeader2'] !== undefined ? objPageContent['SubHeader2'] : EditPage['SubHeader2'];
-        modifiedData.ContentText1 = isPageContentModified && objPageContent['ContentText1'] !== undefined ? objPageContent['ContentText1'] : EditPage['ContentText1'];
-        modifiedData.ContentText2 = isPageContentModified && objPageContent['ContentText2'] !== undefined ? objPageContent['ContentText2'] : EditPage['ContentText2'];
-        modifiedData.BreadcrumbText = isPageContentModified && objPageContent['BreadcrumbText'] !== undefined ? objPageContent['BreadcrumbText'] : EditPage['BreadcrumbText'];
+            this.modifiedData.PageTitle = this.isPageContentModified && this.objPageContent['PageTitle'] !== undefined ? this.objPageContent['PageTitle'] : EditPage['PageTitle'];
+            this.modifiedData.VisibleIntroText = this.isPageContentModified && this.objPageContent['VisibleIntroText'] !== undefined ? this.objPageContent['VisibleIntroText'] : EditPage['VisibleIntroText'];
+            this.modifiedData.HiddenIntroText = this.isPageContentModified && this.objPageContent['HiddenIntroText'] !== undefined ? this.objPageContent['HiddenIntroText'] : EditPage['HiddenIntroText'];
+            this.modifiedData.SubHeader1 = this.isPageContentModified && this.objPageContent['SubHeader1'] !== undefined ? this.objPageContent['SubHeader1'] : EditPage['SubHeader1'];
+            this.modifiedData.SubHeader2 = this.isPageContentModified && this.objPageContent['SubHeader2'] !== undefined ? this.objPageContent['SubHeader2'] : EditPage['SubHeader2'];
+            this.modifiedData.ContentText1 = this.isPageContentModified && this.objPageContent['ContentText1'] !== undefined ? this.objPageContent['ContentText1'] : EditPage['ContentText1'];
+            this.modifiedData.ContentText2 = this.isPageContentModified && this.objPageContent['ContentText2'] !== undefined ? this.objPageContent['ContentText2'] : EditPage['ContentText2'];
+            this.modifiedData.BreadcrumbText = this.isPageContentModified && this.objPageContent['BreadcrumbText'] !== undefined ? this.objPageContent['BreadcrumbText'] : EditPage['BreadcrumbText'];
 
 
-        modifiedData.FeaturePageTag1 = isDrillDownModified && objDrillDown['FeaturePageTag1'] !== undefined ? objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
-        modifiedData.FeaturePageTag2 = isDrillDownModified && objDrillDown['FeaturePageTag2'] !== undefined ? objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
+            this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
+            this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
 
-        modifiedData.ParentPageID = isParentPageModified ? objParentPageUrl : EditPage['ParentPageID'] ;
-        modifiedData.IsActive = isPageStatusModified ? objPageStatus : EditPage['IsActive'];
-        modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
+            this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : EditPage['ParentPageID'] ;
+            this.modifiedData.IsActive = this.isPageStatusModified ? this.objPageStatus : EditPage['IsActive'];
+            this.modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
 
         //API call to update the record
         if (EditPage['PageUrl'] === '/test/'){
             this.APICall();
         }
+        console.log(this.modifiedData);
         $('#pageEditor').modal('hide');
         this.props.callbackFromEditContent(true);
     }
@@ -145,12 +167,12 @@ class PageEditor extends Component {
     }
 
     APICall() {
-        console.log(modifiedData);
+        console.log(this.modifiedData);
         $.ajax({
             url: 'http://ctdev.ef.com:3000/updateUniqueContent',
             type: 'POST',
             dataType: 'TEXT',
-            data: modifiedData,
+            data: this.modifiedData,
             cache: false,
             success: function (data) {
                 console.log(data);
@@ -163,38 +185,38 @@ class PageEditor extends Component {
 
     // Call back methods from page section
     PageTagSection = (value) => {
-        isPageTagModified = true;
-        objPageTag = value;
+        this.isPageTagModified = true;
+        this.objPageTag = value;
     }
 
     ParentPageSection = (value) => {
-        isParentPageModified = true;
-        objParentPageUrl = value;
+        this.isParentPageModified = true;
+        this.objParentPageUrl = value;
     }
 
     MetaInformationSection = (value) => {
-        isMetaInformationModified = true;
-        objMetaInformation = value;
+        this.isMetaInformationModified = true;
+        this.objMetaInformation = value;
     }
 
     PageContentSection = (value) => {
-        isPageContentModified = true;
-        objPageContent = value;
+        this.isPageContentModified = true;
+        this.objPageContent = value;
     }
 
     DrillDownSection = (value) => {
-        isDrillDownModified = true;
-        objDrillDown = value;
+        this.isDrillDownModified = true;
+        this.objDrillDown = value;
     }
 
     BannerImageSection = (value) => {
-        isBannerImageModified = true;
-        objBannerImage = value;
+        this.isBannerImageModified = true;
+        this.objBannerImage = value;
     }
 
     PageStatusSection = (value) => {
-        isPageStatusModified = true;
-        objPageStatus = value;
+        this.isPageStatusModified = true;
+        this.objPageStatus = value;
     }
 
     render() {

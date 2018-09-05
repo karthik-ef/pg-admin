@@ -5,11 +5,16 @@ import ShrinkIcon from '../Icons/Minus.png';
 let objBannerImage = {}
 
 class BannerImage extends Component {
+    
+    constructor(){
+        super();
+        this.objBannerImage = {};
+    }
 
     // Pass MetaInformation data to parent component 
     onBlur() {
-        objBannerImage.BannerImage = this.refs.BannerImage.value;
-        this.props.getBannerImageData(objBannerImage);
+        this.objBannerImage.BannerImage = this.refs.BannerImage.value;
+        this.props.getBannerImageData(this.objBannerImage);
     }
 
     render() {

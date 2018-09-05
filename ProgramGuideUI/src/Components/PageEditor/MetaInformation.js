@@ -6,13 +6,17 @@ let objMetaInformation = {}
 
 class MetaInformation extends Component {
 
+    constructor(){
+        super();
+        this.objMetaInformation = {};
+    }
 
     // Pass MetaInformation data to parent component 
     onBlur(){
-        objMetaInformation.MetaTitle = this.refs.MetaTitle.value;
-        objMetaInformation.MetaDescription = this.refs.MetaDescription.value;
-        objMetaInformation.MetaRobot = this.refs.MetaRobot.value;
-        this.props.MetaInformation(objMetaInformation)
+        this.objMetaInformation.MetaTitle = this.refs.MetaTitle.value;
+        this.objMetaInformation.MetaDescription = this.refs.MetaDescription.value;
+        this.objMetaInformation.MetaRobot = this.refs.MetaRobot.value;
+        this.props.MetaInformation(this.objMetaInformation)
     }
 
     render() {

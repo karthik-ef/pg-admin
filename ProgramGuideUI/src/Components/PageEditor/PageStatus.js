@@ -3,8 +3,6 @@ import ExpandIcon from '../Icons/Plus.png';
 import ShrinkIcon from '../Icons/Minus.png';
 import $ from 'jquery';
 
-let objBannerImage = {}
-
 class PageStatus extends Component {
 
     // Pass MetaInformation data to parent component 
