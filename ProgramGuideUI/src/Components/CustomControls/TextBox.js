@@ -11,6 +11,7 @@ class TextBox extends React.Component {
       suggestions: [],
       theme: {},
       language: [],
+      setInitialValue: true
     };
   }
 
@@ -108,7 +109,7 @@ class TextBox extends React.Component {
 
   onChange = (event, { newValue, method }) => {
     this.setState({
-      value: newValue
+      value: newValue, setInitialValue: false
     });
   };
 
@@ -129,12 +130,23 @@ class TextBox extends React.Component {
 
   render() {
     const { value, suggestions } = this.state;
-    const inputProps = {
-      placeholder: "Enter Here",
-      value,
-      onChange: this.onChange,
-      onBlur: this.onBlur
-    };
+    let inputProps = {};
+    if(this.state.setInitialValue && this.props.SetInitialData !== undefined){
+      inputProps  = {
+        value: this.props.SetInitialData,
+        onChange: this.onChange,
+        onBlur: this.onBlur,
+        disabled: true
+      };
+    }
+    else{
+      inputProps = {
+        placeholder: "Enter Here",
+        value,
+        onChange: this.onChange,
+        onBlur: this.onBlur
+      };
+    }
 
     return (
       <Autosuggest

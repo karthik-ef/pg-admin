@@ -64,16 +64,6 @@ class DrillDown extends Component {
         this.props.getDrillDownData(this.objDrillDown);
     }
 
-    CustomizedTag() {
-        this.setState({customizedTag: this.getCustomizedLinksData.map(m => { 
-            return <div class="input-group input-group-sm" id="CustomizedLinks"> 
-            <TextBox PageUrl={this.props.UniqueContentData.filter(k => k.IsActive).map(k => { return { name: k.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} /> 
-            <input type="text" class="form-control input-sm" value = {m.PageTitle} /> 
-            <button class="btn btn-danger btn-sm" type="submit" >Remove</button> 
-        </div>
-            })});
-    }
-
     tag1PreviewOnClick() {
         this.setState({ showTag1Preview: true });
     }
@@ -86,8 +76,9 @@ class DrillDown extends Component {
         $('.card').attr('id', '');
     }
 
-    getSelectedValue(){
-
+    getSelectedValue = (value) => {
+        var filteredRow = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { PageUrl: m.PageUrl , PageTitle: m.PageTitle , BannerImage: '', LabelTag: ''  } });
+        this.getCustomizedLinksData.push(filteredRow[0]);
     }
 
     getCustomizedLinks() {
@@ -103,11 +94,22 @@ class DrillDown extends Component {
                 console.log(err);
             }
         });
+    }
 
+    AddLinkingPage() {
+        console.log(this.getCustomizedLinksData)
+        this.setState({
+            customizedTag: this.getCustomizedLinksData.map(m => {
+                return <div class="input-group input-group-sm" id="CustomizedLinks">
+                    <TextBox SetInitialData={m.PageUrl} PageUrl={this.props.UniqueContentData.filter(k => k.IsActive).map(k => { return { name: k.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
+                    <input type="text" class="form-control input-sm" value={m.PageTitle} readOnly />
+                    <button class="btn btn-danger btn-sm" type="submit" >Remove</button>
+                </div>
+            })
+        });
     }
 
     render() {
-        console.log(this.state.customizedTag)
         return (
             <div class="card">
                 <div class="card-header" id="DrillDown">
@@ -159,13 +161,12 @@ class DrillDown extends Component {
                         {/* Feature Tag 2 Content */}
                         <strong> Feature Tag Page 3: </strong>
                         <br />
-                        <button class="btn btn-primary btn-sm" type="submit" onClick={this.CustomizedTag.bind(this)}>Show Customized Tags</button>
-                        <br/>
+                        <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Show Customized Tags</button>
+                        <br />
                         {this.state.customizedTag}
                         <div class="input-group input-group-sm" >
                             <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
-                            <input type="text" class="form-control input-sm" />
-                            <button class="btn btn-primary btn-sm" type="submit" >Add linking page </button>
+                            <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
                         </div>
                     </div>
                 </div>
