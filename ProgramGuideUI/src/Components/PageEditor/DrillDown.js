@@ -5,8 +5,9 @@ import ReactTable from "react-table";
 import $ from 'jquery';
 import Preview from './FeaturePreview';
 import TextBox from '../CustomControls/TextBox';
+import LinkingPagesPreview from './LinkingPagesPreview';
 
-let objDrillDown = {}, getCustomizedLinksData;
+let objDrillDown = {}, getCustomizedLinksData, newLinkingPageURL;
 
 class DrillDown extends Component {
 
@@ -14,10 +15,11 @@ class DrillDown extends Component {
         super();
         this.objDrillDown = {};
         this.getCustomizedLinksData = [];
+        this.newLinkingPageURL = {}
         this.state = {
             showTag1Preview: false,
             showTag2Preview: false,
-            customizedTag: []
+            showCustomizedTags: false
         }
     }
 
@@ -77,8 +79,13 @@ class DrillDown extends Component {
     }
 
     getSelectedValue = (value) => {
-        var filteredRow = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { PageUrl: m.PageUrl , PageTitle: m.PageTitle , BannerImage: '', LabelTag: ''  } });
-        this.getCustomizedLinksData.push(filteredRow[0]);
+        if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
+            this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
+            this.newLinkingPageURL = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
+        }
+        else {
+            this.newLinkingPageURL = {}
+        }
     }
 
     getCustomizedLinks() {
@@ -96,19 +103,29 @@ class DrillDown extends Component {
         });
     }
 
-    AddLinkingPage() {
-        console.log(this.getCustomizedLinksData)
-        this.setState({
-            customizedTag: this.getCustomizedLinksData.map(m => {
-                return <div class="input-group input-group-sm" id="CustomizedLinks">
-                    <TextBox SetInitialData={m.PageUrl} PageUrl={this.props.UniqueContentData.filter(k => k.IsActive).map(k => { return { name: k.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
-                    <input type="text" class="form-control input-sm" value={m.PageTitle} readOnly />
-                    <button class="btn btn-danger btn-sm" type="submit" >Remove</button>
-                </div>
-            })
-        });
+    ShowCustomizedTags() {
+        if ($('#customizedTagsPreview').text() === 'Show Customized Tags') {
+            this.setState({ showCustomizedTags: true });
+            $('#customizedTagsPreview').text('Hide Customized Tags');
+        }
+        else {
+            $('#customizedTagsPreview').text('Show Customized Tags');
+            this.newLinkingPageURL = {};
+            this.setState({ showCustomizedTags: false });
+        }
     }
 
+    RemoveLinkingPage = (value) => {
+        this.getCustomizedLinksData = this.getCustomizedLinksData.filter(m => m.PageUrl !== value['PageUrl']);
+        this.setState({ showCustomizedTags: true });
+    }
+
+    AddLinkingPage() {
+        if (this.newLinkingPageURL.length !== undefined) {
+            this.getCustomizedLinksData.push(this.newLinkingPageURL[0]);
+            this.setState({ showCustomizedTags: true });
+        }
+    }
     render() {
         return (
             <div class="card">
@@ -161,13 +178,15 @@ class DrillDown extends Component {
                         {/* Feature Tag 2 Content */}
                         <strong> Feature Tag Page 3: </strong>
                         <br />
-                        <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Show Customized Tags</button>
+                        <button id="customizedTagsPreview" class="btn btn-primary btn-sm" type="submit" onClick={this.ShowCustomizedTags.bind(this)}>Show Customized Tags</button>
                         <br />
-                        {this.state.customizedTag}
-                        <div class="input-group input-group-sm" >
-                            <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
-                            <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
-                        </div>
+                        {this.state.showCustomizedTags
+                            ? <div> <LinkingPagesPreview setLinkingPageData={this.getCustomizedLinksData} DeleteRow={this.RemoveLinkingPage.bind(this)} /> <br />
+                                <div class="input-group input-group-sm" >
+                                    <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
+                                    <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
+                                </div> </div> : ''}
+
                     </div>
                 </div>
             </div>

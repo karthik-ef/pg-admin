@@ -126,7 +126,8 @@ class TextBox extends React.Component {
   };
 
   onBlur = (event, { highlightedSuggestion }) => {
-    this.props.selectedValue(this.state.value)  }
+    this.props.selectedValue(this.state.value)
+    }
 
   render() {
     const { value, suggestions } = this.state;
@@ -139,7 +140,7 @@ class TextBox extends React.Component {
         disabled: true
       };
     }
-    else{
+    else {
       inputProps = {
         placeholder: "Enter Here",
         value,
@@ -149,7 +150,7 @@ class TextBox extends React.Component {
     }
 
     return (
-      <Autosuggest
+      <Autosuggest 
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}
