@@ -71,9 +71,16 @@ class PageEditor extends Component {
     //Update the modified data to QA
     UpdateToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
-        this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
-        this.modifiedData.MarketCode = EditPage['MarketCode'];
-        this.modifiedData.PageURL = EditPage['PageUrl'];
+        if (this.props.isNewPage !== undefined){
+            // this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
+            this.modifiedData.MarketCode = localStorage.getItem('Market');
+            this.modifiedData.PageURL = this.props.PageUrl;
+        }
+        else{
+            this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
+            this.modifiedData.MarketCode = EditPage['MarketCode'];
+            this.modifiedData.PageURL = EditPage['PageUrl'];
+        }
 
         this.modifiedData.TagExperience = this.isPageTagModified
             ? this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
@@ -155,7 +162,14 @@ class PageEditor extends Component {
             this.modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
 
         //API call to update the record
-        if (EditPage['PageUrl'] === '/test/'){
+        // if (EditPage['PageUrl'] === '/test/'){
+        //     this.APICall();
+        // }
+
+        if (this.props.isNewPage !== undefined){
+            this.CreateNewContent();
+        }
+        else if(EditPage['PageUrl'] === '/test/'){
             this.APICall();
         }
 
@@ -172,6 +186,21 @@ class PageEditor extends Component {
     //Update the modified data to LIVE
     UpdateToLive() {
 
+    }
+    CreateNewContent(){
+        $.ajax({
+            url: 'http://ctdev.ef.com:3000/CreateNewContent',
+            type: 'POST',
+            dataType: 'TEXT',
+            data: this.modifiedData,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
     }
 
     APICall() {
@@ -245,7 +274,7 @@ class PageEditor extends Component {
 
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
-        const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : [];
+        const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : this.props.uniqueResult;
         return (
             <div>
                 <div class="modal hide fade" id="pageEditor" tabindex="-1" role="dialog" aria-labelledby="pageEditorTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">

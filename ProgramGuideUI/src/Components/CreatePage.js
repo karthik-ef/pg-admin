@@ -65,17 +65,21 @@ class CreatePage extends Component {
       this.setState({ showValidationError: false, showErrorMessage: true, showModal: false });
     }
     else {
-      this.setState({ showValidationError: false, showErrorMessage: false, showModal: true });
+      this.setState({ showValidationError: false, showErrorMessage: false});
     }
 
     //var t = validate.toString().matches("\\s");
     // console.log(/\s/.test(validate));
   }
 
+  onClick(){
+    this.setState({ showModal: true });
+  }
+
   render() {
     return (
       <div className="itemDiv">
-        {this.state.showModal ? <EditContent PageUrl={this.PageUrl} callbackFromEditContent={this.dataFromEditContent} /> : ''}
+        {this.state.showModal ? <EditContent uniqueResult = {this.state.uniqueResult} isNewPage = {true} PageUrl={this.PageUrl} callbackFromEditContent={this.dataFromEditContent} /> : ''}
         <strong> Create Page URL: </strong>
         <br />
         <div class="row">
@@ -83,7 +87,7 @@ class CreatePage extends Component {
               <div class="input-group input-group-sm">
                 <input type="text" class="form-control input-sm" onBlur={this.OnBlur} ref="ParentPageUrl" required />
                 <span class="input-group-btn">
-                  <button class="btn btn-primary btn-sm" type="submit" >Create Page</button>
+                  <button class="btn btn-primary btn-sm" type="submit" onClick = {this.onClick.bind(this)}>Create Page</button>
                 </span>
               </div>
             <br />
