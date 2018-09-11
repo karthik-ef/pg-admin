@@ -21,6 +21,7 @@ let objDrillDown, isDrillDownModified; //DrillDown
 let objBannerImage, isBannerImageModified; //BannerImage
 let objPageStatus, isPageStatusModified; //PageStatus
 
+let objCustomizedData;
 let modifiedData = {};
 
 class PageEditor extends Component {
@@ -42,6 +43,7 @@ class PageEditor extends Component {
         this.isDrillDownModified = false;
         this.isBannerImageModified = false;
         this.isPageStatusModified = false;
+        this.objCustomizedData = {};
 
         
     }
@@ -156,6 +158,12 @@ class PageEditor extends Component {
         if (EditPage['PageUrl'] === '/test/'){
             this.APICall();
         }
+
+        if(this.objDrillDown['CustomizedLinksData'] !== undefined){
+            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
+            this.objCustomizedData.LinkPageXml = this.objDrillDown['CustomizedLinksData'];
+            this.SaveCustomizedTags()
+        }
         console.log(this.modifiedData);
         $('#pageEditor').modal('hide');
         this.props.callbackFromEditContent(true);
@@ -173,6 +181,22 @@ class PageEditor extends Component {
             type: 'POST',
             dataType: 'TEXT',
             data: this.modifiedData,
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+    }
+
+    SaveCustomizedTags() {
+        $.ajax({
+            url: 'http://ctdev.ef.com:3000/SaveCustomizedLinks',
+            type: 'POST',
+            dataType: 'TEXT',
+            data: this.objCustomizedData,
             cache: false,
             success: function (data) {
                 console.log(data);

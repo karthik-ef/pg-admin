@@ -81,7 +81,7 @@ class DrillDown extends Component {
     getSelectedValue = (value) => {
         if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
             this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
-            this.newLinkingPageURL = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
+            this.newLinkingPageURL = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { UniqueContent_ID: m.UniqueContent_ID, PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
         }
         else {
             this.newLinkingPageURL = {}
@@ -117,12 +117,16 @@ class DrillDown extends Component {
 
     RemoveLinkingPage = (value) => {
         this.getCustomizedLinksData = this.getCustomizedLinksData.filter(m => m.PageUrl !== value['PageUrl']);
+        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => {return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>'}).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+        this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
 
     AddLinkingPage() {
         if (this.newLinkingPageURL.length !== undefined) {
             this.getCustomizedLinksData.push(this.newLinkingPageURL[0]);
+            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => {return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>'}).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+            this.props.getDrillDownData(this.objDrillDown);
             this.setState({ showCustomizedTags: true });
         }
     }
