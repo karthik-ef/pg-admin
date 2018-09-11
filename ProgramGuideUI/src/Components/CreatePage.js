@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import EditContent from './SearchResult/EditContent';
+import EditContent from './PageEditor/PageEditor';
 
 var PageUrl = '';
 
