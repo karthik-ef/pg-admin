@@ -7,16 +7,17 @@ import DeleteUser from './DeleteUser.png';
 import AddUserPopup from '../UserManagement/AddUserPopup'
 // Data Objects
 const UserDetailsData = []; // Hold the data returned from service getUserDetails
+const UserNames = [];
 var Operations = '';
 
-const makeDefaultState = () => ({
-    expanded: {},
-  });
+// const makeDefaultState = () => ({
+//     expanded: {},
+//   });
 
 class UserDashBoard extends Component {
     constructor() {
         super();
-        this.state = makeDefaultState();
+       // this.state = makeDefaultState();
         this.Operations = '';
         this.state = [{
             showModal: false
@@ -33,7 +34,7 @@ class UserDashBoard extends Component {
         })
     }
     resetState() {
-        this.setState(makeDefaultState());
+        // this.setState(makeDefaultState());
       }
     getSearchResults() {
         $.ajax({
@@ -43,6 +44,10 @@ class UserDashBoard extends Component {
             success: function (data) {
                 console.log(data);
                this.UserDetailsData = data;
+               this.UserNames = data.map(u=> {return u.UserName}).filter(function (x, i, a) { 
+                return a.indexOf(x) == i; 
+            }).map(m=> {return  {name: m}}) ;
+               console.log(this.UserNames);
                 this.setState({ showModal: false });
             }.bind(this),
             error: function (xhr, status, err) {
@@ -61,14 +66,14 @@ class UserDashBoard extends Component {
 
         return (
             <div className="itemDiv">
-           {flag ? <AddUserPopup Operations={this.Operations}/> : ''} 
+           {flag ? <AddUserPopup UserNamesList = {this.UserNames} UserDetailsData = {this.UserDetailsData}  Operations={this.Operations}/> : ''} 
                 <ReactTable
                  data={this.UserDetailsData}
                     minRows={0}
                     columns={[
                         {  
                             Header: <div>  
-                            <img className="floatLeft1" src={AddUser} alt="Add User" onClick={this.handleClick.bind(this,'Add User')} data-toggle="tooltip" data-placement="top" title="Add User" />
+                            <img className="floatLeft1" src={AddUser} alt="AddUser" onClick={this.handleClick.bind(this,'Add User')} data-toggle="tooltip" data-placement="top" title="Add User" />
                             <span className="floatLeft1"> <img src={EditUser} alt="EditUser" onClick={this.handleClick.bind(this,'Edit User')} data-toggle="tooltip" data-placement="top" title="Edit User" /></span>
                             <span className="floatLeft1"> <img src={DeleteUser} alt="DeleteUser" onClick={this.handleClick.bind(this,'Delete User')} data-toggle="tooltip" data-placement="top" title="Delete User" /></span>
                             </div>,

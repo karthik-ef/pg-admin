@@ -1,111 +1,150 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
-import ReactTable from "react-table";
-import AddUser from './AddUser.png';
-import EditUser from './EditUser.png';
-import DeleteUser from './DeleteUser.png';
-import AddUserPopup from '../UserManagement/AddUserPopup'
-// Data Objects
-const UserDetailsData = []; // Hold the data returned from service getUserDetails
-var Operations = '';
+import Dropdowm from '../CustomizedDropDown';
+import TextBox from '../CustomTextBox';
 
-const makeDefaultState = () => ({
-    expanded: {},
-  });
-
-class UserDashBoard extends Component {
-    constructor() {
-        super();
-        this.state = makeDefaultState();
-        this.Operations = '';
-        this.state = [{
-            showModal: false
-        }]
-
-        this.handleClick = this.handleClick.bind(this);
+var isVisible = true;
+class EditUser extends Component {
+  constructor() {
+    super();
+    //Declaration
+    this.isVisible = true;
+    this.MarketsList = [];
+    this.state = {
+        Roles: [],
+        Market:[],
+        InitialRolesValue:'',
+        InitialMarketsValue:[],
+        selectedRole: '',
+        selectedUsername:'',
+        UpdateUserDetails: {}
     }
-    componentDidMount() {
-        // Initialization of Data objects
-        this.getSearchResults();
-        // Lose the focus on Download button after click
-        $('.stlying').click(function () {
-            document.activeElement.blur();
-        })
-    }
-    resetState() {
-        this.setState(makeDefaultState());
-      }
-    getSearchResults() {
-        $.ajax({
-            url: 'http://localhost:3001/getUserDetails/',
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                console.log(data);
-               this.UserDetailsData = data;
-                this.setState({ showModal: false });
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
+}
+getRoles() {
+    this.setState({
+        Roles: [
+            {
+                label: 'Admin', value: 'Admin'
+            },
+            {
+                label: 'General', value: 'General'
             }
-        });
+        ]
+    });
+}
+
+getMarkets(){
+    $.ajax({
+        url: 'http://ctdev.ef.com:3000/market',
+        dataType: 'json',
+        cache: false,
+        success: function (data) {
+          this.MarketsList = data;
+          this.setState({ Market: data.map(m => { return { label: m.Name, value: m.MarketCode } }) });
+        }.bind(this),
+        error: function (xhr, status, err) {
+          console.log(err);
+        }
+      });
+}
+componentDidMount() {
+  this.getRoles();
+  this.getMarkets();
+}
+  BindMarkets(value) {
+    this.setState({ selectedMarkets: value }); 
+  }
+
+  BindRoles(value) {
+    if (value === 'Admin') {
+      this.isVisible = false;
+      this.setState({selectedRoles: value, selectedMarkets: this.MarketsList.map(m => { return m.MarketCode }).toLocaleString()})
     }
-    handleClick(operations,event)
+    else {
+      this.isVisible = true;
+      this.setState({ selectedRoles: value });
+    }
+  }
+
+  getSelectedValue(value) {
+    if(this.props.UserNamesList.filter(m => m.name === value).length <= 0 && value != '')
+    { 
+      alert('User does not exist');
+      //selectedValue = '';
+    }
+    else
     {
-        this.Operations = operations;
-        this.setState({showModal: !this.state.showModal});
+      this.setState({selectedUsername: value });
+      this.setState({InitialRolesValue : this.props.UserDetailsData.filter(m => m.UserName === value)[0]["RoleName"]});
+      this.setState({InitialMarketsValue: this.props.UserDetailsData.filter(m => m.UserName === value).map(m=>m.MarketCode)});
     }
+  }
 
-    render() {
-        let flag = this.state.showModal;
+  handleSubmit(e) {
+    var userDetails = {};
+    userDetails.userName = this.state.selectedUsername;
+    userDetails.marketCodeXml = '<userpermission xmlns="">' + this.state.selectedMarkets.split(',').map(m => { return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g, ' ') + '</userpermission>'
+    userDetails.rolesXml = '<userpermission xmlns=""> <role rolename ="' + this.state.selectedRoles + '"/> </userpermission>';
+    this.setState({ UpdateUserDetails: userDetails }, function () {
+      this.UpdateUser();
+    });
+    e.preventDefault();
+  }
 
-        return (
-            <div className="itemDiv">
-           {flag ? <AddUserPopup Operations={this.Operations}/> : ''} 
-                <ReactTable
-                 data={this.UserDetailsData}
-                    minRows={0}
-                    columns={[
-                        {  
-                            Header: <div>  
-                            <img className="floatLeft1" src={AddUser} alt="Add User" onClick={this.handleClick.bind(this,'Add User')} data-toggle="tooltip" data-placement="top" title="Add User" />
-                            <span className="floatLeft1"> <img src={EditUser} alt="EditUser" onClick={this.handleClick.bind(this,'Edit User')} data-toggle="tooltip" data-placement="top" title="Edit User" /></span>
-                            <span className="floatLeft1"> <img src={DeleteUser} alt="DeleteUser" onClick={this.handleClick.bind(this,'Delete User')} data-toggle="tooltip" data-placement="top" title="Delete User" /></span>
-                            </div>,
-                            columns: [
-                                {
-                                    Header: <strong>User Name</strong>,
-                                    id: "UserName",
-                                    accessor: d => d.UserName,
-                                    sortable: false
-                                },
-                                {
-                                    Header: <strong>Role Name</strong>,
-                                    id: "RoleName",
-                                    accessor: d => d.RoleName,
-                                    sortable: false
-                                }
-                            ]
-                        },{
-                        columns: [
-                            {
-                                Header: <strong>Market Code</strong>,
-                                id: "MarketCode",
-                                accessor: d => d.MarketCode,
-                                sortable: false
-                            },
-                        ]
-                    }
-                    ]}
-                    pivotBy={["RoleName","UserName"]}
-                    defaultPageSize={100}
-                    className="-striped -highlight"
+  UpdateUser() {
+    console.log(this.state.saveUserDetails)
+    $.ajax({
+      url: 'http://ctdev.ef.com:3000/updateUser',
+      type: 'POST',
+      dataType: 'TEXT',
+      data: this.state.UpdateUserDetails,
+      cache: false,
+      success: function (data) {
+        console.log(data);
+        console.log('');
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(err);
+      }
+    });
 
-                    expanded={this.state.expanded}
-                    onExpandedChange={expanded => this.setState({ expanded })}
-                />
-            </div>
+  }
+
+    render(){
+      console.log(this.state.InitialRolesValue);
+      let UserNamesList = this.props.UserNamesList
+        return(
+          <div className="Edituser">
+            <h3>Edit Users</h3>
+    
+            <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
+              <div className="form-group row">
+                <div className="col-sm-12">
+                  {/* <input type="text" className="form-control" id="userName" ref="userName" placeholder="User Name" required /> 
+                <input type="text" className="form-control" id="userName" ref="userName" placeholder="User Name" required onBlur ={this.ValidateUser.bind(this)}/>*/}
+                  <TextBox PageUrl={UserNamesList} selectedValue={this.getSelectedValue.bind(this)}/>
+                </div>
+              </div>
+    
+              <div className="form-group row">
+                <div className="col-sm-12">
+                  <Dropdowm Roles={this.state.Roles} multiSelect={false} bindedRoleValue={this.BindRoles.bind(this)} SetInitalValue={this.state.InitialRolesValue}/>
+                  
+                </div>
+              </div>
+          {this.isVisible ?
+            <div className="form-group row">
+              <div className="col-sm-12">
+                <Dropdowm Markets={this.state.Market} multiSelect={true} bindedMarketValue={this.BindMarkets.bind(this)} SetInitalValue={this.state.InitialMarketsValue} />
+              </div>
+            </div> : ''}
+    
+              <div className="col-sm-12 text-center">
+                <input type="submit" value="Update User" className="btn btn-primary" />
+              </div>
+            </form>
+          </div>
         );
     }
 }
-export default UserDashBoard;
+export default EditUser;
