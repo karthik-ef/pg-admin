@@ -13,7 +13,7 @@ class DeleteUser extends Component {
     handleSubmit(e) {
         e.preventDefault();
         $.ajax({
-            url: 'http://localhost:3001/DeleteUser/',
+            url: 'http://ctdev.ef.com:3000/DeleteUser/',
             type: 'POST',
             dataType: 'TEXT',
             data: user,
