@@ -58,7 +58,7 @@ class Header extends Component {
 
     onChange(){
         localStorage.setItem('Market', this.refs.SelectedMarket.value);
-        if (window.location.pathname === '/SearchResults'){
+        if (window.location.pathname === '/SearchResults' || window.location.pathname === '/CreatePage' ){
             window.location.reload();
         }
     }

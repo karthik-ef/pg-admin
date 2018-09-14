@@ -75,11 +75,15 @@ class PageEditor extends Component {
             // this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
             this.modifiedData.MarketCode = localStorage.getItem('Market');
             this.modifiedData.PageURL = this.props.PageUrl;
+            this.modifiedData.IsActive = this.isPageStatusModified ? this.objPageStatus : false;
+            this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : 0 ;
         }
         else{
             this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
             this.modifiedData.MarketCode = EditPage['MarketCode'];
             this.modifiedData.PageURL = EditPage['PageUrl'];
+            this.modifiedData.IsActive = this.isPageStatusModified ? this.objPageStatus : EditPage['IsActive'];
+            this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : EditPage['ParentPageID'] ;
         }
 
         this.modifiedData.TagExperience = this.isPageTagModified
@@ -157,8 +161,6 @@ class PageEditor extends Component {
             this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
             this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
 
-            this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : EditPage['ParentPageID'] ;
-            this.modifiedData.IsActive = this.isPageStatusModified ? this.objPageStatus : EditPage['IsActive'];
             this.modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
 
         //API call to update the record

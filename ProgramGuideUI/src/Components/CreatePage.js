@@ -14,7 +14,8 @@ class CreatePage extends Component {
       uniqueResult: [],
       showModal: false,
       showErrorMessage: false,
-      showValidationError: false
+      showValidationError: false,
+      showMarketError: false
     }
   }
 
@@ -24,7 +25,7 @@ class CreatePage extends Component {
 
   getUniqueContentData() {
     $.ajax({
-      url: 'http://ctdev.ef.com:3000/getUniqueContentResults/?marketCode=es',
+      url: 'http://ctdev.ef.com:3000/getUniqueContentResults/?marketCode=' + localStorage.getItem('Market'),
       type: 'GET',
       cache: false,
       success: function (data) {
@@ -51,29 +52,36 @@ class CreatePage extends Component {
 
   dataFromEditContent = (value) => {
     if (value) {
+      this.refs.ParentPageUrl.value = '';
       this.setState({ showModal: !this.state.showModal })
     }
   }
 
   OnBlur() {
-    this.PageUrl = this.refs.ParentPageUrl.value;
-    var validate = !/\s/.test(this.refs.ParentPageUrl.value) && /^\//.test(this.refs.ParentPageUrl.value) && this.refs.ParentPageUrl.value.endsWith('/');
-    if (!validate) {
-      this.setState({ showValidationError: true, showErrorMessage: false, showModal: false });
-    }
-    else if(this.state.uniqueResult.filter(m => m.PageUrl === this.PageUrl).length > 0){
-      this.setState({ showValidationError: false, showErrorMessage: true, showModal: false });
-    }
-    else {
-      this.setState({ showValidationError: false, showErrorMessage: false});
-    }
+  
 
     //var t = validate.toString().matches("\\s");
     // console.log(/\s/.test(validate));
   }
 
   onClick(){
-    this.setState({ showModal: true });
+   // this.getUniqueContentData();
+
+    this.PageUrl = this.refs.ParentPageUrl.value;
+    var validate = !/\s/.test(this.refs.ParentPageUrl.value) && /^\//.test(this.refs.ParentPageUrl.value) && this.refs.ParentPageUrl.value.endsWith('/');
+    if (!validate) {
+      this.setState({ showValidationError: true, showErrorMessage: false, showModal: false, showMarketError: false });
+    }
+    else if(this.state.uniqueResult.filter(m => m.PageUrl === this.PageUrl).length > 0){
+      this.setState({ showValidationError: false, showErrorMessage: true, showModal: false, showMarketError: false });
+    }
+    else if(localStorage.getItem('Market') === null || localStorage.getItem('Market') === '' || localStorage.getItem('Market' ) === 'select'){
+      this.setState({ showValidationError: false, showErrorMessage: false, showModal: false, showMarketError: true });
+    }
+    else {
+      this.setState({ showValidationError: false, showErrorMessage: false, showModal: true, showMarketError: false});
+    }
+    //this.setState({ showModal: true });
   }
 
   render() {
@@ -92,11 +100,15 @@ class CreatePage extends Component {
               </div>
             <br />
             {this.state.showErrorMessage ? <div class="alert alert-danger" role="alert">
-              Page URL - <strong>{this.PageUrl}</strong> for Market <strong>ES</strong> already exisit! Please choose different URL or Market
+              Page URL - <strong>{this.PageUrl}</strong> for Market <strong>{localStorage.getItem('Market' )}</strong> already exisit! Please choose different URL or Market
           </div> : ''}
 
             {this.state.showValidationError ? <div class="alert alert-danger" role="alert">
               Please provide Valid Page URL
+          </div> : ''}
+
+           {this.state.showMarketError ? <div class="alert alert-danger" role="alert">
+              Please select a Market
           </div> : ''}
 
           </div>
