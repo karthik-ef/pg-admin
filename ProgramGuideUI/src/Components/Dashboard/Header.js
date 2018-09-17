@@ -2,7 +2,15 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import LogoutIcon from './Logout.png';
 import $ from 'jquery';
+import { css } from 'react-emotion';
+import { ClipLoader } from 'react-spinners';
 
+const override = css`
+margin-top: 15%;
+margin-right: 15%;
+margin-bottom: 15%;
+margin-left: 45%;
+`;
 let uniqueContentMarkets, userMarkets, userName = '', role = 'General';
 
 class Header extends Component {
@@ -10,6 +18,8 @@ class Header extends Component {
         super();
         this.state = {
             availableMarkets: [],
+            loading: false,
+            render: false,
         }
     }
 
@@ -57,6 +67,9 @@ class Header extends Component {
     }
 
     onChange(){
+        this.setState({ loading: true },function(){
+            this.props.opac(this.state.loading);
+        });
         localStorage.setItem('Market', this.refs.SelectedMarket.value);
         if (window.location.pathname === '/SearchResults' || window.location.pathname === '/CreatePage' ){
             window.location.reload();
@@ -113,6 +126,15 @@ class Header extends Component {
                         {/* karthik.subbarayappa
                         <img src={LogoutIcon} alt="" /> */}
                     </nav>
+                </div>
+                <div>
+                    <ClipLoader
+                    className={override}
+                    sizeUnit={"px"}
+                    size={50}
+                    color={'#123abc'}
+                    loading={this.state.loading}
+                    />
                 </div>
             </div>
         );

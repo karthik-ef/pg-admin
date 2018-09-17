@@ -84,6 +84,8 @@ var MultiSelectField = createClass({
 			this.state.dispalyText = 'Select Role';
 			this.state.id = 'Role';
 			Roles = this.props.Roles.map((m) => { return m });
+			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
+			this.state.multiValues = false;
 			// console.log('Roles')
 		}
 
@@ -110,6 +112,7 @@ var MultiSelectField = createClass({
 			Market.push(Roles);
 			Roles.unshift({ label: 'Select All', value: 'Select All' });
 			console.log(Roles);
+			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			// console.log(Roles);
 		}
 

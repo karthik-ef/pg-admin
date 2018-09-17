@@ -5,17 +5,24 @@
   "dependencies": {
     "bootstrap": "^4.1.1",
     "create-react-class": "^15.6.3",
+    "inline-style-prefixer": "^5.0.1",
     "jquery": "^3.3.1",
+    "jsontoxml": "^1.0.0",
     "popper.js": "^1.14.3",
     "react": "^16.4.1",
     "react-autosuggest": "^9.3.4",
     "react-data-export": "^0.4.2",
     "react-dom": "^16.4.1",
+    "react-fade": "^1.1.1",
+    "react-loading": "^2.0.3",
     "react-router-dom": "^4.3.1",
     "react-rte": "^0.16.1",
     "react-scripts": "1.1.4",
     "react-select": "^1.2.1",
-    "react-table": "^6.8.6"
+    "react-spinners": "^0.4.5",
+    "react-table": "^6.8.6",
+    "read-excel-file": "^2.0.2",
+    "tachyons-components": "^1.0.0-1"
   },
   "scripts": {
     "start": "react-scripts start",
