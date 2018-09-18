@@ -174,7 +174,7 @@ class DrillDown extends Component {
                                 </div>
                                 <div id="collapseFeaturePageTag2" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
                                     {this.state.showTag2Preview ?
-                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
+                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
                                 </div>
                             </div>
                         </div>
