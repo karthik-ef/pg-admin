@@ -44,11 +44,6 @@ class BulkUpload extends Component {
         type: String,
         required: true
       },
-	    'MarketCode': {
-        prop: 'MarketCode',
-        type: String,
-        required: true,
-      },
 	    'PageUrl': {
         prop: 'PageUrl',
         type: String,
@@ -58,6 +53,11 @@ class BulkUpload extends Component {
         prop: 'Tag_Experience',
         type: String,
         required: true
+      },
+      'Tag_KeywordTopic': {
+        prop: 'Tag_KeywordTopic',
+        type: String,
+        required: true,
       },
 	    'Tag_When': {
         prop: 'Tag_When',
@@ -76,7 +76,7 @@ class BulkUpload extends Component {
       },
 	  	    'Tag_Duration': {
         prop: 'Tag_Duration',
-        type: Number,
+        type: String,
         required: true
       },
 	    'Tag_LocalOffice': {
