@@ -75,7 +75,8 @@ class SearchResult extends Component {
             cache: false,
             success: function (data) {
                 console.log(data);
-                this.UniqueContentData = data
+                var UniqueContentData = JSON.stringify(data).replace(/null/g, "\"\"");
+                this.UniqueContentData = JSON.parse(UniqueContentData);
                 this.PageUrlData = this.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
                 this.ExcelData = [
                     {
