@@ -88,7 +88,7 @@ class AddUser extends Component {
 
   ValidateUser(e)
   {
-    if(this.props.UserNamesList.filter(m => m.name === this.refs.userName.value).length > 0)
+    if(this.props.UserNamesList.filter(m => m.name === this.refs.userName.value.trim()).length > 0)
     { 
       alert('User already exist');
       this.refs.userName.value = '';
