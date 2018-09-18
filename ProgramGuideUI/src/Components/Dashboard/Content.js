@@ -8,10 +8,10 @@ class Content extends Component {
   render() {
     var Role = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
     // Render the component based on URL
-    const component = window.location.pathname === '/SearchResults' ? <SearchResults />
-      : window.location.pathname === '/CreatePage' ? <CreatePage />
-        : Role === 'Admin' && window.location.pathname === '/AddUser' ? <AddUser /> 
-          : window.location.pathname === '/BulkUpload' ? <BulkUpload />
+    const component = window.location.pathname.toLowerCase() === '/searchresults' ? <SearchResults />
+      : window.location.pathname.toLowerCase() === '/createpage' ? <CreatePage />
+        : Role === 'Admin' && window.location.pathname.toLowerCase() === '/adduser' ? <AddUser /> 
+          : window.location.pathname.toLowerCase() === '/bulkupload' ? <BulkUpload />
             : '';
     return (
 
