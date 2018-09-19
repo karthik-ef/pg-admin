@@ -1,20 +1,39 @@
 import React, { Component } from 'react';
 import ExpandIcon from '../Icons/Plus.png';
 import ShrinkIcon from '../Icons/Minus.png';
+import BannerImagePreview from '../Modal/BannerImagePreview';
+import $ from 'jquery';
 
 let objBannerImage = {}
 
 class BannerImage extends Component {
-    
-    constructor(){
+
+    constructor() {
         super();
         this.objBannerImage = {};
+        this.state = {
+            showBannerPreview: false
+        }
     }
 
     // Pass MetaInformation data to parent component 
     onBlur() {
         this.objBannerImage.BannerImage = this.refs.BannerImage.value;
         this.props.getBannerImageData(this.objBannerImage);
+    }
+
+    browseImage() {
+        this.setState({ showBannerPreview: true });
+    }
+
+    fetch = (value) => {
+        console.log(value);
+        this.setState({ showBannerPreview: false });
+        this.refs.BannerImage.value = value['src'];
+    }
+
+    resetModal() {
+        this.setState({ showBannerPreview: false });
     }
 
     render() {
@@ -25,11 +44,19 @@ class BannerImage extends Component {
                         Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                     </strong></p>
                 </div>
+                {this.state.showBannerPreview ? <BannerImagePreview ModalClosed={this.resetModal.bind(this)} setImagePath={this.fetch.bind(this)} /> : ''}
                 <div id="collapseBannerImage" class="collapse" aria-labelledby="BannerImage" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <strong> Banner Image Path: </strong>
                         <br />
-                        <input type="text" class="form-control input-sm" defaultValue={this.props.setBannerImageData} ref="BannerImage" onBlur = {this.onBlur.bind(this)} />
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control input-sm" id="txtBannerImage" defaultValue={this.props.setBannerImageData} ref="BannerImage" onBlur={this.onBlur.bind(this)} />
+                            <span class="input-group-btn">
+                                <button id="browseBannerImage" class="btn btn-primary btn-sm" type="submit" onClick={this.browseImage.bind(this)} >Browse</button>
+                            </span>
+                        </div>
+
+                        {/* <input type="text" class="form-control input-sm" defaultValue={this.props.setBannerImageData} ref="BannerImage" onBlur = {this.onBlur.bind(this)} /> */}
                     </div>
                 </div>
             </div>

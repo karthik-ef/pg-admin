@@ -176,3 +176,13 @@ height: 10%;
 #CustomizedLinks{
     margin-bottom: 3px;
 }
+
+#bannerImageModalBody{
+overflow: hidden;
+}
+
+#ImagePicker{
+    max-height: calc(60vh - 50px);
+    overflow-y: auto;
+    width: 120%
+}
