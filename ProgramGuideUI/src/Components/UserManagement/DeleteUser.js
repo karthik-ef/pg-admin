@@ -10,7 +10,6 @@ class DeleteUser extends Component {
         this.isValue = false;
     }
     getSelectedValue(value) {
-        // alert(value);
          console.log(this.props.UserDetailsData);
         if(this.props.UserDetailsData.filter(m => m.UserName === value).length <= 0 && value != '')
         { 
@@ -51,7 +50,7 @@ class DeleteUser extends Component {
         return (
             <div classname="DeleteUser">
                 <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
-                    <TextBox PageUrl={this.props.UserNamesAutoBind} required selectedValue={this.getSelectedValue.bind(this)} />
+                    <TextBox PageUrl={this.props.UserNamesAutoBind} selectedValue={this.getSelectedValue.bind(this)} />
                     <div className="col-sm-12 text-center">
                         <input type="submit" value="Delete" className="btn btn-primary" />
                     </div>
