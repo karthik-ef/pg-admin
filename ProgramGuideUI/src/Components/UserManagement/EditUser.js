@@ -9,6 +9,7 @@ class EditUser extends Component {
     super();
     //Declaration
     this.isVisible = true;
+    this.isValue = false;
     this.MarketsList = [];
     this.state = {
         Roles: [],
@@ -70,10 +71,10 @@ componentDidMount() {
     if(this.props.UserNamesList.filter(m => m.name === value).length <= 0 && value != '')
     { 
       alert('User does not exist');
-      //selectedValue = '';
     }
     else
     {
+      this.isValue = true;
       this.setState({selectedUsername: value });
       this.setState({InitialRolesValue : this.props.UserDetailsData.filter(m => m.UserName === value)[0]["RoleName"]});
       this.setState({InitialMarketsValue: this.props.UserDetailsData.filter(m => m.UserName === value).map(m=>m.MarketCode)});
@@ -81,6 +82,12 @@ componentDidMount() {
   }
 
   handleSubmit(e) {
+    if(!this.isValue)
+      {
+        alert(this.isValue);
+          alert('User does not exist');
+          window.stop();
+      }
     var userDetails = {};
     userDetails.userName = this.state.selectedUsername;
     userDetails.marketCodeXml = '<userpermission xmlns="">' + this.state.selectedMarkets.split(',').map(m => { return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g, ' ') + '</userpermission>'
@@ -100,6 +107,7 @@ componentDidMount() {
       data: this.state.UpdateUserDetails,
       cache: false,
       success: function (data) {
+        window.location.reload();
         console.log(data);
         console.log('');
       }.bind(this),
