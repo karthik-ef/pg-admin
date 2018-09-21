@@ -28,12 +28,14 @@ class FeaturePreview extends Component {
                 for (var n = 0; n < info.length; n++) {
 
                     if (info[n]["Values"] === '00') {
-                        if (item[info[n]["Field"]] === '00' || !item[info[n]["Field"]]) {
+                        if (item[info[n]["Field"]] === '00' || item[info[n]["Field"]] === '' || item[info[n]["Field"]] === null ) {
                             count++;
                         }
                     }
                     else if (info[n]["Values"] === '?') {
-                        if (item[info[n]["Field"]] !== '00' && !item[info[n]["Field"]]) {
+                        console.log(item[info[n]["Field"]]);
+                        if (item[info[n]["Field"]] !== '00' || !item[info[n]["Field"]]) {
+                            console.log("1");
                             count++;
                         }
                     }
