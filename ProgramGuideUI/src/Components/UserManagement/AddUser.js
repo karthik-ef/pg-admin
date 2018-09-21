@@ -45,6 +45,7 @@ class AddUser extends Component {
       data: this.state.saveUserDetails,
       cache: false,
       success: function (data) {
+        window.location.reload();
         console.log(data);
         console.log('');
       }.bind(this),
