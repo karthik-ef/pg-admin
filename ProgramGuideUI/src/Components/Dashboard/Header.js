@@ -76,6 +76,11 @@ class Header extends Component {
         }
     }
 
+    Logout(){
+        window.location.pathname = '/';
+        localStorage.clear();
+    }
+
 
     render() {
         console.log(this.state.availableMarkets);
@@ -123,6 +128,7 @@ class Header extends Component {
                 <div className="profileDiv">
                     <nav className="navbar navbar-light bg-light">
                         {userName}
+                        <button type="button" class="btn btn-primary" onClick = {this.Logout.bind(this)}>Logout</button>
                         {/* karthik.subbarayappa
                         <img src={LogoutIcon} alt="" /> */}
                     </nav>
