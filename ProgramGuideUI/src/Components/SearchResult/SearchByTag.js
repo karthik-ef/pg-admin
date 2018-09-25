@@ -297,46 +297,46 @@ class SearchByTag extends Component {
                     <strong>Seleted Tags:</strong>
                     <br />
                     <label id="selectedTags">
-                        {this.props.ValueFromDb && !this.isTagExperienceChanged ? this.props.ValueFromDb['Tag_Experience']
+                        {this.props.ValueFromDb && !this.isTagExperienceChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Experience']
                             : this.state.tagExperienceValue === '' ? '*' : this.state.tagExperienceValue}_
 
-                   {this.props.ValueFromDb && !this.isTagKeywordTopicChanged ? this.props.ValueFromDb['Tag_KeywordTopic']
+                   {this.props.ValueFromDb && !this.isTagKeywordTopicChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_KeywordTopic']
                             : this.state.tagKeywordTopicValue === '' ? '*' : this.state.tagKeywordTopicValue}_
 
-                    {this.props.ValueFromDb && !this.isTagWhenChanged ? this.props.ValueFromDb['Tag_When']
+                    {this.props.ValueFromDb && !this.isTagWhenChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_When']
                             : this.state.tagWhenValue === '' ? '*' : this.state.tagWhenValue}_
 
-                    {this.props.ValueFromDb && !this.isTagCourseTypeChanged ? this.props.ValueFromDb['Tag_CourseType']
+                    {this.props.ValueFromDb && !this.isTagCourseTypeChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_CourseType']
                             : this.state.tagCourseTypeValue === '' ? '*' : this.state.tagCourseTypeValue}_
 
-                    {this.props.ValueFromDb && !this.isTagAgeRangeChanged ? this.props.ValueFromDb['Tag_AgeRange']
+                    {this.props.ValueFromDb && !this.isTagAgeRangeChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_AgeRange']
                             : this.state.tagAgeRangeValue === '' ? '*' : this.state.tagAgeRangeValue}_
 
-                    {this.props.ValueFromDb && !this.isTagDurationChanged ? this.props.ValueFromDb['Tag_Duration']
+                    {this.props.ValueFromDb && !this.isTagDurationChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Duration']
                             : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
 
-                    {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LocalOffice']
+                    {this.props.ValueFromDb && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_LocalOffice']
                             : this.state.tagLocaloffice === '' ? '00' : '00'}_
 
-                    {this.props.ValueFromDb && !this.isTagLanguageChanged ? this.props.ValueFromDb['Tag_Language']
+                    {this.props.ValueFromDb && !this.isTagLanguageChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Language']
                             : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
 
-                    {this.props.ValueFromDb && !this.isTagPlatformChanged ? this.props.ValueFromDb['Tag_Platform']
+                    {this.props.ValueFromDb && !this.isTagPlatformChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Platform']
                             : this.state.tagPlatformValue === '' ? '*' : this.state.tagPlatformValue}_
 
-                    {this.props.ValueFromDb && !this.isTagContinentChanged ? this.props.ValueFromDb['Tag_Continent']
+                    {this.props.ValueFromDb && !this.isTagContinentChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Continent']
                             : this.state.tagContinentValue === '' ? '*' : this.state.tagContinentValue}_
 
-                    {this.props.ValueFromDb && !this.isTagCountryChanged ? this.props.ValueFromDb['Tag_Country']
+                    {this.props.ValueFromDb && !this.isTagCountryChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Country']
                             : this.state.tagCountryValue === '' ? '*' : this.state.tagCountryValue}_
 
-                    {this.props.ValueFromDb && !this.isTagStateChanged ? this.props.ValueFromDb['Tag_State']
+                    {this.props.ValueFromDb && !this.isTagStateChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_State']
                             : this.state.tagStateValue === '' ? '*' : this.state.tagStateValue}_
 
-                    {this.props.ValueFromDb && !this.isTagCityChanged ? this.props.ValueFromDb['Tag_City']
+                    {this.props.ValueFromDb && !this.isTagCityChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_City']
                             : this.state.tagCityValue === '' ? '*' : this.state.tagCityValue}_
 
-                    {this.props.ValueFromDb && !this.isTagFeatureChanged ? this.props.ValueFromDb['Tag_Feature']
+                    {this.props.ValueFromDb && !this.isTagFeatureChanged && this.props.ValueFromDb.length > 0 ? this.props.ValueFromDb['Tag_Feature']
                             : this.state.tagFeatureValue === '' ? '*' : this.state.tagFeatureValue}
                     </label>
                 </div>
