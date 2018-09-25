@@ -84,9 +84,7 @@ componentDidMount() {
   handleSubmit(e) {
     if(!this.isValue)
       {
-        alert(this.isValue);
           alert('User does not exist');
-          window.stop();
       }
     var userDetails = {};
     userDetails.userName = this.state.selectedUsername;
