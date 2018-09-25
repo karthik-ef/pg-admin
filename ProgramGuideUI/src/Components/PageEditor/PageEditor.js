@@ -301,7 +301,7 @@ class PageEditor extends Component {
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary">Cancel</button>
+                                {/* <button type="button" class="btn btn-primary">Cancel</button> */}
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToLive.bind(this)}>Save and Publish</button>
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToQA.bind(this)}>Save</button>
                             </div>
