@@ -4,16 +4,33 @@ import ShrinkIcon from '../Icons/Minus.png';
 import BannerImagePreview from '../Modal/BannerImagePreview';
 import $ from 'jquery';
 
-let objBannerImage = {}
-
 class BannerImage extends Component {
 
     constructor() {
         super();
         this.objBannerImage = {};
         this.state = {
-            showBannerPreview: false
+            showBannerPreview: false,
+            createBannerImage: []
         }
+    }
+
+    componentDidMount() {
+        this.getBannerImage();
+    }
+
+    getBannerImage() {
+        $.ajax({
+            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetBannerImages/?mc=de',
+            type: 'GET',
+            cache: false,
+            success: function (data) {
+                this.setState({createBannerImage: data});
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
     }
 
     // Pass MetaInformation data to parent component 
@@ -29,7 +46,7 @@ class BannerImage extends Component {
     fetch = (value) => {
         console.log(value);
         this.setState({ showBannerPreview: false });
-        this.refs.BannerImage.value = value['src'];
+        this.refs.BannerImage.value = value;
     }
 
     resetModal() {
@@ -44,7 +61,7 @@ class BannerImage extends Component {
                         Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                     </strong></p>
                 </div>
-                {this.state.showBannerPreview ? <BannerImagePreview ModalClosed={this.resetModal.bind(this)} setImagePath={this.fetch.bind(this)} /> : ''}
+                {this.state.showBannerPreview ? <BannerImagePreview data = {this.state.createBannerImage} ModalClosed={this.resetModal.bind(this)} setImagePath={this.fetch.bind(this)} /> : ''}
                 <div id="collapseBannerImage" class="collapse" aria-labelledby="BannerImage" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <strong> Banner Image Path: </strong>
@@ -55,8 +72,6 @@ class BannerImage extends Component {
                                 <button id="browseBannerImage" class="btn btn-primary btn-sm" type="submit" onClick={this.browseImage.bind(this)} >Browse</button>
                             </span>
                         </div>
-
-                        {/* <input type="text" class="form-control input-sm" defaultValue={this.props.setBannerImageData} ref="BannerImage" onBlur = {this.onBlur.bind(this)} /> */}
                     </div>
                 </div>
             </div>
