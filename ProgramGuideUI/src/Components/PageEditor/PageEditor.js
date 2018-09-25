@@ -274,6 +274,11 @@ class PageEditor extends Component {
         this.objPageStatus = value;
     }
 
+    Close(){
+        $('#pageEditor').modal('hide');
+        this.props.callbackFromEditContent(true);  
+    }
+
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : this.props.uniqueResult;
@@ -301,7 +306,7 @@ class PageEditor extends Component {
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                {/* <button type="button" class="btn btn-primary">Cancel</button> */}
+                                <button type="button" class="btn btn-primary" onClick={this.Close.bind(this)}>Cancel</button>
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToLive.bind(this)}>Save and Publish</button>
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToQA.bind(this)}>Save</button>
                             </div>
