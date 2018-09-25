@@ -52,6 +52,7 @@ class CreatePage extends Component {
 
   dataFromEditContent = (value) => {
     if (value) {
+      this.getUniqueContentData();
       this.refs.ParentPageUrl.value = '';
       this.setState({ showModal: !this.state.showModal })
     }
