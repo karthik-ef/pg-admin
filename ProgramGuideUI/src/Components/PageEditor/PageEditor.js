@@ -44,8 +44,13 @@ class PageEditor extends Component {
         this.isBannerImageModified = false;
         this.isPageStatusModified = false;
         this.objCustomizedData = {};
-
-        
+        this.Checkduplicate = {};
+        this.validation = false;
+		
+        this.state = {
+            showDuplicateErrorForCreate: false,
+            //showDuplicateErrorForUpdate: false,
+        }
     }
 
     componentDidMount() {
@@ -167,8 +172,29 @@ class PageEditor extends Component {
         // if (EditPage['PageUrl'] === '/test/'){
         //     this.APICall();
         // }
-
-        if (this.props.isNewPage !== undefined){
+        var tagStructure = this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
+        
+        if( this.Checkduplicate.filter(m => m.Tags === tagStructure).length > 0 )
+        {
+            this.validation = true;
+            this.setState({ showDuplicateErrorForCreate: true});
+          
+        }
+        else if (this.props.isNewPage !== undefined){
+            this.setState({ showDuplicateErrorForCreate: false})
             this.CreateNewContent();
         }
         else if(EditPage['PageUrl'] === '/test/'){
@@ -180,9 +206,11 @@ class PageEditor extends Component {
             this.objCustomizedData.LinkPageXml = this.objDrillDown['CustomizedLinksData'];
             this.SaveCustomizedTags()
         }
-        console.log(this.modifiedData);
-        $('#pageEditor').modal('hide');
-        this.props.callbackFromEditContent(true);
+        if(!this.validation)
+        {
+            $('#pageEditor').modal('hide');
+            this.props.callbackFromEditContent(true);
+        }
     }
 
     //Update the modified data to LIVE
@@ -282,6 +310,7 @@ class PageEditor extends Component {
     render() {
         const EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         const UniqueContentData = this.props.EditPageRow !== undefined ? this.props.EditPageRow['UniqueContentData'] : this.props.uniqueResult;
+        this.Checkduplicate = UniqueContentData;
         return (
             <div>
                 <div class="modal hide fade" id="pageEditor" tabindex="-1" role="dialog" aria-labelledby="pageEditorTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
@@ -306,6 +335,12 @@ class PageEditor extends Component {
                                 </div>
                             </div>
                             <div class="modal-footer">
+                            {this.state.showDuplicateErrorForCreate ? <div class="alert alert-danger" role="alert">
+                                This set of tags already exist for other Pagr URL, Please reset the tags.
+                                </div> : ''}
+                                {/* {this.state.showDuplicateErrorForUpdate ? <div class="alert alert-danger" role="alert">
+                                Please modify the data before saving.
+                                </div> : ''} */}
                                 <button type="button" class="btn btn-primary" onClick={this.Close.bind(this)}>Cancel</button>
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToLive.bind(this)}>Save and Publish</button>
                                 <button type="button" class="btn btn-primary" onClick={this.UpdateToQA.bind(this)}>Save</button>
