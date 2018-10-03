@@ -54,6 +54,7 @@ class BannerImage extends Component {
     }
 
     render() {
+        console.log(this.state.createBannerImage['a']);
         return (
             <div class="card">
                 <div class="card-header" id="BannerImage">
@@ -61,7 +62,7 @@ class BannerImage extends Component {
                         Banner Image  <span className="floatLeft"> <img src={ExpandIcon} alt="Logo" /></span>
                     </strong></p>
                 </div>
-                {this.state.showBannerPreview ? <BannerImagePreview data = {this.state.createBannerImage} ModalClosed={this.resetModal.bind(this)} setImagePath={this.fetch.bind(this)} /> : ''}
+                {this.state.showBannerPreview ? <BannerImagePreview treeData = {this.state.createBannerImage['a']} data = {this.state.createBannerImage['b']} ModalClosed={this.resetModal.bind(this)} setImagePath={this.fetch.bind(this)} /> : ''}
                 <div id="collapseBannerImage" class="collapse" aria-labelledby="BannerImage" data-parent="#pageEditorSection">
                     <div class="card-body">
                         <strong> Banner Image Path: </strong>

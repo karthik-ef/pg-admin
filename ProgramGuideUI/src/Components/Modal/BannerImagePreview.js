@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import ImagePicker from 'react-image-picker'
 import 'react-image-picker/dist/index.css'
 import $ from 'jquery';
-
+import Tree from '../CustomControls/TreeView';
 class BannerImagePreview extends Component {
 
     constructor() {
         super();
         this.bannerImagePath = '';
+        this.state = {
+            imageData: [],
+            isFilter: false
+        };
     }
 
     componentDidMount() {
@@ -31,11 +35,20 @@ class BannerImagePreview extends Component {
         this.props.ModalClosed(true);
     }
 
+    Filter = (value) => {
+        this.setState({isFilter: true, imageData: this.props.data.filter(m => m.includes(value.value))})
+    }
+
 
     render() {
+
+        this.state.isFilter ? '' : this.state.imageData = this.props.data;
+        let treeStructure = this.props.treeData;
+
+        console.log(treeStructure);
         return (
             <div class="modal hide fade" id="bannerImage" tabindex="-1" role="dialog" aria-labelledby="bannerImageTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-lg" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <button type="button" className="close" aria-label="Close" onClick={this.handleCloseClick.bind(this)}>
@@ -43,11 +56,17 @@ class BannerImagePreview extends Component {
                             </button>
                         </div>
                         <div class="modal-body" id="bannerImageModalBody">
-                            <div id="ImagePicker">
-                                <ImagePicker
-                                    images={this.props.data.map((image,i) => ({ src: image, value: i }))}
+                        <div id = 'left'>
+                        <Tree setData = {treeStructure} CallBack = {this.Filter.bind(this)}/>
+                        </div>
+                        <div id='right'>
+                        <ImagePicker
+                                    images={this.state.imageData.map((image,i) => ({ src: image, value: i }))}
                                     onPick={this.onPick.bind(this)}
                                 />
+                        </div>
+                            <div id="ImagePicker">
+                                
                             </div>
                         </div>
                         <div class="modal-footer">

@@ -177,7 +177,7 @@ height: 10%;
     margin-bottom: 3px;
 }
 
-#bannerImageModalBody{
+/* #bannerImageModalBody{
 overflow: hidden;
 }
 
@@ -185,4 +185,21 @@ overflow: hidden;
     max-height: calc(60vh - 50px);
     overflow-y: auto;
     width: 120%
+} */
+
+#bannerImageModalBody{
+    max-height: 300px;
+    overflow: auto;
+    }
+
+#left{
+    float: left;
+    width: 25%;
+    height: 100%;
+}
+#right {
+    float: right;
+    width: 75%;
+    height: 100%;
+    overflow: auto;
 }
