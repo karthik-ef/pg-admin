@@ -28,6 +28,7 @@ class BannerImagePreview extends Component {
         var img = image['src'].toString();
         console.log( img.substring(img.indexOf("/universal")));
         this.bannerImagePath = img.substring(img.indexOf("/universal"));
+        this.setImagePath();
     }
 
     handleCloseClick(){
