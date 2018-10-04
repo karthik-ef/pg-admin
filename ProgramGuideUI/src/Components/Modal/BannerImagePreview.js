@@ -42,7 +42,8 @@ class BannerImagePreview extends Component {
 
     render() {
 
-        this.state.isFilter ? '' : this.state.imageData = this.props.data;
+        let imageData;
+        this.state.isFilter ? imageData = this.state.imageData : imageData = this.props.data;
         let treeStructure = this.props.treeData;
 
         console.log(treeStructure);
@@ -61,7 +62,7 @@ class BannerImagePreview extends Component {
                         </div>
                         <div id='right'>
                         <ImagePicker
-                                    images={this.state.imageData.map((image,i) => ({ src: image, value: i }))}
+                                    images={imageData.map((image,i) => ({ src: image, value: i }))}
                                     onPick={this.onPick.bind(this)}
                                 />
                         </div>
