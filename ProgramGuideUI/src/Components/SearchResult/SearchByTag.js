@@ -27,6 +27,7 @@ class SearchByTag extends Component {
         this.isTagCourseTypeChanged = false;
         this.isTagAgeRangeChanged = false;
         this.isTagDurationChanged = false;
+        this.isTag_LanguageOfInstructionChnaged = false;
         this.isTagLanguageChanged = false;
         this.isTagPlatformChanged = false;
         this.isTagContinentChanged = false;
@@ -43,6 +44,7 @@ class SearchByTag extends Component {
             tagCourseTypeData: [],
             tagAgeRangeData: [],
             tagDurationData: [],
+            tagLanguageOfInstructionData: [],
             tagLanguageData: [],
             tagPlatformData: [],
             tagContinentData: [],
@@ -56,6 +58,7 @@ class SearchByTag extends Component {
             tagCourseTypeValue: '',
             tagAgeRangeValue: '',
             tagDurationValue: '',
+            tagLanguageOfInstructionValue: [],
             tagLocaloffice: '',
             tagLanguageValue: '',
             tagPlatformValue: '',
@@ -79,6 +82,7 @@ class SearchByTag extends Component {
                 this.setState({ tagCourseTypeData: data.filter(m => m.TagName === "Tag_CourseType").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagAgeRangeData: data.filter(m => m.TagName === "Tag_AgeRange").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagDurationData: data.filter(m => m.TagName === "Tag_Duration").map(m => { return { label: m.Value, value: m.Value } }) });
+                this.setState({ tagLanguageOfInstructionData: data.filter(m => m.TagName === "Tag_LanguageOfInstruction").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagLanguageData: data.filter(m => m.TagName === "Tag_LanguageLearned").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagPlatformData: data.filter(m => m.TagName === "Tag_Platform").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagContinentData: data.filter(m => m.TagName === "Tag_Continent").map(m => { return { label: m.Value, value: m.Value } }) });
@@ -127,6 +131,12 @@ class SearchByTag extends Component {
             this.isTagDurationChanged = true;
             this.setState({ tagDurationValue: value }, function () { this.selectedTags() });
         }
+
+        else if (TagName === 'Tag_LanguageOfInstruction') {
+            this.isTag_LanguageOfInstructionChnaged = true;
+            this.setState({ tagLanguageOfInstructionValue: value }, function () { this.selectedTags() });
+        }
+
         else if (TagName === 'Tag_LanguageLearned') {
             this.isTagLanguageChanged = true;
             this.setState({ tagLanguageValue: value }, function () { this.selectedTags() });
@@ -231,38 +241,53 @@ class SearchByTag extends Component {
                     </div>
                     <div class="col-md-5 ml-auto">
                         <div class="col-sm-8">
+                        <label for="exampleInputEmail1"><strong>Tag_LanguageOfInstruction</strong></label>
+                            <Dropdown Tags={this.state.tagLanguageOfInstructionData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LanguageOfInstruction'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_LanguageOfInstruction')} />
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 ml-auto">
+                        <div class="col-sm-10">
                         <label for="exampleInputEmail1"><strong>Tag_LanguageLearned</strong></label>
                             <Dropdown Tags={this.state.tagLanguageData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LanguageLearned'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_LanguageLearned')} />
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
+                    <div class="col-md-5 ml-auto">
+                        <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_Platform</strong></label>
                             <Dropdown Tags={this.state.tagPlatformData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Platform')} />
                         </div>
                     </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 ml-auto">
+                        <div class="col-sm-10">
                         <label for="exampleInputEmail1"><strong>Tag_Continent</strong></label>
                             <Dropdown Tags={this.state.tagContinentData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Continent')} />
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
+                    <div class="col-md-5 ml-auto">
+                        <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_Country</strong></label>
                             <Dropdown Tags={this.state.tagCountryData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Country')} />
                         </div>
                     </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 ml-auto">
+                        <div class="col-sm-10">
                         <label for="exampleInputEmail1"><strong>Tag_State</strong></label>
                             <Dropdown Tags={this.state.tagStateData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_State')} />
+                        </div>
+                    </div>
+                    <div class="col-md-5 ml-auto">
+                        <div class="col-sm-8">
+                        <label for="exampleInputEmail1"><strong>Tag_City</strong></label>
+                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
                         </div>
                     </div>
                 </div>
@@ -270,27 +295,14 @@ class SearchByTag extends Component {
                 <div class="row">
                     <div class="col-md-4 ml-auto">
                         <div class="col-sm-10">
-                        <label for="exampleInputEmail1"><strong>Tag_City</strong></label>
-                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
-                        </div>
-                    </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_Feature</strong></label>
                             <Dropdown Tags={this.state.tagFeatureData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Feature')} />
                         </div>
                     </div>
-                </div>
-                <br />
-                {/* <div class="row">
-                    <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
-                        </div>
-                    </div>
                     <div class="col-md-5 ml-auto">
                     </div>
                 </div>
-                <br /> */}
+                <br />
                 <div>
                     <strong>Seleted Tags:</strong>
                     <br />
@@ -312,9 +324,12 @@ class SearchByTag extends Component {
 
                     {this.props.ValueFromDb && !this.isTagDurationChanged && this.props.ValueFromDb.length === undefined ? this.props.ValueFromDb['Tag_Duration']
                             : this.state.tagDurationValue === '' ? '*' : this.state.tagDurationValue}_
+                    
+                    {this.props.ValueFromDb && !this.isTag_LanguageOfInstructionChnaged && this.props.ValueFromDb.length === undefined ? this.props.ValueFromDb['Tag_LanguageOfInstruction']
+                            : this.state.tagLanguageOfInstructionValue === '' ? '*' : this.state.tagLanguageOfInstructionValue}_
 
-                    {this.props.ValueFromDb && this.props.ValueFromDb.length === undefined ? this.props.ValueFromDb['Tag_LanguageOfInstruction']
-                            : this.state.tagLocaloffice === '' ? '00' : '00'}_
+                    {/* {this.props.ValueFromDb && this.props.ValueFromDb.length === undefined ? this.props.ValueFromDb['Tag_LanguageOfInstruction']
+                            : this.state.tagLocaloffice === '' ? '00' : '00'}_ */}
 
                     {this.props.ValueFromDb && !this.isTagLanguageChanged && this.props.ValueFromDb.length === undefined ? this.props.ValueFromDb['Tag_LanguageLearned']
                             : this.state.tagLanguageValue === '' ? '*' : this.state.tagLanguageValue}_
