@@ -16,6 +16,10 @@ class DrillDown extends Component {
         this.objDrillDown = {};
         this.getCustomizedLinksData = [];
         this.newLinkingPageURL = {}
+
+        this.isTag1Valid = true;
+        this.isTag2Valid = true;
+        this.isDrillDownTagValid = true;
         this.state = {
             showTag1Preview: false,
             showTag2Preview: false,
@@ -65,12 +69,14 @@ class DrillDown extends Component {
             $('#collapseFeaturePageTag1').collapse('toggle');
             $('.card').attr('id', 'drillDownHide');
             $('#featurePageTag1Preview').text('Preview');
+            this.isTag1Valid = true;
             this.setState({ showTag1Preview: false });
         }
         else if ($('#featurePageTag2Preview').text() !== 'Preview') {
             $('#collapseFeaturePageTag2').collapse('toggle');
             $('.card').attr('id', 'drillDownHide');
             $('#featurePageTag2Preview').text('Preview');
+            this.isTag2Valid = true;
             this.setState({ showTag2Preview: false });
         }
 
@@ -78,6 +84,7 @@ class DrillDown extends Component {
             $('#collapseDrillDownAlias').collapse('toggle');
             $('.card').attr('id', 'drillDownHide');
             $('#DrillDownAliasPreview').text('Preview');
+            this.isDrillDownTagValid = true;
             this.setState({ showDrillDownAliasPreview: false });
         }
 
@@ -89,14 +96,88 @@ class DrillDown extends Component {
     }
 
     tag1PreviewOnClick() {
+        var arrSelectedTags = this.refs.FeaturePageTag1.value.toString().split('_');
+        var filterCriteria = [
+            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
+            { Field: "Tag_Topic", Values: arrSelectedTags[0] },
+            { Field: "Tag_When", Values: arrSelectedTags[1] },
+            { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
+            { Field: "Tag_AgeRange", Values: arrSelectedTags[3] },
+            { Field: "Tag_Duration", Values: arrSelectedTags[4] },
+            { Field: "Tag_LanguageOfInstruction", Values: arrSelectedTags[5] },
+            { Field: "Tag_LanguageLearned", Values: arrSelectedTags[6] },
+            { Field: "Tag_Platform", Values: arrSelectedTags[7] },
+            { Field: "Tag_Continent", Values: arrSelectedTags[8] },
+            { Field: "Tag_Country", Values: arrSelectedTags[9] },
+            { Field: "Tag_State", Values: arrSelectedTags[10] },
+            { Field: "Tag_City", Values: arrSelectedTags[11] },
+            { Field: "Tag_Feature", Values: arrSelectedTags[12] }
+        ];
+
+        if (filterCriteria.filter(m => m.Values === undefined || m.Values === '').length > 0) {
+            this.isTag1Valid = false;
+        }
+        else {
+            this.isTag1Valid = true;
+        }
         this.setState({ showTag1Preview: true });
     }
 
     tag2PreviewOnClick() {
+        var arrSelectedTags = this.refs.FeaturePageTag2.value.toString().split('_');
+        var filterCriteria = [
+            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
+            { Field: "Tag_Topic", Values: arrSelectedTags[0] },
+            { Field: "Tag_When", Values: arrSelectedTags[1] },
+            { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
+            { Field: "Tag_AgeRange", Values: arrSelectedTags[3] },
+            { Field: "Tag_Duration", Values: arrSelectedTags[4] },
+            { Field: "Tag_LanguageOfInstruction", Values: arrSelectedTags[5] },
+            { Field: "Tag_LanguageLearned", Values: arrSelectedTags[6] },
+            { Field: "Tag_Platform", Values: arrSelectedTags[7] },
+            { Field: "Tag_Continent", Values: arrSelectedTags[8] },
+            { Field: "Tag_Country", Values: arrSelectedTags[9] },
+            { Field: "Tag_State", Values: arrSelectedTags[10] },
+            { Field: "Tag_City", Values: arrSelectedTags[11] },
+            { Field: "Tag_Feature", Values: arrSelectedTags[12] }
+        ];
+
+        if (filterCriteria.filter(m => m.Values === undefined || m.Values === '').length > 0) {
+            this.isTag2Valid = false;
+        }
+        else {
+            this.isTag2Valid = true;
+        }
         this.setState({ showTag2Preview: true });
     }
 
     DrillDownAliasPreviewOnClick() {
+
+        var arrSelectedTags = this.refs.DrillDownAlias.value.toString().split('_');
+        var filterCriteria = [
+            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
+            { Field: "Tag_Topic", Values: arrSelectedTags[0] },
+            { Field: "Tag_When", Values: arrSelectedTags[1] },
+            { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
+            { Field: "Tag_AgeRange", Values: arrSelectedTags[3] },
+            { Field: "Tag_Duration", Values: arrSelectedTags[4] },
+            { Field: "Tag_LanguageOfInstruction", Values: arrSelectedTags[5] },
+            { Field: "Tag_LanguageLearned", Values: arrSelectedTags[6] },
+            { Field: "Tag_Platform", Values: arrSelectedTags[7] },
+            { Field: "Tag_Continent", Values: arrSelectedTags[8] },
+            { Field: "Tag_Country", Values: arrSelectedTags[9] },
+            { Field: "Tag_State", Values: arrSelectedTags[10] },
+            { Field: "Tag_City", Values: arrSelectedTags[11] },
+            { Field: "Tag_Feature", Values: arrSelectedTags[12] }
+        ];
+
+        if (filterCriteria.filter(m => m.Values === undefined || m.Values === '').length > 0) {
+            this.isDrillDownTagValid = false;
+        }
+        else {
+            this.isDrillDownTagValid = true;
+        }
+
         this.setState({ showDrillDownAliasPreview: true });
     }
 
@@ -143,7 +224,7 @@ class DrillDown extends Component {
 
     RemoveLinkingPage = (value) => {
         this.getCustomizedLinksData = this.getCustomizedLinksData.filter(m => m.PageUrl !== value['PageUrl']);
-        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => {return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>'}).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
         this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
@@ -151,7 +232,7 @@ class DrillDown extends Component {
     AddLinkingPage() {
         if (this.newLinkingPageURL.length !== undefined) {
             this.getCustomizedLinksData.push(this.newLinkingPageURL[0]);
-            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => {return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>'}).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
             this.props.getDrillDownData(this.objDrillDown);
             this.setState({ showCustomizedTags: true });
         }
@@ -180,7 +261,9 @@ class DrillDown extends Component {
                                         </span>
                                     </div>
                                     <div id="collapseFeaturePageTag1" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
-                                        {this.state.showTag1Preview ?
+                                    {!this.isTag1Valid ? <div class="alert alert-danger" role="alert">
+                                                                Invalid tag!
+                                                                </div> :this.state.showTag1Preview ?
                                             <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : this.objDrillDown.FeaturePageTag1} /> : ''}
                                     </div>
                                 </div>
@@ -199,7 +282,9 @@ class DrillDown extends Component {
                                     </span>
                                 </div>
                                 <div id="collapseFeaturePageTag2" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
-                                    {this.state.showTag2Preview ?
+                                {!this.isTag2Valid ? <div class="alert alert-danger" role="alert">
+                                                                Invalid tag!
+                                                                </div> :this.state.showTag2Preview ?
                                         <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
                                 </div>
                             </div>
@@ -217,7 +302,7 @@ class DrillDown extends Component {
                                     <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
                                 </div> </div> : ''}
 
-                         <br />
+                        <br />
                         {/* Drill Down Alias Content */}
                         <strong> Drill Down Alias: </strong>
                         <br />
@@ -230,8 +315,10 @@ class DrillDown extends Component {
                                     </span>
                                 </div>
                                 <div id="collapseDrillDownAlias" class="collapse" aria-labelledby="DrillDown" data-parent="DrillDownAliasButton">
-                                    {this.state.showDrillDownAliasPreview ?
-                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
+                                    {!this.isDrillDownTagValid ? <div class="alert alert-danger" role="alert">
+                                                                Invalid tag!
+                                                                </div> : this.state.showDrillDownAliasPreview ?
+                                            <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
                                 </div>
                             </div>
                         </div>
