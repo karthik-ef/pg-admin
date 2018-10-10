@@ -63,20 +63,20 @@ class FeaturePreview extends Component {
 
         var arrSelectedTags = this.props.setData.toString().split('_');
         var filterCriteria = [
-            { Field: "Tag_Experience", Values: arrSelectedTags[0] },
-            { Field: "Tag_KeywordTopic", Values: arrSelectedTags[1] },
-            { Field: "Tag_When", Values: arrSelectedTags[2] },
-            { Field: "Tag_CourseType", Values: arrSelectedTags[3] },
-            { Field: "Tag_AgeRange", Values: arrSelectedTags[4] },
-            { Field: "Tag_Duration", Values: arrSelectedTags[5] },
-            { Field: "Tag_LocalOffice", Values: arrSelectedTags[6] },
-            { Field: "Tag_Language", Values: arrSelectedTags[7] },
-            { Field: "Tag_Platform", Values: arrSelectedTags[8] },
-            { Field: "Tag_Continent", Values: arrSelectedTags[9] },
-            { Field: "Tag_Country", Values: arrSelectedTags[10] },
-            { Field: "Tag_State", Values: arrSelectedTags[11] },
-            { Field: "Tag_City", Values: arrSelectedTags[12] },
-            { Field: "Tag_Feature", Values: arrSelectedTags[13] }
+            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
+            { Field: "Tag_Topic", Values: arrSelectedTags[0] },
+            { Field: "Tag_When", Values: arrSelectedTags[1] },
+            { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
+            { Field: "Tag_AgeRange", Values: arrSelectedTags[3] },
+            { Field: "Tag_Duration", Values: arrSelectedTags[4] },
+            { Field: "Tag_LanguageOfInstruction", Values: arrSelectedTags[5] },
+            { Field: "Tag_LanguageLearned", Values: arrSelectedTags[6] },
+            { Field: "Tag_Platform", Values: arrSelectedTags[7] },
+            { Field: "Tag_Continent", Values: arrSelectedTags[8] },
+            { Field: "Tag_Country", Values: arrSelectedTags[9] },
+            { Field: "Tag_State", Values: arrSelectedTags[10] },
+            { Field: "Tag_City", Values: arrSelectedTags[11] },
+            { Field: "Tag_Feature", Values: arrSelectedTags[12] }
         ];
 
         this.setState({data : this.props.UniqueContentData.flexFilter(filterCriteria.filter(m => m.Values !== '*'))});

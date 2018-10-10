@@ -19,6 +19,7 @@ class DrillDown extends Component {
         this.state = {
             showTag1Preview: false,
             showTag2Preview: false,
+            showDrillDownAlias: false,
             showCustomizedTags: false
         }
     }
@@ -45,6 +46,17 @@ class DrillDown extends Component {
                 $(this).text('Preview');
             }
         });
+
+        $('#DrillDownAliasPreview').click(function () {
+            if ($(this).text() === 'Preview') {
+                $('.card').attr('id', 'drillDownPreview');
+                $(this).text('Hide');
+            }
+            else {
+                $('.card').attr('id', 'drillDownHide');
+                $(this).text('Preview');
+            }
+        });
     }
 
     // Pass MetaInformation data to parent component 
@@ -61,8 +73,18 @@ class DrillDown extends Component {
             $('#featurePageTag2Preview').text('Preview');
             this.setState({ showTag2Preview: false });
         }
+
+        else if ($('#DrillDownAliasPreview').text() !== 'Preview') {
+            $('#collapseDrillDownAlias').collapse('toggle');
+            $('.card').attr('id', 'drillDownHide');
+            $('#DrillDownAliasPreview').text('Preview');
+            this.setState({ showDrillDownAliasPreview: false });
+        }
+
+
         this.objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
         this.objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
+        this.objDrillDown.DrillDownAlias = this.refs.DrillDownAlias.value;
         this.props.getDrillDownData(this.objDrillDown);
     }
 
@@ -72,6 +94,10 @@ class DrillDown extends Component {
 
     tag2PreviewOnClick() {
         this.setState({ showTag2Preview: true });
+    }
+
+    DrillDownAliasPreviewOnClick() {
+        this.setState({ showDrillDownAliasPreview: true });
     }
 
     onBlur() {
@@ -190,6 +216,25 @@ class DrillDown extends Component {
                                     <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
                                     <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
                                 </div> </div> : ''}
+
+                         <br />
+                        {/* Drill Down Alias Content */}
+                        <strong> Drill Down Alias: </strong>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="input-group input-group-sm">
+                                    <input type="text" class="form-control input-sm" id="txtDrillDownAlias" defaultValue={this.props.setDrillDownData['DrillDownAlias']} ref="DrillDownAlias" onChange={this.onChange.bind(this)} />
+                                    <span class="input-group-btn">
+                                        <button id="DrillDownAliasPreview" data-toggle="collapse" data-target="#collapseDrillDownAlias" aria-expanded="true" aria-controls="collapseDrillDownAlias" class="btn btn-primary btn-sm" type="submit" onBlur={this.onBlur} onClick={this.DrillDownAliasPreviewOnClick.bind(this)} >Preview</button>
+                                    </span>
+                                </div>
+                                <div id="collapseDrillDownAlias" class="collapse" aria-labelledby="DrillDown" data-parent="DrillDownAliasButton">
+                                    {this.state.showDrillDownAliasPreview ?
+                                        <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
