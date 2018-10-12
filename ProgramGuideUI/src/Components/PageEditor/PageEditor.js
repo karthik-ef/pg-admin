@@ -91,13 +91,13 @@ class PageEditor extends Component {
             this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : EditPage['ParentPageID'] ;
         }
 
-        this.modifiedData.TagExperience = this.isPageTagModified
-            ? this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
-            : EditPage['Tag_Experience'];
+        // this.modifiedData.TagExperience = this.isPageTagModified
+        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
+        //     : EditPage['Tag_Experience'];
 
             this.modifiedData.TagKeywordTopic = this.isPageTagModified
-            ? this.objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString()
-            : EditPage['Tag_KeywordTopic'];
+            ? this.objPageTag.filter(m => m.Field === 'Tag_Topic').map(m => { return m.Values }).toString()
+            : EditPage['Tag_Topic'];
 
             this.modifiedData.TagWhen = this.isPageTagModified
             ? this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
@@ -116,12 +116,12 @@ class PageEditor extends Component {
             : EditPage['Tag_Duration'];
 
             this.modifiedData.TagLocalOffice = this.isPageTagModified
-            ? this.objPageTag.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString()
-            : EditPage['Tag_LocalOffice'];
+            ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString()
+            : EditPage['Tag_LanguageOfInstruction'];
 
             this.modifiedData.TagLanguage = this.isPageTagModified
-            ? this.objPageTag.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString()
-            : EditPage['Tag_Language'];
+            ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageLearned').map(m => { return m.Values }).toString()
+            : EditPage['Tag_LanguageLearned'];
 
             this.modifiedData.TagPlatform = this.isPageTagModified
             ? this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
@@ -172,14 +172,15 @@ class PageEditor extends Component {
         // if (EditPage['PageUrl'] === '/test/'){
         //     this.APICall();
         // }
-        var tagStructure = this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
+        var tagStructure = 
+            // this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString() + '_' + 
-            this.objPageTag.filter(m => m.Field === 'Tag_LocalOffice').map(m => { return m.Values }).toString() + '_' + 
-            this.objPageTag.filter(m => m.Field === 'Tag_Language').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_LanguageLearned').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString() + '_' + 
@@ -218,6 +219,7 @@ class PageEditor extends Component {
 
     }
     CreateNewContent(){
+        console.log(this.modifiedData)
         $.ajax({
             url: 'http://ctdev.ef.com:3000/CreateNewContent',
             type: 'POST',
