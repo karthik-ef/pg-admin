@@ -126,14 +126,19 @@ class TextBox extends React.Component {
   };
 
   onBlur = (event, { highlightedSuggestion }) => {
-    this.props.selectedValue(this.state.value)
+    if (this.props.Id !== undefined && this.props.Id === 'FeatureTag3') {
+      this.props.selectedValueForFeatureTag3(this.state.value);
     }
+    else {
+      this.props.selectedValue(this.state.value);
+    }
+  }
 
   render() {
     const { value, suggestions } = this.state;
     let inputProps = {};
-    if(this.state.setInitialValue && this.props.SetInitialData !== undefined){
-      inputProps  = {
+    if (this.state.setInitialValue && this.props.SetInitialData !== undefined) {
+      inputProps = {
         value: this.props.SetInitialData,
         onChange: this.onChange,
         onBlur: this.onBlur,
@@ -150,7 +155,7 @@ class TextBox extends React.Component {
     }
 
     return (
-      <Autosuggest 
+      <Autosuggest
         suggestions={suggestions}
         onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
         onSuggestionsClearRequested={this.onSuggestionsClearRequested}

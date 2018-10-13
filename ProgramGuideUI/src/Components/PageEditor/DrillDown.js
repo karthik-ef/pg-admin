@@ -7,7 +7,7 @@ import Preview from './FeaturePreview';
 import TextBox from '../CustomControls/TextBox';
 import LinkingPagesPreview from './LinkingPagesPreview';
 
-let objDrillDown = {}, getCustomizedLinksData, newLinkingPageURL;
+let objDrillDown = {}, getCustomizedLinksData;
 
 class DrillDown extends Component {
 
@@ -16,6 +16,7 @@ class DrillDown extends Component {
         this.objDrillDown = {};
         this.getCustomizedLinksData = [];
         this.newLinkingPageURL = {}
+        this.newLinkingPageURL1 = {}
 
         this.getFeatureTag3Results = [];
         this.getCustomizedFeatureTagResults = [];
@@ -190,7 +191,6 @@ class DrillDown extends Component {
     }
 
     getSelectedValue = (value) => {
-        //alert('sdads')
         console.log(this.newLinkingPageURL.length);
         if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
             this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
@@ -199,11 +199,23 @@ class DrillDown extends Component {
             console.log(this.newLinkingPageURL);
         }
         else {
+            this.newLinkingPageURL = {}
+        }
+    }
+
+    getSelectedFeatureTag3Value = (value) => {
+        if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
+            this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
+            this.setState({ isPgUrl: true });
+            this.newLinkingPageURL1 = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { UniqueContent_ID: m.UniqueContent_ID, PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
+            console.log(this.newLinkingPageURL1);
+        }
+        else {
             this.setState({ isPgUrl: false });
             // this.newLinkingPageURL.length > 0 
             // ? this.newLinkingPageURL = {UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }
-            this.newLinkingPageURL = [{ UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }];
-            console.log(this.newLinkingPageURL);
+            this.newLinkingPageURL1 = [{ UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }];
+            console.log(this.newLinkingPageURL1);
         }
     }
 
@@ -246,7 +258,7 @@ class DrillDown extends Component {
         }
         else {
             $('#featureTag3Preview').text('Show Pages');
-            this.newLinkingPageURL = {};
+            this.newLinkingPageURL1 = {};
             this.setState({ showFeatureTag3Pages: false });
         }
     }
@@ -260,18 +272,21 @@ class DrillDown extends Component {
 
     AddLinkingPage() {
         if (this.newLinkingPageURL.length !== undefined) {
+            var PageUrl = this.newLinkingPageURL.map(m => {return m.PageUrl}).toString();
+            if(this.getCustomizedFeatureTagResults.filter(m => m.PageUrl === PageUrl).length ===0){
             this.getCustomizedFeatureTagResults.push(this.newLinkingPageURL[0]);
             this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
             this.props.getDrillDownData(this.objDrillDown);
             this.setState({ showCustomizedTags: true });
         }
     }
+    }
 
     AddFeatureTag3Links(){
-        if (this.newLinkingPageURL.length !== undefined) {
-            var PageUrl = this.newLinkingPageURL.map(m => {return m.PageUrl}).toString();
+        if (this.newLinkingPageURL1.length !== undefined) {
+            var PageUrl = this.newLinkingPageURL1.map(m => {return m.PageUrl}).toString();
             if(this.getFeatureTag3Results.filter(m => m.PageUrl === PageUrl).length ===0){
-                this.getFeatureTag3Results.push(this.newLinkingPageURL[0]);
+                this.getFeatureTag3Results.push(this.newLinkingPageURL1[0]);
                 this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
                 this.props.getDrillDownData(this.objDrillDown);
                 this.setState({ showFeatureTag3Pages: true });
@@ -347,7 +362,7 @@ class DrillDown extends Component {
                         {this.state.showFeatureTag3Pages
                             ? <div> <LinkingPagesPreview setLinkingPageData={this.getFeatureTag3Results} DeleteRow={this.RemoveFeatureTag3Links.bind(this)} /> <br />
                                 <div class="input-group input-group-sm" >
-                                    <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
+                                    <TextBox Id= "FeatureTag3" PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValueForFeatureTag3={this.getSelectedFeatureTag3Value.bind(this)} />
                                     <input type="text" ref="AnchorText" placeholder="Anchor text" />
                                     <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddFeatureTag3Links.bind(this)}>Add linking page </button>
                                 </div> 
