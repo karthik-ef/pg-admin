@@ -269,10 +269,13 @@ class DrillDown extends Component {
 
     AddFeatureTag3Links(){
         if (this.newLinkingPageURL.length !== undefined) {
-            this.getFeatureTag3Results.push(this.newLinkingPageURL[0]);
-            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
-            this.props.getDrillDownData(this.objDrillDown);
-            this.setState({ showFeatureTag3Pages: true });
+            var PageUrl = this.newLinkingPageURL.map(m => {return m.PageUrl}).toString();
+            if(this.getFeatureTag3Results.filter(m => m.PageUrl === PageUrl).length ===0){
+                this.getFeatureTag3Results.push(this.newLinkingPageURL[0]);
+                this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+                this.props.getDrillDownData(this.objDrillDown);
+                this.setState({ showFeatureTag3Pages: true });
+            }
         }
     }
 
