@@ -17,6 +17,9 @@ class DrillDown extends Component {
         this.getCustomizedLinksData = [];
         this.newLinkingPageURL = {}
 
+        this.getFeatureTag3Results = [];
+        this.getCustomizedFeatureTagResults = [];
+
         this.isTag1Valid = true;
         this.isTag2Valid = true;
         this.isDrillDownTagValid = true;
@@ -24,7 +27,8 @@ class DrillDown extends Component {
             showTag1Preview: false,
             showTag2Preview: false,
             showDrillDownAlias: false,
-            showCustomizedTags: false
+            showCustomizedTags: false,
+            showFeatureTag3Pages: false
         }
     }
 
@@ -186,12 +190,20 @@ class DrillDown extends Component {
     }
 
     getSelectedValue = (value) => {
+        //alert('sdads')
+        console.log(this.newLinkingPageURL.length);
         if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
             this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
+            this.setState({ isPgUrl: true });
             this.newLinkingPageURL = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { UniqueContent_ID: m.UniqueContent_ID, PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
+            console.log(this.newLinkingPageURL);
         }
         else {
-            this.newLinkingPageURL = {}
+            this.setState({ isPgUrl: false });
+            // this.newLinkingPageURL.length > 0 
+            // ? this.newLinkingPageURL = {UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }
+            this.newLinkingPageURL = [{ UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }];
+            console.log(this.newLinkingPageURL);
         }
     }
 
@@ -202,7 +214,12 @@ class DrillDown extends Component {
             type: 'GET',
             cache: false,
             success: function (data) {
-                this.getCustomizedLinksData = data
+                this.getCustomizedLinksData = data;
+                console.log(data);
+                this.getFeatureTag3Results = data.filter(m => m.Type === false);
+                this.getCustomizedFeatureTagResults = data.filter(m => m.Type === true);
+                console.log(this.getFeatureTag3Results)
+
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
@@ -222,20 +239,48 @@ class DrillDown extends Component {
         }
     }
 
+    ShowfeatureTag3() {
+        if ($('#featureTag3Preview').text() === 'Show Pages') {
+            this.setState({ showFeatureTag3Pages: true });
+            $('#featureTag3Preview').text('Hide Pages');
+        }
+        else {
+            $('#featureTag3Preview').text('Show Pages');
+            this.newLinkingPageURL = {};
+            this.setState({ showFeatureTag3Pages: false });
+        }
+    }
+
     RemoveLinkingPage = (value) => {
-        this.getCustomizedLinksData = this.getCustomizedLinksData.filter(m => m.PageUrl !== value['PageUrl']);
-        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+        this.getCustomizedFeatureTagResults = this.getCustomizedFeatureTagResults.filter(m => m.PageUrl !== value['PageUrl']);
+        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
         this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
 
     AddLinkingPage() {
         if (this.newLinkingPageURL.length !== undefined) {
-            this.getCustomizedLinksData.push(this.newLinkingPageURL[0]);
-            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedLinksData.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+            this.getCustomizedFeatureTagResults.push(this.newLinkingPageURL[0]);
+            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
             this.props.getDrillDownData(this.objDrillDown);
             this.setState({ showCustomizedTags: true });
         }
+    }
+
+    AddFeatureTag3Links(){
+        if (this.newLinkingPageURL.length !== undefined) {
+            this.getFeatureTag3Results.push(this.newLinkingPageURL[0]);
+            this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+            this.props.getDrillDownData(this.objDrillDown);
+            this.setState({ showFeatureTag3Pages: true });
+        }
+    }
+
+    RemoveFeatureTag3Links(value){
+        this.getFeatureTag3Results = this.getFeatureTag3Results.filter(m => m.PageUrl !== value['PageUrl']);
+        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+        this.props.getDrillDownData(this.objDrillDown);
+        this.setState({ showFeatureTag3Pages: true });
     }
     render() {
         return (
@@ -290,13 +335,31 @@ class DrillDown extends Component {
                             </div>
                         </div>
                         <br />
-                        {/* Feature Tag 2 Content */}
-                        <strong> Feature Tag Page 3: </strong>
+
+                        {/* Feature Tag 3 */}
+                        <strong> Feature Tag 3: </strong>
+                        <br />
+                        <button id="featureTag3Preview" class="btn btn-primary btn-sm" type="submit" onClick={this.ShowfeatureTag3.bind(this)}>Show Pages</button>
+                        <br />
+                        {this.state.showFeatureTag3Pages
+                            ? <div> <LinkingPagesPreview setLinkingPageData={this.getFeatureTag3Results} DeleteRow={this.RemoveFeatureTag3Links.bind(this)} /> <br />
+                                <div class="input-group input-group-sm" >
+                                    <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
+                                    <input type="text" ref="AnchorText" placeholder="Anchor text" />
+                                    <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddFeatureTag3Links.bind(this)}>Add linking page </button>
+                                </div> 
+                                </div> 
+                                : ''}
+
+                        <br />
+
+                        {/* Feature Tag Customized */}
+                        <strong> Feature Tag Customized: </strong>
                         <br />
                         <button id="customizedTagsPreview" class="btn btn-primary btn-sm" type="submit" onClick={this.ShowCustomizedTags.bind(this)}>Show Customized Tags</button>
                         <br />
                         {this.state.showCustomizedTags
-                            ? <div> <LinkingPagesPreview setLinkingPageData={this.getCustomizedLinksData} DeleteRow={this.RemoveLinkingPage.bind(this)} /> <br />
+                            ? <div> <LinkingPagesPreview setLinkingPageData={this.getCustomizedFeatureTagResults} DeleteRow={this.RemoveLinkingPage.bind(this)} /> <br />
                                 <div class="input-group input-group-sm" >
                                     <TextBox PageUrl={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValue={this.getSelectedValue.bind(this)} />
                                     <button class="btn btn-primary btn-sm" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
