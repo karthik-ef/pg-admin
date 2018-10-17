@@ -268,7 +268,7 @@ class DrillDown extends Component {
 
     RemoveLinkingPage = (value) => {
         this.getCustomizedFeatureTagResults = this.getCustomizedFeatureTagResults.filter(m => m.PageUrl !== value['PageUrl']);
-        this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+        this.objDrillDown.CustomizedLinksData = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
         this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
@@ -278,9 +278,9 @@ class DrillDown extends Component {
             var PageUrl = this.newLinkingPageURL.map(m => { return m.PageUrl }).toString();
             if (this.getCustomizedFeatureTagResults.filter(m => m.PageUrl === PageUrl).length === 0) {
                 this.getCustomizedFeatureTagResults.push(this.newLinkingPageURL[0]);
-                this.objDrillDown.CustomizedLinksData = '<CustomizedLinks>' + this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
-               
-               console.log(this.objDrillDown.CustomizedLinksData)
+                this.objDrillDown.CustomizedLinksData = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
+
+                console.log(this.objDrillDown.CustomizedLinksData)
                 this.props.getDrillDownData(this.objDrillDown);
                 this.setState({ showCustomizedTags: true });
             }
@@ -292,17 +292,16 @@ class DrillDown extends Component {
         if (this.newLinkingPageURL1.length !== undefined && this.AnchorTextEntered) {
             var PageUrl = this.newLinkingPageURL1.map(m => { return m.PageUrl }).toString();
             if (this.getFeatureTag3Results.filter(m => m.PageUrl === PageUrl).length === 0) {
-                console.log(this.newLinkingPageURL1[0]);
+                this.getFeatureTag3Results.push(this.newLinkingPageURL1[0]);
 
-                if(this.newLinkingPageURL1[0]['UniqueContent_ID'] === ''){
-                    this.getFeatureTag3Results.push(this.newLinkingPageURL1[0]);
-                }
-                else{
-                    this.getFeatureTag3Results.push({ UniqueContent_ID: this.newLinkingPageURL1[0]['UniqueContent_ID'], PageUrl: '', PageTitle: '', BannerImage: '', LabelTag: '' })
-                }
-                console.log(this.getFeatureTag3Results);
-                this.objDrillDown.CustomizedLinksData1 = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
-                console.log(this.objDrillDown.CustomizedLinksData1)
+                // Pg and Non Pg pages
+                var nonPgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID === '');
+                var pgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID !== '');
+
+                var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+                var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+
+                this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
                 this.props.getDrillDownData(this.objDrillDown);
                 this.refs.AnchorText.value = ''
                 this.AnchorTextEntered = false;
@@ -313,7 +312,14 @@ class DrillDown extends Component {
 
     RemoveFeatureTag3Links(value) {
         this.getFeatureTag3Results = this.getFeatureTag3Results.filter(m => m.PageUrl !== value['PageUrl']);
-        this.objDrillDown.CustomizedLinksData1 = '<CustomizedLinks>' + this.getFeatureTag3Results.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ') + '</CustomizedLinks>';
+
+        var nonPgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID === '');
+        var pgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID !== '');
+
+        var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+        var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+
+        this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
         this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showFeatureTag3Pages: true });
     }

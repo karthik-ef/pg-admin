@@ -174,7 +174,7 @@ class PageEditor extends Component {
         // }
         var tagStructure = 
             // this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
-            this.objPageTag.filter(m => m.Field === 'Tag_KeywordTopic').map(m => { return m.Values }).toString() + '_' + 
+            this.objPageTag.filter(m => m.Field === 'Tag_Topic').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString() + '_' + 
@@ -204,8 +204,10 @@ class PageEditor extends Component {
 
         if(this.objDrillDown['CustomizedLinksData'] !== undefined){
             this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
-            this.objCustomizedData.LinkPageXml = this.objDrillDown['CustomizedLinksData'];
-            this.SaveCustomizedTags()
+            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + this.objDrillDown['CustomizedLinksData1'] + '</CustomizedLinks>';
+            
+            console.log(this.objCustomizedData.LinkPageXml)
+            // this.SaveCustomizedTags()
         }
         if(!this.validation)
         {
