@@ -172,7 +172,10 @@ class PageEditor extends Component {
         // if (EditPage['PageUrl'] === '/test/'){
         //     this.APICall();
         // }
-        var tagStructure = 
+
+        var tagStructure = {};
+        if(this.isPageTagModified){
+            tagStructure = 
             // this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Topic').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString() + '_' + 
@@ -187,6 +190,8 @@ class PageEditor extends Component {
             this.objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString() + '_' + 
             this.objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
+
+        }
         
         if( this.Checkduplicate.filter(m => m.Tags === tagStructure).length > 0 )
         {
