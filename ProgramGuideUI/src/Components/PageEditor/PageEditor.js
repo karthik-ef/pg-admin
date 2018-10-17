@@ -207,7 +207,7 @@ class PageEditor extends Component {
             this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + this.objDrillDown['CustomizedLinksData1'] + '</CustomizedLinks>';
             
             console.log(this.objCustomizedData.LinkPageXml)
-            // this.SaveCustomizedTags()
+            this.SaveCustomizedTags()
         }
         if(!this.validation)
         {

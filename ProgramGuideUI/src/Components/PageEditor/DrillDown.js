@@ -299,7 +299,7 @@ class DrillDown extends Component {
                 var pgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID !== '');
 
                 var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
-                var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+                var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
 
                 this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
                 this.props.getDrillDownData(this.objDrillDown);
@@ -317,7 +317,7 @@ class DrillDown extends Component {
         var pgPages = this.getFeatureTag3Results.filter(m => m.UniqueContent_ID !== '');
 
         var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
-        var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
+        var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
 
         this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
         this.props.getDrillDownData(this.objDrillDown);
