@@ -44,18 +44,15 @@ class BulkUpload extends Component {
         type: String,
         required: true
       },
+
 	    'PageUrl': {
         prop: 'PageUrl',
         type: String,
         required: true
       },
-	    'Tag_Experience': {
-        prop: 'Tag_Experience',
-        type: String,
-        required: true
-      },
-      'Tag_KeywordTopic': {
-        prop: 'Tag_KeywordTopic',
+
+      'Tag_Topic': {
+        prop: 'Tag_Topic',
         type: String,
         required: true,
       },
@@ -79,13 +76,13 @@ class BulkUpload extends Component {
         type: String,
         required: true
       },
-	    'Tag_LocalOffice': {
-        prop: 'Tag_LocalOffice',
+	    'Tag_LanguageOfInstruction': {
+        prop: 'Tag_LanguageOfInstruction',
         type: String,
         required: false
       },
-      'Tag_Language': {
-        prop: 'Tag_Language',
+      'Tag_LanguageLearned': {
+        prop: 'Tag_LanguageLearned',
         type: String,
         required: true
       },
@@ -225,7 +222,22 @@ class BulkUpload extends Component {
           return escapeXml(value);
             
           }
+        },
+          'DrillDownAlias': {
+            prop: 'DrillDownAlias',
+            type: String,
+            required: true,
+            
+          
       },
+      'FeaturePageTagCustomized': {
+        prop: 'FeaturePageTagCustomized',
+        type: String,
+        required: true,
+        
+      
+  },
+      
 	    'FeaturePageTag1': {
         prop: 'FeaturePageTag1',
         type: String,
@@ -258,6 +270,8 @@ class BulkUpload extends Component {
     readXlsxFile(file, { schema }).then(({ rows, errors }) => {
        //`errors` have shape `{ row, column, error, value }`.
       
+     console.log(rows);
+     
      var xml = jsonxml({
      
       XmlDocument:rows
@@ -279,12 +293,23 @@ BulkUpload() {
       dataType: 'Text',
       data: this.h,
       cache: false,
-      success: function (data) {
+      success: function (data, status, err) {
         console.log(data);
-        console.log('');
+        if( data!=null ||data == undefined)
+        {
+        alert(data);
+        }
+        else
+        {
+          alert("Data saved sucess fully")
+        }
+        
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(err);
+       
+
+
       }
     });
 
@@ -299,7 +324,7 @@ BulkUpload() {
       
         <input type="file" id="input"  />
       </div>
-      <input type="submit" value="Upload" id="btnSubmit" onClick={this.handleUploadFile}/>
+      <input type="submit" value="Upload" id="tnSubmit" onClick={this.handleUploadFile}/>
       </div>
     );
   }

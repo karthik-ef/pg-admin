@@ -50,10 +50,10 @@ class SearchResult extends Component {
         this.state = {
             showModal: false,
             showEditContentModal: false,
-            columnName: ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_KeywordTopic", "Tag_When", "Tag_CourseType", "Tag_AgeRange",
-                "Tag_Duration", "Tag_LocalOffice", "Tag_Language", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", 
+            columnName: ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_Topic", "Tag_When", "Tag_CourseType", "Tag_AgeRange",
+                "Tag_Duration", "Tag_LanguageOfInstruction", "Tag_LanguageLearned", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", 
                 "BannerImage", "MetaTitle", "MetaDescription", "MetaRobot", "PageTitle",  "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2",
-                "ContentText1", "ContentText2", "BreadcrumbText", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "ParentPageID"]
+                "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTagCustomized", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "ParentPageID"]
             // columnName: ["Page ID", "ParentPage ID", "Page Url", "Market Code", "Banner Image", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "Breadcrumb Text", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "Page Title", "Meta Title", "Meta Description"],
         };
     }
@@ -83,13 +83,13 @@ class SearchResult extends Component {
                         columns: this.state.columnName,
                         data: this.UniqueContentData.map(m => {
                             return [{ value: m.UniqueContent_ID.toString() }, { value: m.MarketCode }, { value: m.PageUrl },
-                                { value: m.Tag_KeywordTopic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
-                                { value: m.Tag_Duration }, { value: m.Tag_LocalOffice }, { value: m.Tag_Language }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
+                                { value: m.Tag_Topic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
+                                { value: m.Tag_Duration }, { value: m.Tag_LanguageOfInstruction }, { value: m.Tag_LanguageLearned }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
                                 { value: m.Tag_Country }, { value: m.Tag_State }, { value: m.Tag_City }, { value: m.Tag_Feature },
                                 { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                                 { value: m.PageTitle }, { value: m.VisibleIntroText },
                                 { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                                { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                                { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
                                 { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                                 { value: m.ParentPageID.toString() }]
                             })
@@ -203,17 +203,17 @@ class SearchResult extends Component {
                 columns: this.state.columnName,
                 data: this.FilteredData.map(m => {
                     return [{ value: m.UniqueContent_ID.toString() }, { value: m.MarketCode }, { value: m.PageUrl },
-                        { value: m.Tag_KeywordTopic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
-                        { value: m.Tag_Duration }, { value: m.Tag_LocalOffice }, { value: m.Tag_Language }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
+                        { value: m.Tag_Topic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
+                        { value: m.Tag_Duration }, { value: m.Tag_LanguageOfInstruction }, { value: m.Tag_LanguageLearned }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
                         { value: m.Tag_Country }, { value: m.Tag_State }, { value: m.Tag_City }, { value: m.Tag_Feature },
                         { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                         { value: m.PageTitle }, { value: m.VisibleIntroText },
                         { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                        { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
                         { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                         { value: m.ParentPageID.toString() }]
                     })
-            }
+    }
         ]
     }
 
@@ -226,17 +226,17 @@ class SearchResult extends Component {
                 columns: this.state.columnName,
                 data: this.UniqueContentData.map(m => {
                     return [{ value: m.UniqueContent_ID.toString() }, { value: m.MarketCode }, { value: m.PageUrl },
-                        { value: m.Tag_KeywordTopic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
-                        { value: m.Tag_Duration }, { value: m.Tag_LocalOffice }, { value: m.Tag_Language }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
+                        { value: m.Tag_Topic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
+                        { value: m.Tag_Duration }, { value: m.Tag_LanguageOfInstruction }, { value: m.Tag_LanguageLearned }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
                         { value: m.Tag_Country }, { value: m.Tag_State }, { value: m.Tag_City }, { value: m.Tag_Feature },
                         { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                         { value: m.PageTitle }, { value: m.VisibleIntroText },
                         { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                        { value: m.ContentText2 }, { value: m.BreadcrumbText },
+                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
                         { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                         { value: m.ParentPageID.toString() }]
                     })
-            }
+    }
         ];
         this.setState({ showModal: this.state.showModal });
     }
