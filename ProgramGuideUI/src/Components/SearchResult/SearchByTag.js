@@ -76,15 +76,16 @@ class SearchByTag extends Component {
             dataType: 'json',
             cache: false,
             success: function (data) {
+                console.log(data)
                // this.setState({ tagExperienceData: data.filter(m => m.TagName === "Tag_Experience").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagKeywordTopicData: data.filter(m => m.TagName === "Tag_Topic").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagWhenData: data.filter(m => m.TagName === "Tag_When").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagCourseTypeData: data.filter(m => m.TagName === "Tag_CourseType").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagAgeRangeData: data.filter(m => m.TagName === "Tag_AgeRange").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagDurationData: data.filter(m => m.TagName === "Tag_Duration").map(m => { return { label: m.Value, value: m.Value } }) });
+               // this.setState({ tagDurationData: data.filter(m => m.TagName === "Tag_Duration").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagLanguageOfInstructionData: data.filter(m => m.TagName === "Tag_LanguageOfInstruction").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagLanguageData: data.filter(m => m.TagName === "Tag_LanguageLearned").map(m => { return { label: m.Value, value: m.Value } }) });
-                this.setState({ tagPlatformData: data.filter(m => m.TagName === "Tag_Platform").map(m => { return { label: m.Value, value: m.Value } }) });
+                //this.setState({ tagPlatformData: data.filter(m => m.TagName === "Tag_Platform").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagContinentData: data.filter(m => m.TagName === "Tag_Continent").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagCountryData: data.filter(m => m.TagName === "Tag_Country").map(m => { return { label: m.Value, value: m.Value } }) });
                 this.setState({ tagStateData: data.filter(m => m.TagName === "Tag_State").map(m => { return { label: m.Value, value: m.Value } }) });
@@ -98,8 +99,40 @@ class SearchByTag extends Component {
 
     }
 
+    getTagDuration(){
+        $.ajax({
+            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetDurationTags/?mc=de',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                console.log(data);
+            this.setState({ tagDurationData: data.map(m => { return { label: m, value: m } }) });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+    }
+
+    getTagPlatform(){
+        $.ajax({
+            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetTagPlatform/?mc=de',
+            dataType: 'json',
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                this.setState({ tagPlatformData: data.map(m => { return { label: m, value: m } }) });
+            }.bind(this),
+            error: function (xhr, status, err) {
+                console.log(err);
+            }
+        });
+    }
+
     componentDidMount() {
         this.getTagData();
+        this.getTagDuration();
+        this.getTagPlatform();
         $('#exampleModalLong').modal('show');
         // $(window).on('load', function () {
         //     $('#exampleModalLong').modal('show');
