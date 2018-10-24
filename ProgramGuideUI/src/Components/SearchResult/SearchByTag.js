@@ -273,66 +273,73 @@ class SearchByTag extends Component {
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
+                    <div class="col-sm-8">
+                        <label for="exampleInputEmail1"><strong>Duration details</strong></label>
+                        <input type="text" class="form-control" />
+                            {/* <Dropdown Tags={this.state.tagAgeRangeData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_AgeRange')} /> */}
+                        </div>
+
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 ml-auto">
+                    <div class="col-sm-10">
                         <label for="exampleInputEmail1"><strong>Tag_LanguageOfInstruction</strong></label>
                             <Dropdown Tags={this.state.tagLanguageOfInstructionData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LanguageOfInstruction'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_LanguageOfInstruction')} />
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
+                    <div class="col-md-5 ml-auto">
+                    <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_LanguageLearned</strong></label>
                             <Dropdown Tags={this.state.tagLanguageData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_LanguageLearned'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_LanguageLearned')} />
                         </div>
                     </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-4 ml-auto">
+                    <div class="col-sm-10">
                         <label for="exampleInputEmail1"><strong>Tag_Platform</strong></label>
                             <Dropdown Tags={this.state.tagPlatformData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Platform'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Platform')} />
                         </div>
                     </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
+                    <div class="col-md-5 ml-auto">
+                    <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_Continent</strong></label>
                             <Dropdown Tags={this.state.tagContinentData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Continent'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Continent')} />
                         </div>
                     </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
-                        <label for="exampleInputEmail1"><strong>Tag_Country</strong></label>
-                            <Dropdown Tags={this.state.tagCountryData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Country')} />
-                        </div>
-                    </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
+                    <div class="col-sm-10">
+                        <label for="exampleInputEmail1"><strong>Tag_Country</strong></label>
+                            <Dropdown Tags={this.state.tagCountryData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Country'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Country')} />
+                        </div>
+
+                    </div>
+                    <div class="col-md-5 ml-auto">
+                    <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Tag_State</strong></label>
                             <Dropdown Tags={this.state.tagStateData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_State'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_State')} />
                         </div>
                     </div>
-                    <div class="col-md-5 ml-auto">
-                        <div class="col-sm-8">
-                        <label for="exampleInputEmail1"><strong>Tag_City</strong></label>
-                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
-                        </div>
-                    </div>
                 </div>
                 <br />
                 <div class="row">
                     <div class="col-md-4 ml-auto">
-                        <div class="col-sm-10">
-                        <label for="exampleInputEmail1"><strong>Tag_Feature</strong></label>
-                            <Dropdown Tags={this.state.tagFeatureData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Feature')} />
+                    <div class="col-sm-10">
+                        <label for="exampleInputEmail1"><strong>Tag_City</strong></label>
+                            <Dropdown Tags={this.state.tagCityData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_City'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_City')} />
                         </div>
                     </div>
                     <div class="col-md-5 ml-auto">
+                    <div class="col-sm-8">
+                        <label for="exampleInputEmail1"><strong>Tag_Feature</strong></label>
+                            <Dropdown Tags={this.state.tagFeatureData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Feature'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_Feature')} />
+                        </div>
                     </div>
                 </div>
                 <br />
