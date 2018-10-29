@@ -58,7 +58,7 @@ class SearchByTag extends Component {
             tagCourseTypeValue: '',
             tagAgeRangeValue: '',
             tagDurationValue: '',
-            tagLanguageOfInstructionValue: [],
+            tagLanguageOfInstructionValue: '',
             tagLocaloffice: '',
             tagLanguageValue: '',
             tagPlatformValue: '',
@@ -217,7 +217,8 @@ class SearchByTag extends Component {
             { Field: "Tag_Country", Values: arrSelectedTags[9] },
             { Field: "Tag_State", Values: arrSelectedTags[10] },
             { Field: "Tag_City", Values: arrSelectedTags[11] },
-            { Field: "Tag_Feature", Values: arrSelectedTags[12] }
+            { Field: "Tag_Feature", Values: arrSelectedTags[12] },
+            { Field: "AdditionalDetails", Values : this.refs.AdditionalDetails.value}
         ];
 
         this.setState({ selectedTagValue: filterCriteria }, function () { this.props.SearchByTagValues(this.state.selectedTagValue) })
@@ -275,7 +276,7 @@ class SearchByTag extends Component {
                     <div class="col-md-5 ml-auto">
                     <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Duration details</strong></label>
-                        <input type="text" class="form-control" />
+                        <input type="text" class="form-control" ref = "AdditionalDetails" defaultValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration'] : ''} onBlur = {this.selectedTags.bind(this)}/>
                             {/* <Dropdown Tags={this.state.tagAgeRangeData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_AgeRange')} /> */}
                         </div>
 

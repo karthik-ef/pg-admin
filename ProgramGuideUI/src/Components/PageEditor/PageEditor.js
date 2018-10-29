@@ -115,6 +115,10 @@ class PageEditor extends Component {
             ?this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
             : EditPage['Tag_Duration'];
 
+            this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified
+            ?this.objPageTag.filter(m => m.Field === 'AdditionalDetails').map(m => { return m.Values }).toString()
+            : EditPage['FeaturePageTag3'];
+
             this.modifiedData.TagLocalOffice = this.isPageTagModified
             ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString()
             : EditPage['Tag_LanguageOfInstruction'];
@@ -203,7 +207,7 @@ class PageEditor extends Component {
             this.setState({ showDuplicateErrorForCreate: false})
             this.CreateNewContent();
         }
-        else if(EditPage['PageUrl'] === '/test/'){
+        else if(EditPage['PageUrl'] === '/testkarthik1029/'){
             this.APICall();
         }
 

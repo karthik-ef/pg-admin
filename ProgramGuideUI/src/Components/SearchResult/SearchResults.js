@@ -165,10 +165,10 @@ class SearchResult extends Component {
                 this.FilterCriteria = buildSelectedTag.substring(0, buildSelectedTag.length - 1);
                 this.FilteredBy = 'Search Tag';
                 if(IncludeInactivePage){
-                    this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                    this.FilteredData = this.UniqueContentData.flexFilter(modalClosed[1].filter(m => m.Values !== '*' && m.Field !== 'AdditionalDetails'));
                 }
                 else{
-                    this.FilteredData = this.UniqueContentData.filter(m => m.IsActive).flexFilter(modalClosed[1].filter(m => m.Values !== '*'));
+                    this.FilteredData = this.UniqueContentData.filter(m => m.IsActive).flexFilter(modalClosed[1].filter(m => m.Values !== '*' && m.Field !== 'AdditionalDetails'));
                 }
                 this.FilteredResultsCount = this.FilteredData.length;
             }
