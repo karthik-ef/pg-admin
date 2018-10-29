@@ -283,12 +283,13 @@ class SearchResult extends Component {
                     columns={[
                         {
                             Header: <div>  
-                                <img className="divApplyFilter" src={ApplyFilter} alt="Apply Filter" onClick={this.handleClick} data-toggle="tooltip" data-placement="top" title="Apply Filter" />
-                                <img className="divClearFilter" src={ClearFilter} alt="Clear Filter" onClick={this.clearFilter.bind(this)} data-toggle="tooltip" data-placement="top" title="Clear Filter" />
                                 <span className="imageFloatLeft"><ExcelFile filename="ProgramGuideReport" element={<button data-toggle="tooltip" data-placement="top" title="Download" className="stlying"><img className="downloadImage" src={Download} alt="Download" /></button>}>
                                     <ExcelSheet dataSet={this.ExcelData} name="Result" />
                                 </ExcelFile>
-                                </span></div>,
+                                </span>
+                                <img className="imageFloatLeft" src={ClearFilter} alt="Clear Filter" onClick={this.clearFilter.bind(this)} data-toggle="tooltip" data-placement="top" title="Clear Filter" />
+                                <img className="imageFloatLeft" src={ApplyFilter} alt="Apply Filter" onClick={this.handleClick} data-toggle="tooltip" data-placement="top" title="Apply Filter" />
+                                </div>,
                             columns: [
                                 {
                                     Header: <strong>Page URL</strong>,
