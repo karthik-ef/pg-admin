@@ -5,7 +5,7 @@
 
 /* Header Styles */
 .headerDiv{
-height: 10%;
+height: 20%;
 /* background-color: aqua; */
 }
 .opp{
@@ -15,7 +15,7 @@ height: 10%;
 
 .brandDiv{
     height: 100%;
-    width: 20%;
+    width: 60%;
     /* background-color: white; */
     float: left;
 }
@@ -26,7 +26,7 @@ height: 10%;
 
 .navItemsDiv{
     height: 100%;
-    width: 60%;
+    width: 20%;
     float: left;
     /* background-color: blue; */
 }
@@ -90,11 +90,20 @@ height: 10%;
 
 /* STYLES FOR CONTENT */
 .contentDiv{
-    height: 85%;
+    height: 75%;
     overflow: auto;
     /* background-color: white;   */
-
 }
+
+.test1{
+height: 50%;
+}
+
+.test2{
+    height: 50%;
+    width: 50%;
+}
+
 .table{
     width: 50%;
     margin: 0px auto;
