@@ -226,16 +226,7 @@ class BulkUpload extends Component {
           'DrillDownAlias': {
             prop: 'DrillDownAlias',
             type: String,
-            required: true,
-            
-          
-      },
-      'FeaturePageTagCustomized': {
-        prop: 'FeaturePageTagCustomized',
-        type: String,
-        required: true,
-        
-      
+            required: true,    
   },
       
 	    'FeaturePageTag1': {
@@ -246,11 +237,6 @@ class BulkUpload extends Component {
       },
       'FeaturePageTag2': {
         prop: 'FeaturePageTag2',
-        type: String,
-        required: false
-      },
-	  	    'FeaturePageTag3': {
-        prop: 'FeaturePageTag3',
         type: String,
         required: false
       },

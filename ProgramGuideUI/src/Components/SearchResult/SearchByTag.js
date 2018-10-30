@@ -276,7 +276,7 @@ class SearchByTag extends Component {
                     <div class="col-md-5 ml-auto">
                     <div class="col-sm-8">
                         <label for="exampleInputEmail1"><strong>Duration details</strong></label>
-                        <input type="text" class="form-control" ref = "AdditionalDetails" defaultValue = {this.props.ValueFromDb ? this.props.ValueFromDb['Tag_Duration'] : ''} onBlur = {this.selectedTags.bind(this)}/>
+                        <input type="text" class="form-control" ref = "AdditionalDetails" defaultValue = {this.props.ValueFromDb ? this.props.ValueFromDb['AdditionalDurationDetails'] : ''} onBlur = {this.selectedTags.bind(this)}/>
                             {/* <Dropdown Tags={this.state.tagAgeRangeData} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb['Tag_AgeRange'] : ''} bindedValue={this.bindVal.bind(this, 'Tag_AgeRange')} /> */}
                         </div>
 

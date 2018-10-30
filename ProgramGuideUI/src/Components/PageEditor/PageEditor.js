@@ -117,7 +117,7 @@ class PageEditor extends Component {
 
             this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified
             ?this.objPageTag.filter(m => m.Field === 'AdditionalDetails').map(m => { return m.Values }).toString()
-            : EditPage['FeaturePageTag3'];
+            : EditPage['AdditionalDurationDetails'];
 
             this.modifiedData.TagLocalOffice = this.isPageTagModified
             ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString()

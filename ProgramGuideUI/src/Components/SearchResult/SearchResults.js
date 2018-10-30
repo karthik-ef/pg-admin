@@ -53,7 +53,7 @@ class SearchResult extends Component {
             columnName: ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_Topic", "Tag_When", "Tag_CourseType", "Tag_AgeRange",
                 "Tag_Duration", "Tag_LanguageOfInstruction", "Tag_LanguageLearned", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", 
                 "BannerImage", "MetaTitle", "MetaDescription", "MetaRobot", "PageTitle",  "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2",
-                "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTagCustomized", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "ParentPageID"]
+                "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "ParentPageID"]
             // columnName: ["Page ID", "ParentPage ID", "Page Url", "Market Code", "Banner Image", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "Breadcrumb Text", "FeaturePageTag1", "FeaturePageTag2", "FeaturePageTag3", "Page Title", "Meta Title", "Meta Description"],
         };
     }
@@ -89,7 +89,7 @@ class SearchResult extends Component {
                                 { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                                 { value: m.PageTitle }, { value: m.VisibleIntroText },
                                 { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                                { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
+                                { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias },
                                 { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                                 { value: m.ParentPageID.toString() }]
                             })
@@ -209,7 +209,7 @@ class SearchResult extends Component {
                         { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                         { value: m.PageTitle }, { value: m.VisibleIntroText },
                         { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
+                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias },
                         { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                         { value: m.ParentPageID.toString() }]
                     })
@@ -232,7 +232,7 @@ class SearchResult extends Component {
                         { value: m.BannerImage }, { value: m.MetaTitle }, { value: m.MetaDescription } , { value: m.MetaRobot },
                         { value: m.PageTitle }, { value: m.VisibleIntroText },
                         { value: m.HiddenIntroText }, { value: m.SubHeader1 }, { value: m.SubHeader2 }, { value: m.ContentText1 }, 
-                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias }, { value: m.FeaturePageTagCustomized },
+                        { value: m.ContentText2 }, { value: m.BreadcrumbText }, { value: m.DrillDownAlias },
                         { value: m.FeaturePageTag1 }, { value: m.FeaturePageTag2 }, { value: m.FeaturePageTag3 },
                         { value: m.ParentPageID.toString() }]
                     })
