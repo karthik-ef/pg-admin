@@ -207,7 +207,7 @@ class PageEditor extends Component {
             this.setState({ showDuplicateErrorForCreate: false})
             this.CreateNewContent();
         }
-        else if(EditPage['PageUrl'] === '/testkarthik1029/'){
+        else {
             this.APICall();
         }
 
