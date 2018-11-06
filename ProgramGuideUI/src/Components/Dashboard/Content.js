@@ -3,6 +3,7 @@ import SearchResults from '../SearchResult/SearchResults';
 import CreatePage from '../CreatePage';
 import AddUser from '../UserManagement/UserDashBoard';
 import BulkUpload from '../BulkUpload';
+import PageHierarchy from '../PageHierarchy';
 
 class Content extends Component {
   render() {
@@ -16,6 +17,7 @@ class Content extends Component {
         : window.location.pathname.toLowerCase() === '/createpage' ? <CreatePage />
           : Role === 'Admin' && window.location.pathname.toLowerCase() === '/adduser' ? <AddUser />
             : window.location.pathname.toLowerCase() === '/bulkupload' ? <BulkUpload />
+            :window.location.pathname.toLowerCase() === '/pagehierarchy' ? <PageHierarchy />
               : '';
     return (
 

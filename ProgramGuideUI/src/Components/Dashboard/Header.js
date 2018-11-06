@@ -71,7 +71,7 @@ class Header extends Component {
             this.props.opac(this.state.loading);
         });
         localStorage.setItem('Market', this.refs.SelectedMarket.value);
-        if (window.location.pathname === '/SearchResults' || window.location.pathname === '/CreatePage') {
+        if (window.location.pathname === '/SearchResults' || window.location.pathname === '/CreatePage' || window.location.pathname === '/AddUser' || window.location.pathname === '/BulkUpload' || window.location.pathname === '/PageHierarchy') {
             window.location.reload();
         }
     }
@@ -171,6 +171,9 @@ class Header extends Component {
                                     </li>}
                                     <li className="nav-item">
                                         <Link to="/BulkUpload" className="nav-link">Bulk Upload</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link to="/PageHierarchy" className="nav-link">Page Hierarchy</Link>
                                     </li>
                                 </ul>
                             </div>
