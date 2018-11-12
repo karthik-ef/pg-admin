@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import $ from 'jquery';
 import Tree from './CustomControls/TreeView';
 import EditContent from './PageEditor/PageEditor';
-var pageHierarchyData = { name: '/pg/', toggled: true }
+var pageHierarchyData = { toggled: true }
 var ChildrenPageDetails = [];
 var rootPageID;
 
@@ -14,8 +14,9 @@ class PageHierarchy extends Component {
     this.EditPageRow = [];
     this.Flag = true;
   }
+
   Filter = (value) => {
-    console.log(value['toggled'])
+    console.log(value)
     if (!value['toggled']) {
       var objContent = {};
       objContent.UniqueContentData = this.state.uniqueContentData;
@@ -27,8 +28,13 @@ class PageHierarchy extends Component {
   }
 
   MultipleLevelRecursive(a) {
-    var data = this.state.uniqueContentData.filter(m => m.ParentPageID === a).map(m => { return { name: m.PageUrl, value: m.UniqueContent_ID, children: this.MultipleLevelRecursive(m.UniqueContent_ID) } })
-    return data;
+    if (this.state.uniqueContentData.filter(m => m.ParentPageID === a).length === 0) {
+      return null;
+    }
+    else {
+      var data = this.state.uniqueContentData.filter(m => m.ParentPageID === a).map(m => { return { name: m.PageUrl, value: m.UniqueContent_ID, children: this.MultipleLevelRecursive(m.UniqueContent_ID) } })
+      return data;
+    }
   }
 
   FirstLevelRecursive(a) {
@@ -66,6 +72,8 @@ class PageHierarchy extends Component {
   render() {
     console.log(this.EditPageRow)
     if (this.state.uniqueContentData !== undefined && this.Flag) {
+      pageHierarchyData.name = this.state.uniqueContentData.filter(m => m.ParentPageID === 0 && m.PageUrl === '/pg/').map(m => { return m.PageUrl })[0];
+      pageHierarchyData.value = this.state.uniqueContentData.filter(m => m.ParentPageID === 0 && m.PageUrl === '/pg/').map(m => { return m.UniqueContent_ID })[0];
       this.state.uniqueContentData.filter(m => m.ParentPageID === rootPageID[0]).map(m => {
         var v = {};
         v.PageUrl = m.PageUrl;
