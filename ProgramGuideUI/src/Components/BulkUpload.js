@@ -71,8 +71,13 @@ class BulkUpload extends Component {
         type: String,
         required: false
       },
-	  	    'Tag_Duration': {
+	  	  'Tag_Duration': {
         prop: 'Tag_Duration',
+        type: String,
+        required: true
+      },
+      'AdditionalDurationDetails': {
+        prop: 'AdditionalDurationDetails',
         type: String,
         required: true
       },
