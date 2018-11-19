@@ -333,7 +333,7 @@ class BulkUpload extends Component {
 
   getBulkUploadDetails() {
     $.ajax({
-      url: 'http://ctdev.ef.com:3000/getBatchDetails',
+      url: 'http://ctdev.ef.com:3000/getBatchDetails/?userName=' + JSON.parse(localStorage.getItem('Login'))['UserName'],
       type: 'GET',
       cache: false,
       success: function (data, status, err) {
