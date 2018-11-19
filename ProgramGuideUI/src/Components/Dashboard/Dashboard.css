@@ -212,3 +212,15 @@ overflow: hidden;
     height: 100%;
     overflow: auto;
 }
+
+#bulkUploadBatchDetails{
+    width: 100%;
+}
+
+.bulkUploadContent{
+    line-height: 2;
+}
+
+.table td{
+    padding: 0rem;
+}
