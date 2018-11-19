@@ -4,6 +4,8 @@ import jsonxml from 'jsontoxml';
 import $ from 'jquery';
 
 let h ;
+var UpdatedUniqueContentId = []
+
 
 class BulkUpload extends Component {
 
@@ -259,9 +261,22 @@ class BulkUpload extends Component {
 
 
     readXlsxFile(file, { schema }).then(({ rows, errors }) => {
+
+      var dataRow = [];
        //`errors` have shape `{ row, column, error, value }`.
-      
-     console.log(rows);
+       //console.log(rows[0]);
+       console.log(rows);
+
+       rows.forEach(element => {
+        dataRow.push(element['Uniquecontent']);
+       });
+     this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + dataRow.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
+
+     console.log(this.UpdatedUniqueContentId);
+     this.BulkUploadDetails = {};
+
+     this.BulkUploadDetails.xmlData = this.UpdatedUniqueContentId;
+     this.BulkUploadDetails.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
      
      var xml = jsonxml({
      
@@ -285,25 +300,31 @@ BulkUpload() {
       data: this.h,
       cache: false,
       success: function (data, status, err) {
-        console.log(data);
-        if( data!=null ||data == undefined)
-        {
-        alert(data);
-        }
-        else
-        {
-          alert("Data saved sucess fully")
-        }
-        
+      this.SaveBulkUploadDetails();
       }.bind(this),
       error: function (xhr, status, err) {
         console.log(err);
-       
-
-
       }
     });
 
+  }
+
+  SaveBulkUploadDetails(){
+    console.log(this.BulkUploadDetails);
+    $.ajax({
+      url: 'http://ctdev.ef.com:3000/CreateBatchDetails',
+      type: 'POST',
+      dataType: 'Text',
+      data: this.BulkUploadDetails,
+      cache: false,
+      success: function (data, status, err) {
+        console.log(data);
+        alert('Excel uploaded sucessfully');
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log(err);
+      }
+    });
   }
 
   render() {
