@@ -341,7 +341,7 @@ class BulkUpload extends Component {
           this.setState({
             bulkUploadDetailsData: data.map(m => {
               return <tr><td className="tdBulkUpload"><p className="bulkUploadContent">Batch Id# {m.BATCH_ID}, upload date {m.UploadDate}, by {m.UpdatedBy} </p></td>
-                <td className="tdBulkUpload"><button type="button" class="btn btn-primary btn-sm">Publish to LIVE</button></td>
+                <td className="tdBulkUpload"><button type="button" class="btn btn-primary btn-sm">Publish to Live</button></td>
               </tr>
             })
           });
