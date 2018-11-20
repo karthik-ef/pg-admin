@@ -11,277 +11,79 @@ class BulkUpload extends Component {
       bulkUploadDetailsData: []
     }
     this.h = {}
-    this.handleUploadFile = this.handleUploadFile.bind(this);
-
   }
 
-
-  handleUploadFile() {
-    function escapeXml(unsafe) {
-
-      return unsafe.replace(/[<>&'"]/g, function (c) {
-        switch (c) {
-          case '<': return '&lt;';
-          case '>': return '&gt;';
-          case '&': return '&amp;';
-          case '\'': return '&apos;';
-          case '"': return '&quot;';
-        }
-      });
-    }
-    const schema = {
-      'Uniquecontent': {
-        prop: 'Uniquecontent',
-        type: {
-
-          'UniqueContent_ID': {
-            prop: 'UniqueContent_ID',
-            type: Number,
-            required: true
-          },
-          'MarketCode': {
-            prop: 'MarketCode',
-            type: String,
-            required: true
-          },
-
-          'PageUrl': {
-            prop: 'PageUrl',
-            type: String,
-            required: true
-          },
-
-          'Tag_Topic': {
-            prop: 'Tag_Topic',
-            type: String,
-            required: true,
-          },
-          'Tag_When': {
-            prop: 'Tag_When',
-            type: String,
-            required: false
-          },
-          'Tag_CourseType': {
-            prop: 'Tag_CourseType',
-            type: String,
-            required: true
-          },
-          'Tag_AgeRange': {
-            prop: 'Tag_AgeRange',
-            type: String,
-            required: false
-          },
-          'Tag_Duration': {
-            prop: 'Tag_Duration',
-            type: String,
-            required: true
-          },
-          'AdditionalDurationDetails': {
-            prop: 'AdditionalDurationDetails',
-            type: String,
-            required: true
-          },
-          'Tag_LanguageOfInstruction': {
-            prop: 'Tag_LanguageOfInstruction',
-            type: String,
-            required: false
-          },
-          'Tag_LanguageLearned': {
-            prop: 'Tag_LanguageLearned',
-            type: String,
-            required: true
-          },
-          'Tag_Platform': {
-            prop: 'Tag_Platform',
-            type: String,
-            required: false
-          },
-          'Tag_Continent': {
-            prop: 'Tag_Continent',
-            type: String,
-            required: true
-          },
-          'Tag_Country': {
-            prop: 'Tag_Country',
-            type: String,
-            required: false
-          },
-          'Tag_State': {
-            prop: 'Tag_State',
-            type: String,
-            required: true
-          },
-          'Tag_City': {
-            prop: 'Tag_City',
-            type: String,
-            required: false
-          },
-          'Tag_Feature': {
-            prop: 'Tag_Feature',
-            type: String,
-            required: true
-          },
-          'BannerImage': {
-            prop: 'BannerImage',
-            type: String,
-            required: false
-          },
-          'MetaTitle': {
-            prop: 'MetaTitle',
-            type: String,
-            required: true,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'MetaDescription': {
-            prop: 'MetaDescription',
-            type: String,
-            required: false,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'MetaRobot': {
-            prop: 'MetaRobot',
-            type: String,
-            required: true,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'PageTitle': {
-            prop: 'PageTitle',
-            type: String,
-            required: false,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'VisibleIntroText': {
-            prop: 'VisibleIntroText',
-            type: String,
-            required: true,
-
-            parse(value) {
-              return escapeXml(value);
-
-            }
-
-          },
-          'HiddenIntroText': {
-            prop: 'HiddenIntroText',
-            type: String,
-            required: false,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'SubHeader1': {
-            prop: 'SubHeader1',
-            type: String,
-            required: true,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-
-          },
-          'SubHeader2': {
-            prop: 'SubHeader2',
-            type: String,
-            required: false,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'ContentText1': {
-            prop: 'ContentText1',
-            type: String,
-            required: true,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'ContentText2': {
-            prop: 'ContentText2',
-            type: String,
-            required: false,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'BreadcrumbText': {
-            prop: 'BreadcrumbText',
-            type: String,
-            required: true,
-            parse(value) {
-              return escapeXml(value);
-
-            }
-          },
-          'DrillDownAlias': {
-            prop: 'DrillDownAlias',
-            type: String,
-            required: true,
-          },
-
-          'FeaturePageTag1': {
-            prop: 'FeaturePageTag1',
-            type: String,
-            required: false,
-
-          },
-          'FeaturePageTag2': {
-            prop: 'FeaturePageTag2',
-            type: String,
-            required: false
-          },
-          'ParentPageID': {
-            prop: 'ParentPageID',
-            type: Number,
-            required: false
-          },
-
-        }
+  validateXml(data) {
+    return data.replace(/[<>&'"]/g, function (c) {
+      switch (c) {
+        case '<': return '&lt;';
+        case '>': return '&gt;';
+        case '&': return '&amp;';
+        case '\'': return '&apos;';
+        case '"': return '&quot;';
       }
+    });
+  }
 
-    }
+  saveUploadedExcelData() {
     var file = document.getElementById("uploadBatchFile").files[0];
+    var UniqueContentcolumns = ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_Topic", "Tag_When", "Tag_CourseType", "Tag_agerange", "Tag_Duration", "AdditionalDurationDetails", "Tag_LanguageOfInstruction", "Tag_LanguageLearned", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", "BannerImage", "MetaTitle", "MetaDescription", "MetaRobot", "PageTitle", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTag1", "FeaturePageTag2", "ParentPageID"];
+    
+    readXlsxFile(file, { sheet: 1 }).then((data) => {
+      var excelContent = [];
+      this.validationFailed = false;
+      if (JSON.stringify(UniqueContentcolumns.toLocaleString().toUpperCase().split(',')) === JSON.stringify(data[0].toLocaleString().toUpperCase().split(','))) {
+        data.forEach((element, index) => {
 
-    readXlsxFile(file, { schema }).then(({ rows, errors }) => {
+          //First iteration contains column header
+          if (index !== 0) {
+            //Construct key value pair
+            excelContent.push(element.reduce(function (result, field, index) {
+              result[UniqueContentcolumns[index]] = field;
+              return result;
+            }, {}));
 
-      var dataRow = [];
-      //`errors` have shape `{ row, column, error, value }`.
-      //console.log(rows[0]);
+            //Perform validation on the uploaded data
+            element.forEach((content, i) => {
+              if (i === 0 || i === 32) {
+               if (isNaN(content)){
+                 this.validationFailed = true;
+                 alert(UniqueContentcolumns[i] + ' column should contain numeric value. Please correct and upload again');
+               }
+              }
+              else {
+                content = content !== null ? this.validateXml(content) : content;
+              }
+            });
 
-      rows.forEach(element => {
-        dataRow.push(element['Uniquecontent']);
-      });
-      this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + dataRow.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
+          }
 
-      this.BulkUploadDetails = {};
+        });
 
-      this.BulkUploadDetails.xmlData = this.UpdatedUniqueContentId;
-      this.BulkUploadDetails.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
+        if(this.validationFailed) return;
 
-      var xml = jsonxml({
+        this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + excelContent.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
 
-        XmlDocument: rows
-      })
-      this.h.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
-      this.h.xmlData = xml.toString();
-      this.BulkUpload();
+        this.BulkUploadDetails = {};
 
-    })
+        this.BulkUploadDetails.xmlData = this.UpdatedUniqueContentId;
+        this.BulkUploadDetails.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
+
+        var xml = jsonxml({
+
+          XmlDocument: excelContent
+        })
+        this.h.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
+        this.h.userRole = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
+        this.h.xmlData = xml.toString();
+        this.BulkUpload();
+
+
+      }
+      else {
+        alert('Error! Header names of the uploaded file is either incorrect or missing or not in the expected sequence.')
+      }
+    });
   }
 
   componentDidMount() {
@@ -358,11 +160,11 @@ class BulkUpload extends Component {
       <div className="itemDiv">
         <div class="input-group">
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="uploadBatchFile"/>
-            <label class="custom-file-label" id="uploadBatchFileLabel" for="inputGroupFile04">Choose file</label>
+            <input type="file" class="custom-file-input" id="uploadBatchFile" />
+            <label class="custom-file-label" id="uploadBatchFileLabel" for="uploadBatchFile">Choose file</label>
           </div>
           <div class="input-group-append">
-            <button class="btn btn-primary" type="button" onClick={this.handleUploadFile}>Upload</button>
+            <button class="btn btn-primary" type="button" onClick={this.saveUploadedExcelData.bind(this)}>Upload</button>
           </div>
         </div>
         <br />
