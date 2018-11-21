@@ -34,16 +34,10 @@ class BulkUpload extends Component {
       this.validationFailed = false;
       if (JSON.stringify(UniqueContentcolumns.toLocaleString().toUpperCase().split(',')) === JSON.stringify(data[0].toLocaleString().toUpperCase().split(','))) {
         data.forEach((element, index) => {
-
           //First iteration contains column header
           if (index !== 0) {
-            //Construct key value pair
-            excelContent.push(element.reduce(function (result, field, index) {
-              result[UniqueContentcolumns[index]] = field;
-              return result;
-            }, {}));
-
             //Perform validation on the uploaded data
+            var formatedContent = [];
             element.forEach((content, i) => {
               if (i === 0 || i === 32) {
                if (isNaN(content)){
@@ -54,12 +48,18 @@ class BulkUpload extends Component {
               else {
                 content = content !== null ? this.validateXml(content) : content;
               }
+              formatedContent.push(content)
             });
-
+            //Construct key value pair
+            excelContent.push(formatedContent.reduce(function (result, field, index) {
+              result[UniqueContentcolumns[index]] = field;
+              return result;
+            }, {}));
           }
 
         });
 
+        console.log(excelContent);
         if(this.validationFailed) return;
 
         this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + excelContent.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
