@@ -27,7 +27,7 @@ class BulkUpload extends Component {
 
   saveUploadedExcelData() {
     var file = document.getElementById("uploadBatchFile").files[0];
-    var UniqueContentcolumns = ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_Topic", "Tag_When", "Tag_CourseType", "Tag_agerange", "Tag_Duration", "AdditionalDurationDetails", "Tag_LanguageOfInstruction", "Tag_LanguageLearned", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", "BannerImage", "MetaTitle", "MetaDescription", "MetaRobot", "PageTitle", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTag1", "FeaturePageTag2", "ParentPageID"];
+    var UniqueContentcolumns = ["UniqueContent_ID", "MarketCode", "PageUrl", "Tag_Topic", "Tag_When", "Tag_CourseType", "Tag_AgeRange", "Tag_Duration", "AdditionalDurationDetails", "Tag_LanguageOfInstruction", "Tag_LanguageLearned", "Tag_Platform", "Tag_Continent", "Tag_Country", "Tag_State", "Tag_City", "Tag_Feature", "BannerImage", "MetaTitle", "MetaDescription", "MetaRobot", "PageTitle", "VisibleIntroText", "HiddenIntroText", "SubHeader1", "SubHeader2", "ContentText1", "ContentText2", "BreadcrumbText", "DrillDownAlias", "FeaturePageTag1", "FeaturePageTag2", "ParentPageID"];
     
     readXlsxFile(file, { sheet: 1 }).then((data) => {
       var excelContent = [];
