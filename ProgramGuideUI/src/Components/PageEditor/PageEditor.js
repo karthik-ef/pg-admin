@@ -342,7 +342,7 @@ class PageEditor extends Component {
                                     <ParentPage UniqueContentData={UniqueContentData} setParentPageData={EditPage['ParentPageID']} getParentPageData={this.ParentPageSection.bind(this)} />
                                     <MetaInformation data={EditPage} MetaInformation={this.MetaInformationSection.bind(this)} />
                                     <PageContent setPageContentData={EditPage} getPageContentData={this.PageContentSection.bind(this)} />
-                                    <DrillDown setDrillDownData={EditPage} getDrillDownData={this.DrillDownSection.bind(this)} UniqueContentData={UniqueContentData}/>
+                                    <DrillDown setDrillDownData={EditPage} getDrillDownData={this.DrillDownSection.bind(this)} UniqueContentData={UniqueContentData.filter(m => m.PageUrl !== EditPage['PageUrl'])}/>
                                     <BannerImage setBannerImageData={EditPage['BannerImage']} getBannerImageData={this.BannerImageSection.bind(this)} />
                                     <PageStatus setPageStatusData={EditPage['IsActive']} getPageStatusData={this.PageStatusSection.bind(this)} />
                                 </div>

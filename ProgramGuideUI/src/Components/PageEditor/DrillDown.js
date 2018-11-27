@@ -359,7 +359,7 @@ class DrillDown extends Component {
                                         {!this.isTag1Valid ? <div class="alert alert-danger" role="alert">
                                             Invalid tag!
                                                                 </div> : this.state.showTag1Preview ?
-                                                <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : this.objDrillDown.FeaturePageTag1} /> : ''}
+                                                <Preview Type = {'featurePageTag1'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : this.objDrillDown.FeaturePageTag1} /> : ''}
                                     </div>
                                 </div>
                             </div>
@@ -380,7 +380,7 @@ class DrillDown extends Component {
                                     {!this.isTag2Valid ? <div class="alert alert-danger" role="alert">
                                         Invalid tag!
                                                                 </div> : this.state.showTag2Preview ?
-                                            <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
+                                            <Preview Type = {'featurePageTag2'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
                                 </div>
                             </div>
                         </div>
@@ -431,7 +431,7 @@ class DrillDown extends Component {
                                     {!this.isDrillDownTagValid ? <div class="alert alert-danger" role="alert">
                                         Invalid tag!
                                                                 </div> : this.state.showDrillDownAliasPreview ?
-                                            <Preview UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
+                                            <Preview Type = {'DrillDownAlias'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
                                 </div>
                             </div>
                         </div>

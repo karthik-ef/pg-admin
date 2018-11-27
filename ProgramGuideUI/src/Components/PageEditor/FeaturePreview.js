@@ -10,7 +10,9 @@ class FeaturePreview extends Component {
     }
 
     componentDidMount() {
-        this.generateData()
+        if(this.props.Type !== 'DrillDownAlias'){
+            this.generateData()
+        }
     }
 
     generateData() {
@@ -33,9 +35,7 @@ class FeaturePreview extends Component {
                         }
                     }
                     else if (info[n]["Values"] === '?') {
-                        console.log(item[info[n]["Field"]]);
                         if (item[info[n]["Field"]] !== '00' || !item[info[n]["Field"]]) {
-                            console.log("1");
                             count++;
                         }
                     }
@@ -79,7 +79,35 @@ class FeaturePreview extends Component {
             { Field: "Tag_Feature", Values: arrSelectedTags[12] }
         ];
 
-        this.setState({data : this.props.UniqueContentData.flexFilter(filterCriteria.filter(m => m.Values !== '*'))});
+        var drillDownAliasData = this.props.UniqueContentData.filter(m => m.DrillDownAlias !== '' && m.DrillDownAlias !== null);
+        var mergedPageTags = [];
+        drillDownAliasData.forEach(element => {
+            var arrDrillDownTags = element['DrillDownAlias'].includes('_') ? element['DrillDownAlias'].toString().split('_') : [];
+            if(arrDrillDownTags.length === 13){
+                var newUniqueContent = {};
+                newUniqueContent.Tag_Topic = arrDrillDownTags[0];
+                newUniqueContent.Tag_When = arrDrillDownTags[1];
+                newUniqueContent.Tag_CourseType = arrDrillDownTags[2];
+                newUniqueContent.Tag_AgeRange = arrDrillDownTags[3];
+                newUniqueContent.Tag_Duration = arrDrillDownTags[4];
+                newUniqueContent.Tag_LanguageOfInstruction = arrDrillDownTags[5];
+                newUniqueContent.Tag_LanguageLearned = arrDrillDownTags[6];
+                newUniqueContent.Tag_Platform = arrDrillDownTags[7];
+                newUniqueContent.Tag_Continent = arrDrillDownTags[8];
+                newUniqueContent.Tag_Country = arrDrillDownTags[9];
+                newUniqueContent.Tag_State = arrDrillDownTags[10];
+                newUniqueContent.Tag_City = arrDrillDownTags[11];
+                newUniqueContent.Tag_Feature = arrDrillDownTags[12];
+                newUniqueContent.UniqueContent_ID = element['UniqueContent_ID'];
+                mergedPageTags.push(newUniqueContent);
+            }
+        });
+
+        var uniqueContentIdOfMergedPages = mergedPageTags.flexFilter(filterCriteria.filter(m => m.Values !== '*')).map(m => m.UniqueContent_ID);
+        var featureTagResult = this.props.UniqueContentData.flexFilter(filterCriteria.filter(m => m.Values !== '*'));
+        var drillDownResult = this.props.UniqueContentData.filter(m =>uniqueContentIdOfMergedPages.includes(m.UniqueContent_ID));
+        var data = featureTagResult.concat(drillDownResult)
+        this.setState({data : data});
     }
     
     render() {
