@@ -51,10 +51,10 @@ class BulkUpload extends Component {
               formatedContent.push(content)
             });
             //Construct key value pair
-            excelContent.push(formatedContent.reduce(function (result, field, index) {
+            excelContent.push({UniqueContent : formatedContent.reduce(function (result, field, index) {
               result[UniqueContentcolumns[index]] = field;
               return result;
-            }, {}));
+            }, {})});
           }
 
         });
@@ -62,7 +62,7 @@ class BulkUpload extends Component {
         console.log(excelContent);
         if(this.validationFailed) return;
 
-        this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + excelContent.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent_ID + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
+        this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + excelContent.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent['UniqueContent_ID'] + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
 
         this.BulkUploadDetails = {};
 
@@ -76,6 +76,7 @@ class BulkUpload extends Component {
         this.h.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
         this.h.userRole = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
         this.h.xmlData = xml.toString();
+        console.log(this.h);
         this.BulkUpload();
 
 
