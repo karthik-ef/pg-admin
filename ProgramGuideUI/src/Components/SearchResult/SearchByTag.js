@@ -101,7 +101,7 @@ class SearchByTag extends Component {
 
     getTagDuration(){
         $.ajax({
-            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetDurationTags/?mc=de',
+            url: 'http://ctdev.ef.com:3000/PlatformTags',
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -116,11 +116,10 @@ class SearchByTag extends Component {
 
     getTagPlatform(){
         $.ajax({
-            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetTagPlatform/?mc=de',
+            url: 'http://ctdev.ef.com:3000/DurationTags',
             dataType: 'json',
             cache: false,
             success: function (data) {
-                console.log(data);
                 this.setState({ tagPlatformData: data.map(m => { return { label: m, value: m } }) });
             }.bind(this),
             error: function (xhr, status, err) {

@@ -21,11 +21,11 @@ class BannerImage extends Component {
 
     getBannerImage() {
         $.ajax({
-            url: 'https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetBannerImages/?mc=de',
+            url: 'http://ctdev.ef.com:3000/BannerImage',
             type: 'GET',
             cache: false,
             success: function (data) {
-                this.setState({createBannerImage: data});
+                this.setState({createBannerImage: JSON.parse(data)});
             }.bind(this),
             error: function (xhr, status, err) {
                 console.log(err);
