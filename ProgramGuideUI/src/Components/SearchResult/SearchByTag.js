@@ -101,7 +101,7 @@ class SearchByTag extends Component {
 
     getTagDuration(){
         $.ajax({
-            url: 'http://ctdev.ef.com:3000/PlatformTags',
+            url: 'http://ctdev.ef.com:3000/DurationTags',
             dataType: 'json',
             cache: false,
             success: function (data) {
@@ -116,7 +116,7 @@ class SearchByTag extends Component {
 
     getTagPlatform(){
         $.ajax({
-            url: 'http://ctdev.ef.com:3000/DurationTags',
+            url: 'http://ctdev.ef.com:3000/PlatformTags',
             dataType: 'json',
             cache: false,
             success: function (data) {
