@@ -3,6 +3,7 @@ import $ from 'jquery';
 import Tree from '../CustomControls/TreeView';
 import EditContent from '../PageEditor/PageEditor';
 import * as Constant from '../../utils/constant';
+import Loader from '../CustomControls/LoadingScreen';
 
 import './hierarchy.css';
 
@@ -86,19 +87,29 @@ class PageHierarchy extends Component {
         pageHierarchyData.children = ChildrenPageDetails;
       })
     }
-    return (
-      !localStorage.getItem('Market')
-        ? <div className="container">
-          <div className="alert alert-danger" role="alert">
-            <p>{Constant.ERROR_SELECT_MARKET}</p>
+
+    console.log(this.state.uniqueContentData);
+    if (this.state.uniqueContentData === undefined) {
+      return (
+        <Loader />
+      )
+    }
+    else {
+      return (
+        !localStorage.getItem('Market')
+          ? <div className="container">
+            <div className="alert alert-danger" role="alert">
+              <p>{Constant.ERROR_SELECT_MARKET}</p>
+            </div>
+          </div> :
+          <div className="itemDiv hierarchy__wrapper container">
+            {this.state.showEditContentModal ? <EditContent getEditorContentData={this.editorContentData.bind(this)} EditPageRow={this.EditPageRow} /> : ''}
+            <Tree setData={pageHierarchyData} CallBack={this.Filter.bind(this)} />
           </div>
-        </div> :
-        <div className="itemDiv hierarchy__wrapper container">
-          {this.state.showEditContentModal ? <EditContent getEditorContentData={this.editorContentData.bind(this)} EditPageRow={this.EditPageRow} /> : ''}
-          <Tree setData={pageHierarchyData} CallBack={this.Filter.bind(this)} />
-        </div>
-    );
+      );
+    }
   }
 }
+
 
 export default PageHierarchy;

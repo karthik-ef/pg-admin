@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import Loader from '../CustomControls/LoadingScreen';
 
 import AddUserIcon from '../Icons/UserManagement_AddUser.png';
 import EditIcon from '../Icons/UserManagement_EditUser.png';
@@ -44,75 +45,83 @@ class TopicExperienceMapping extends Component {
 
     render() {
         this.state.availableMarkets.length > 0 && !this.state.flag ? this.data1() : ''
-        return (
-            <div className="itemDiv add-users__wrapper">
-                <div className="container">
-                    <ReactTable
-                        data={this.data}
-                        minRows={0}
-                        columns={[
-                            {
-                                Header: <div className="header-icon__wrapper">
-                                    <ExcelFile filename="TopicExperienceMappingReport" element={<span className="imageFloatLeft"><img  src={DownloadIcon} alt="Download" data-toggle="tooltip" data-placement="top" title="Download" /></span>}>
-                                        <ExcelSheet dataSet={this.ExcelData} name="TopicExperienceMapping" />
-                                    </ExcelFile>
-                                </div>,
-                                columns: [
-                                    {
-                                        Header: <strong>Market</strong>,
-                                        id: "MarketCode",
-                                        accessor: d => d.marketCode,
-                                        sortable: false,
-                                        width: 100
-                                    },
-                                    {
-                                        Header: <strong>Tag Topic</strong>,
-                                        id: "TagTopic",
-                                        accessor: d => d.tagTopic,
-                                        sortable: false,
-                                        width: 180
-                                    },
-                                    {
-                                        Header: <strong>Age Start</strong>,
-                                        id: "AgeStart",
-                                        accessor: d => d.ageStart,
-                                        sortable: false,
-                                        width: 80
-                                    },
-                                    {
-                                        Header: <strong>Age End</strong>,
-                                        id: "AgeEnd",
-                                        accessor: d => d.ageEnd,
-                                        sortable: false,
-                                        width: 70
-                                    },
-                                    {
-                                        Header: <strong>Tag Experience</strong>,
-                                        id: "TagExperience",
-                                        accessor: d => d.tagExperience,
-                                        sortable: false,
-                                        width: 150
-                                    },
-                                    {
-                                        Header: <strong>Products</strong>,
-                                        id: "Products",
-                                        accessor: d => d.products,
-                                        sortable: false,
-                                        style: { 'whiteSpace': 'unset' }
-                                    }
-                                ]
-                            }
-                        ]}
-                        pivotBy={["MarketCode"]}
-                        className="-striped -highlight add-user__table"
-                        showPagination={false}
-                        showPageSizeOptions={false}
-                        expanded={this.state.expanded}
-                        onExpandedChange={expanded => this.setState({ expanded })}
-                    />
+
+        if (!this.state.flag) {
+            return (
+                <Loader />
+            )
+        }
+        else {
+            return (
+                <div className="itemDiv add-users__wrapper">
+                    <div className="container">
+                        <ReactTable
+                            data={this.data}
+                            minRows={0}
+                            columns={[
+                                {
+                                    Header: <div className="header-icon__wrapper">
+                                        <ExcelFile filename="TopicExperienceMappingReport" element={<span className="imageFloatLeft"><img src={DownloadIcon} alt="Download" data-toggle="tooltip" data-placement="top" title="Download" /></span>}>
+                                            <ExcelSheet dataSet={this.ExcelData} name="TopicExperienceMapping" />
+                                        </ExcelFile>
+                                    </div>,
+                                    columns: [
+                                        {
+                                            Header: <strong>Market</strong>,
+                                            id: "MarketCode",
+                                            accessor: d => d.marketCode,
+                                            sortable: false,
+                                            width: 100
+                                        },
+                                        {
+                                            Header: <strong>Tag Topic</strong>,
+                                            id: "TagTopic",
+                                            accessor: d => d.tagTopic,
+                                            sortable: false,
+                                            width: 180
+                                        },
+                                        {
+                                            Header: <strong>Age Start</strong>,
+                                            id: "AgeStart",
+                                            accessor: d => d.ageStart,
+                                            sortable: false,
+                                            width: 80
+                                        },
+                                        {
+                                            Header: <strong>Age End</strong>,
+                                            id: "AgeEnd",
+                                            accessor: d => d.ageEnd,
+                                            sortable: false,
+                                            width: 70
+                                        },
+                                        {
+                                            Header: <strong>Tag Experience</strong>,
+                                            id: "TagExperience",
+                                            accessor: d => d.tagExperience,
+                                            sortable: false,
+                                            width: 150
+                                        },
+                                        {
+                                            Header: <strong>Products</strong>,
+                                            id: "Products",
+                                            accessor: d => d.products,
+                                            sortable: false,
+                                            style: { 'whiteSpace': 'unset' }
+                                        }
+                                    ]
+                                }
+                            ]}
+                            pivotBy={["MarketCode"]}
+                            className="-striped -highlight add-user__table"
+                            showPagination={false}
+                            showPageSizeOptions={false}
+                            expanded={this.state.expanded}
+                            onExpandedChange={expanded => this.setState({ expanded })}
+                        />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
     }
 }
 export default TopicExperienceMapping;
