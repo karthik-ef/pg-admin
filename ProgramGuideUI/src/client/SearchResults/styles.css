@@ -1,0 +1,87 @@
+.search__results--wrapper {
+  
+}
+
+.pg-search__table {
+  border: none;
+}
+
+.pg-search__table .-headerGroups {
+  background: white !important;
+  border-bottom: none !important;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.pg-search__table .-header {
+  background-color: rgba(	199, 199, 199, 0.66);
+  height: 41px;
+  padding-left: 20px;
+  padding-top: 2px;
+}
+
+span.imageFloatLeft {
+  padding-right: 0;
+}
+
+.pg-search__table .rt-resizable-header-content strong{
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #191919;
+  vertical-align: sub;
+}
+
+.pg-search__table .rt-tbody {
+  border: 1px solid #e5e5e5;
+  margin-bottom: 31px;
+}
+
+.pg-search__table .rt-tbody .rt-tr-group .rt-tr{
+  padding: 0 20px !important;
+}
+.pg-search__table .rt-tbody .rt-tr-group .rt-tr .rt-td{
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: rgba(25, 25, 25, 0.8);
+}
+.pg-search__table .rt-tbody .rt-tr-group .rt-tr.-odd{
+  background-color: #ffffff;
+}
+.pg-search__table .rt-tbody .rt-tr-group .rt-tr.-even{
+  background: #f2f2f2;
+}
+
+.pg-search__table .pagination-bottom .-pagination {
+  box-shadow: unset;
+  border-top: none;
+}
+
+.pg-search__table .pagination-bottom .-pagination .-previous, .pg-search__table .pagination-bottom .-pagination .-next {
+  width: 136px !important;
+  flex: none;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: center;
+  color: #191919;
+}
+.-pagination .-next .-btn:hover, .-pagination .-previous .-btn:hover {
+  color: #e5e5e5 !important;
+}
+
+.ReactTable.pg-search__table .-pagination .-previous .-btn, .ReactTable.pg-search__table .-pagination .-next .-btn {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.2) !important;
+  background-color: #ffffff !important;
+}

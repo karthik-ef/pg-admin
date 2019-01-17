@@ -1,0 +1,149 @@
+.level1 {
+  height: 109px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
+}
+.top-nav--items {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.header__select {
+
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.header__select select {
+  width: 188px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.1);
+  background-color: #ffffff;
+  opacity: 0.5;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #191919;
+}
+
+.user__name {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #191919;
+  margin-bottom:0;
+  opacity: 0.8; 
+  margin: auto 32px;
+}
+
+.btn-black {
+  border-radius: 100px;
+  background-color: #191919;
+  color: white;
+  padding: 6px 20px;
+  width: auto;
+}
+
+.level2 {
+  margin-top: 43px;
+}
+
+.site--title {
+  font-size: 18px;
+  font-weight: 900;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 2px;
+  color: #191919;
+  text-transform: uppercase;
+}
+
+.level2 .navbar-nav {
+  width: auto;
+  display: flex;
+}
+.level2 .nav__padding {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.level2 .navbar-nav .nav-item {
+  margin-right: 32px; 
+}
+
+.level2 .nav-link.no-padding {
+  padding: 0;
+}
+
+/* styling select */
+
+.navItemsDiv {
+  position: relative;
+  top: 36px
+}
+
+.navItemsDiv .pg-col__dropdown {
+  display: block;
+  background: url(./dropdown.png) no-repeat 95% center;
+  border: 1px solid grey;
+  padding: 5px;
+  width: 188px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.1);
+  background-color: #ffffff;
+  
+}
+
+.navItemsDiv .pg-col__dropdown span {
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #191919;
+  margin: 9px 8px;
+}
+
+.navItemsDiv .pg-col__dropdown.--expanded {
+  box-shadow: 0 4px 12px 0 rgba(0, 158, 232, 0.2);
+}
+
+.pg-col__options {
+  width: 188px;
+  max-height: 260px;
+  box-shadow: 0 2px 8px 0 rgba(60, 53, 53, 0.1);
+  background-color: #ffffff;
+  padding: 21px 8px;
+  margin-top: 8px;
+  position: relative;
+  z-index: 99999;
+  overflow: auto;
+
+}
+
+.pg-col__dropdown:hover {
+  cursor: pointer;
+}
+.pg-col__item-wrapper {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pg-col__item {
+  padding: 9px 16px;
+}
+.pg-col__item:hover {
+  border-radius: 6px;
+  background-color: #efefef;
+  cursor: pointer;
+}

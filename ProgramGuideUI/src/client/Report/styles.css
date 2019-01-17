@@ -1,0 +1,179 @@
+/* add users page styling */
+.add-users__wrapper {
+
+
+}
+.add-user__table {
+  border: none;
+}
+.add-user__table .header-icon__wrapper {
+  float: right;
+}
+.add-user__table .rt-table {
+  overflow: unset;
+}
+
+.add-user__table img.imageFloatLeft {
+  padding-right: 0;
+  float: none;
+
+}
+.add-user__table span.imageFloatLeft {
+  padding-right: 20px;
+  float: none;
+}
+
+.add-user__table .-headerGroups {
+  background: white !important;
+  border-bottom: none !important;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.add-user__table .rt-thead .rt-th:first-child {
+  border: none;
+}
+.add-user__table .rt-thead .rt-th:last-child {
+  display: none;
+  border: none;
+}
+.add-user__table .rt-thead .rt-th.rt-resizable-header:last-child {
+  display: block;
+}
+
+.add-user__table .-header {
+  background-color: rgba(	199, 199, 199, 0.66);
+  height: 41px;
+  padding-left: 20px;
+  padding-top: 2px;
+}
+.add-user__table .-header .rt-header-pivot:before, .add-user__table .-header .rt-header-pivot:after{
+  display: none;
+}
+
+span.imageFloatLeft {
+  padding-right: 0;
+}
+
+.add-user__table .rt-resizable-header-content strong{
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #191919;
+  vertical-align: sub;
+}
+
+.add-user__table .rt-tbody {
+  border: 1px solid #e5e5e5;
+  margin-bottom: 31px;
+}
+
+.add-user__table .rt-tbody .rt-tr-group .rt-tr{
+  padding: 0 20px !important;
+}
+.add-user__table .rt-tbody .rt-tr-group .rt-tr .rt-td{
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.4;
+  letter-spacing: normal;
+  color: rgba(25, 25, 25, 0.8);
+}
+.add-user__table .rt-tbody .rt-tr-group .rt-tr.-odd{
+  background-color: #ffffff;
+}
+.add-user__table .rt-tbody .rt-tr-group .rt-tr.-even{
+  background: #f2f2f2;
+}
+
+.add-user__table .pagination-bottom .-pagination {
+  box-shadow: unset;
+  border-top: none;
+}
+
+.add-user__table .pagination-bottom .-pagination .-previous, .add-user__table .pagination-bottom .-pagination .-next {
+  width: 136px !important;
+  flex: none;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  text-align: center;
+  color: #191919;
+}
+.-pagination .-next .-btn:hover, .-pagination .-previous .-btn:hover {
+  color: #e5e5e5 !important;
+}
+
+.ReactTable.add-user__table .-pagination .-previous .-btn, .ReactTable.add-user__table .-pagination .-next .-btn {
+  border-radius: 6px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.2) !important;
+  background-color: #ffffff !important;
+}
+
+
+/* modal styles */
+.modal__border {
+  border: 1px solid #d1d1d1;
+  padding: 33px 24px;
+}
+.form-horizontal input, .form-horizontal select {
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.1);
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.57;
+  letter-spacing: normal;
+  color: #191919;
+}
+
+.modal-dialog {
+  margin: 180px auto;
+}
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-body {
+  padding-left: 32px;
+  padding-right: 32px;
+}
+
+.modal__title {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #191919;
+  margin-bottom: 15px;
+}
+
+.modal__button {
+  float: right;
+  margin: 32px auto;
+}
+
+.btn.btn-modal{
+  border-radius: 20px;
+  box-shadow: 0 2px 8px 0 rgba(71, 149, 214, 0.4);
+  background-image: linear-gradient(to bottom, #06b4ea, #009ee8);
+  padding: 0 25px;
+}
+
+.btn.btn-modal-default {
+  border-radius: 20px;
+  background-image: white;
+  padding: 0 25px;
+  border: 1px solid #d1d1d1;
+}

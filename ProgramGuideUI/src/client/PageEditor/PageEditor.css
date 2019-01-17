@@ -1,0 +1,83 @@
+.modal.editor__modal {
+  font-size: 14px; 
+}
+
+.modal.editor__modal .modal-header button.close span {
+  font-size: 32px;
+}
+
+.modal.editor__modal .modal-body .body-title{
+  margin-bottom: 32px;
+}
+
+.modal.editor__modal .modal-body .accordian .card .card-header img.down__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.modal.editor__modal .form-check-inline .form-check-input {
+  margin: 0;
+}
+
+.modal.editor__modal .custom-checkbox .custom-control-label strong{
+  margin-left: 12px;
+}
+
+.modal.editor__modal .custom-checkbox .custom-control-label::before {
+  border-radius: .25rem;
+  background: white;
+  border: 1px solid rgba(25, 25, 25, 0.3);
+  height: 24px;
+  width: 24px;
+  top: 0px;
+}
+
+.modal.editor__modal .custom-checkbox .custom-control-input:checked~.custom-control-label::before {
+  background-color: #fff;
+}
+
+.modal.editor__modal .custom-checkbox .custom-control-input:checked~.custom-control-label::after {
+  left: -14px;
+    top: 6px;
+    width: 5px;
+    height: 10px;
+    border: solid #009ee8;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    background-color: #fff;
+}
+
+#collapsePageTagSection .drop__selectors {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+input#txtPparentPageUrl {
+  max-width: 460px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.1);
+  background-color: #ffffff;
+  margin-right: 32px;
+}
+
+#collapseDrillDown input, #collapseBannerImage input {
+  max-width: 460px;
+  height: 40px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px 0 rgba(25, 25, 25, 0.1);
+  background-color: #ffffff;
+  margin-right: 32px;
+}
+
+#collapsePageContent .input__title {
+  margin-bottom: 16px;
+}
+
+.modal.editor__modal .modal-footer {
+  margin:32px;
+  border-top: none;
+  padding:0;
+}

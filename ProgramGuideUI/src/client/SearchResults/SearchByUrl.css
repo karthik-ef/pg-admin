@@ -1,0 +1,15 @@
+
+.filter__modal .url__search .form-group {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.filter__modal .url__search .col-form-label{
+  margin-bottom: 10px;
+}
+
+.filter__modal .url__search .search__wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}

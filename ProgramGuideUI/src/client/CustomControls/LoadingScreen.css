@@ -1,0 +1,5 @@
+#myOverlay{position: absolute;height:60%;width: 1024px !important;}
+#myOverlay{background:black;opacity:.7;z-index:2;display:none;}
+
+#loadingGIF{position:absolute;top:40%;left:45%;z-index:3;display:none;}
+

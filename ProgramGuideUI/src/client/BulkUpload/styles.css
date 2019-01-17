@@ -1,0 +1,70 @@
+.bulk-upload__wrapper h3 {
+  font-size: 14px;
+  font-weight: bold;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #191919;
+  margin-bottom: 24px;
+}
+
+.bulk-upload__wrapper input[type="file"] {
+    display: none;
+}
+.bulk-upload__wrapper .btn {
+    width: 126px;
+}
+.bulk-upload__wrapper #file-selected {
+    margin-left: 20px;
+    font-size: 14px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #191919;  
+}
+.custom-button__wrapper {
+  margin-bottom:20px;
+}
+.bulk-upload__wrapper .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 126px;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgba(71, 149, 214, 0.4);
+    background-image: linear-gradient(to bottom, #06b4ea, #009ee8);
+    text-align: center;
+    color: white;
+    
+}
+
+.btn.btn-modal.-disabled {
+    box-shadow: 0 2px 8px 0 rgba(71, 149, 214, 0.4) !important;
+    background-image: none;
+    background-color: rgba(71, 149, 214, 0.4) !important;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  .btn.btn-publish {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    width: 126px;
+    height: 40px;
+    border-radius: 20px;
+    box-shadow: 0 2px 8px 0 rgba(214, 71, 190, 0.4);
+    background-image: linear-gradient(to bottom, #ea069e, #e80087);
+    text-align: center;
+    color: white;
+  }
+
+  .table td, .table th {
+      padding-top: 0;
+  }

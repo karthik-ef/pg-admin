@@ -1,10 +1,10 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import SearchResults from "./Components/SearchResults";
-import CreatePage from "./Components/CreatePage";
-import AddUser from "./Components/AddUser";
-import BulkUpload from "./Components/BulkUpload";
-import PageHierarchy from "./Components/PageHierarchy";
+import SearchResults from "./SearchResults/SearchResults";
+import CreatePage from "./CreatePage/CreatePage";
+import AddUser from "./UserManagement/UserDashBoard";
+import BulkUpload from "./BulkUpload/BulkUpload";
+import PageHierarchy from "./PageHierarchy/PageHierarchy";
 
 export default () =>
   <Switch>
