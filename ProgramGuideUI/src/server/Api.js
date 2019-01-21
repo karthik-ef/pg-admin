@@ -16,6 +16,7 @@ export function GetLoginDetails() {
       }
       else {
         this.isValidUser = false;
+        this.Authentication();
       }
     })
     .catch(err => { console.log(err) });
