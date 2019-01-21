@@ -6,7 +6,8 @@ export function GetLoginDetails() {
   axios.post(Constant.USER_LOGIN_API, this.UserDetails)
     .then(result => {
       console.log(result.data);
-      if (result.data['AuthenticationResponse'] && result.data['UserName']) {
+      console.log(result.data['DepartmentName'] === 'SEO')
+      if (result.data['AuthenticationResponse'] && result.data['UserName'] && result.data['DepartmentName'] === 'SEO') {
         localStorage.setItem('LoggedInTime', Date.now());
         localStorage.setItem('Login', JSON.stringify(result.data));
 
