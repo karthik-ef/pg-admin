@@ -8,7 +8,7 @@ import * as Constant from '../../utils/constant';
 class DeleteUser extends Component {
 
     getSelectedValue(value) {
-        if (JSON.stringify(this.props.setData.userNameList).toLowerCase().includes(value)) {
+        if (JSON.stringify(this.props.setData.userNameList).toLowerCase().includes(value.toLowerCase())) {
             this.userName = value;
             this.isValidUser = true;
         }

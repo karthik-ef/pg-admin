@@ -30,7 +30,7 @@ class EditUser extends Component {
   }
 
   getSelectedValue(value) {
-    if (value && JSON.stringify(this.props.setData.userNameList).toLowerCase().includes(value)) {
+    if (value && JSON.stringify(this.props.setData.userNameList).toLowerCase().includes(value.toLowerCase())) {
       this.userName = value;
       this.isValidUser = true;
       this.selectedUserRoles = this.props.setData.state.userManagementData.filter(m => m.UserName === value)[0]["RoleName"];
