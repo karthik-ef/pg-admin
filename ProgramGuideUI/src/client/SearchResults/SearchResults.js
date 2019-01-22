@@ -80,6 +80,8 @@ class SearchResult extends Component {
     }
 
     editorContentData = (value) => {
+
+        if (value === 'Data updated') window.location.reload();
         //window.location.reload();
         this.setState({ showEditContentModal: !this.state.showEditContentModal });
     }

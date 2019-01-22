@@ -297,7 +297,7 @@ class PageEditor extends Component {
         }
         if (!this.validation) {
             $('#pageEditor').modal('hide');
-            this.props.getEditorContentData(true);
+            this.props.getEditorContentData('Data updated');
         }
     }
 
