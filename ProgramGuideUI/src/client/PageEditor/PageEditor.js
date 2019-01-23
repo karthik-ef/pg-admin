@@ -107,59 +107,59 @@ class PageEditor extends Component {
         var arr = this.objPageTag.toString().split('_')
         console.log(arr);
 
-        this.modifiedData.TagKeywordTopic = this.isPageTagModified
+        this.modifiedData.TagKeywordTopic = this.isPageTagModified && arr.length === 14
             ? arr[0]
             : EditPage['Tag_Topic'];
 
-        this.modifiedData.TagWhen = this.isPageTagModified
+        this.modifiedData.TagWhen = this.isPageTagModified && arr.length === 14
             ? arr[1]
             : EditPage['Tag_When'];
 
-        this.modifiedData.TagCourseType = this.isPageTagModified
+        this.modifiedData.TagCourseType = this.isPageTagModified && arr.length === 14
             ? arr[2]
             : EditPage['Tag_CourseType'];
 
-        this.modifiedData.TagAgeRange = this.isPageTagModified
+        this.modifiedData.TagAgeRange = this.isPageTagModified && arr.length === 14
             ? arr[3]
             : EditPage['Tag_AgeRange'];
 
-        this.modifiedData.TagDuration = this.isPageTagModified
+        this.modifiedData.TagDuration = this.isPageTagModified && arr.length === 14
             ? arr[4]
             : EditPage['Tag_Duration'];
 
-        this.modifiedData.TagLocalOffice = this.isPageTagModified
+        this.modifiedData.TagLocalOffice = this.isPageTagModified && arr.length === 14
             ? arr[5]
             : EditPage['Tag_LanguageOfInstruction'];
 
-        this.modifiedData.TagLanguage = this.isPageTagModified
+        this.modifiedData.TagLanguage = this.isPageTagModified && arr.length === 14
             ? arr[6]
             : EditPage['Tag_LanguageLearned'];
 
-        this.modifiedData.TagPlatform = this.isPageTagModified
+        this.modifiedData.TagPlatform = this.isPageTagModified && arr.length === 14
             ? arr[7]
             : EditPage['Tag_Platform'];
 
-        this.modifiedData.TagContinent = this.isPageTagModified
+        this.modifiedData.TagContinent = this.isPageTagModified && arr.length === 14
             ? arr[8]
             : EditPage['Tag_Continent'];
 
-        this.modifiedData.TagCountry = this.isPageTagModified
+        this.modifiedData.TagCountry = this.isPageTagModified && arr.length === 14
             ? arr[9]
             : EditPage['Tag_Country'];
 
-        this.modifiedData.TagState = this.isPageTagModified
+        this.modifiedData.TagState = this.isPageTagModified && arr.length === 14
             ? arr[10]
             : EditPage['Tag_State'];
 
-        this.modifiedData.TagCity = this.isPageTagModified
+        this.modifiedData.TagCity = this.isPageTagModified && arr.length === 14
             ? arr[11]
             : EditPage['Tag_City'];
 
-        this.modifiedData.TagFeature = this.isPageTagModified
+        this.modifiedData.TagFeature = this.isPageTagModified && arr.length === 14
             ? arr[12]
             : EditPage['Tag_Feature'];
 
-        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified
+        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified && arr.length === 14
             ? arr[13]
             : EditPage['AdditionalDurationDetails'];
 
