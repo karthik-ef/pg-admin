@@ -11,9 +11,10 @@ class DrilldownAlias extends Component {
         this.state = {
             showPreviewData: false
         }
+        this.renderEditable = this.renderEditable.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.getDrillDownAlias();
     }
 
@@ -21,14 +22,14 @@ class DrilldownAlias extends Component {
 
     }
 
-    getDrillDownAlias(){
+    getDrillDownAlias() {
         $.ajax({
             url: 'http://ctdev.ef.com:3000/getDrillDownAlias/?UniqueContent_ID=' + this.props.setData,
             type: 'GET',
             cache: false,
             success: function (data) {
                 this.drillDownAliasData = data
-                this.setState({showPreviewData: false});
+                this.setState({ showPreviewData: false });
                 console.log(data);
             }.bind(this),
             error: function (xhr, status, err) {
@@ -40,7 +41,7 @@ class DrilldownAlias extends Component {
     addDrillDownAliasData = (value) => {
 
         if (this.refs.DrilldownAlias.value !== '' && this.refs.AnchorText.value !== ''
-            && this.drillDownAliasData.filter(m => m.AnchorText === this.refs.AnchorText.value).length === 0) {
+            && this.drillDownAliasData.filter(m => m.DrilldownAlias === this.refs.DrilldownAlias.value).length === 0) {
 
             this.drillDownAliasData.push({ DrilldownAlias: this.refs.DrilldownAlias.value, AnchorText: this.refs.AnchorText.value });
             this.setState({ showPreviewData: false });
@@ -61,6 +62,32 @@ class DrilldownAlias extends Component {
 
     }
 
+    renderEditable(cellInfo) {
+        return (
+            <div
+                style={{ backgroundColor: "#", height: '100%' }}
+                contentEditable
+                suppressContentEditableWarning
+                onBlur={e => {
+                    if ( this.drillDownAliasData[cellInfo.index][cellInfo.column.id] !== e.target.innerHTML && this.drillDownAliasData.filter(m => m.DrilldownAlias === e.target.innerHTML).length > 0) {
+                        alert('Drilldown tag already exist');
+                        e.target.innerHTML = this.drillDownAliasData[cellInfo.index][cellInfo.column.id];
+                    }
+                    else {
+                        const data = this.drillDownAliasData;
+                        data[cellInfo.index][cellInfo.column.id] = e.target.innerHTML;
+                        this.objDrillDownXML = this.drillDownAliasData.map(m => { return '<Tags DrillDownAlias="' + m.DrilldownAlias + '" AnchorText = "' + m.AnchorText + '" />' }).toString().replace(/,/g, ' ');
+                        this.props.getDrillDownAliasData(this.objDrillDownXML);
+                        this.setState({ data });
+                    }
+                }}
+                dangerouslySetInnerHTML={{
+                    __html: this.drillDownAliasData[cellInfo.index][cellInfo.column.id]
+                }}
+            />
+        );
+    }
+
     render() {
         return (
 
@@ -77,24 +104,18 @@ class DrilldownAlias extends Component {
                                 columns: [
                                     {
                                         Header: <strong>Drilldown Alias</strong>,
-                                        id: "PageUrl",
+                                        id: "DrilldownAlias",
                                         accessor: d => d.DrilldownAlias,
-                                        sortable: false
+                                        sortable: false,
+                                        Cell: this.renderEditable
                                     },
                                     {
                                         Header: <strong>Anchor Text</strong>,
-                                        id: "PageTitle",
+                                        id: "AnchorText",
                                         accessor: d => d.AnchorText,
-                                        sortable: false
+                                        sortable: false,
+                                        Cell: this.renderEditable
                                     },
-                                    // {
-                                    //     Header: '',
-                                    //     sortable: false,
-                                    //     width: 80,
-                                    //     Cell: row => (
-                                    //         <button class="btn btn-danger btn-sm" type="submit" >Preview</button>
-                                    //     )
-                                    // },
                                     {
                                         Header: '',
                                         sortable: false,
