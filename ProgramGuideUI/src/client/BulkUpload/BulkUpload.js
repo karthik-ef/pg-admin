@@ -56,7 +56,7 @@ class BulkUpload extends Component {
             //Perform validation on the uploaded data
             var formatedContent = [];
             element.forEach((content, i) => {
-              if (i === 0 || i === 32) {
+              if (i === 0 || i === 31) {
                 if (isNaN(content)) {
                   this.validationFailed = true;
                   alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should contain numeric value. Please correct and upload again');
