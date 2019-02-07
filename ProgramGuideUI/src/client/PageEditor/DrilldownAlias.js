@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Table from "react-table";
 import $ from 'jquery';
+import * as API from '../../api/ContentEditor';
 
 class DrilldownAlias extends Component {
 
@@ -15,27 +16,12 @@ class DrilldownAlias extends Component {
     }
 
     componentDidMount() {
-        this.getDrillDownAlias();
+        API.getDrillDownAliasDetails.call(this);
+        //this.getDrillDownAlias();
     }
 
     previewData = (value) => {
 
-    }
-
-    getDrillDownAlias() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/getDrillDownAlias/?UniqueContent_ID=' + this.props.setData,
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                this.drillDownAliasData = data
-                this.setState({ showPreviewData: false });
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
     }
 
     addDrillDownAliasData = (value) => {
@@ -62,6 +48,13 @@ class DrilldownAlias extends Component {
 
     }
 
+    removeDrillDownAliasData = (value) => {
+        this.drillDownAliasData = this.drillDownAliasData.filter(m => m.DrilldownAlias !== value["DrilldownAlias"]);
+        this.objDrillDownXML = this.drillDownAliasData.map(m => { return '<Tags DrillDownAlias="' + m.DrilldownAlias + '" AnchorText = "' + m.AnchorText + '" />' }).toString().replace(/,/g, ' ');
+        this.setState({ showPreviewData: false });
+        this.props.getDrillDownAliasData(this.objDrillDownXML);
+    }
+
     renderEditable(cellInfo) {
         return (
             <div
@@ -69,7 +62,7 @@ class DrilldownAlias extends Component {
                 contentEditable
                 suppressContentEditableWarning
                 onBlur={e => {
-                    if ( this.drillDownAliasData[cellInfo.index][cellInfo.column.id] !== e.target.innerHTML && this.drillDownAliasData.filter(m => m.DrilldownAlias === e.target.innerHTML).length > 0) {
+                    if (this.drillDownAliasData[cellInfo.index][cellInfo.column.id] !== e.target.innerHTML && this.drillDownAliasData.filter(m => m.DrilldownAlias === e.target.innerHTML).length > 0) {
                         alert('Drilldown tag already exist');
                         e.target.innerHTML = this.drillDownAliasData[cellInfo.index][cellInfo.column.id];
                     }
@@ -130,13 +123,10 @@ class DrilldownAlias extends Component {
                         getTdProps={(state, rowInfo, column, instance) => {
                             return {
                                 onClick: (e, handleOriginal) => {
-
+                                    console.log(column);
+                                    console.log(e);
                                     if (column['Header']['props'] === undefined) {
-                                        this.AnchorText = rowInfo['original'].AnchorText;
-                                        this.drillDownAliasData = this.drillDownAliasData.filter(m => m.AnchorText !== this.AnchorText)
-                                        this.objDrillDownXML = this.drillDownAliasData.map(m => { return '<Tags DrillDownAlias="' + m.DrilldownAlias + '" AnchorText = "' + m.AnchorText + '" />' }).toString().replace(/,/g, ' ');
-                                        this.setState({ showPreviewData: false });
-                                        this.props.getDrillDownAliasData(this.objDrillDownXML);
+                                        this.removeDrillDownAliasData(rowInfo['original']);
                                     }
                                 }
                             };

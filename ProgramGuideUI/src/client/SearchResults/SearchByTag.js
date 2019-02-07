@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Dropdown from '../CustomControls/DropDown';
-import * as modal from '../../server/api_SearchByTag';
+import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
 import Loader from '../CustomControls/LoadingScreen';
 
@@ -21,7 +21,7 @@ class SearchByTag extends Component {
     // Code refactoring
 
     componentDidMount() {
-        modal.getTagData.call(this);
+        API.getTagData.call(this);
         $('#exampleModalLong').modal('show');
 
         var tagCollection = [Constant.Tag_Topic, Constant.Tag_When, Constant.Tag_CourseType, Constant.Tag_AgeRange,

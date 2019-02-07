@@ -1,40 +1,38 @@
 import axios from 'axios';
-import * as API from '../utils/endPoint';
-import * as Constant from '../utils/constant';
-import { dataForDropDown } from '../utils/generic';
+import * as API from '../utils/endpoints';
 
-export function getUserManagementDetails() {
-    axios.get(API.USER_MANAGEMENT_DETAILS)
+export function getUserDetails() {
+    axios.get(API.getUserDetails)
         .then(result => {
             this.userNameList = result.data.map(m => { return m.UserName }).filter((x, i, a) => { return a.indexOf(x) === i }).map(m => { return { name: m } });
             this.setState({ userManagementData: result.data });
         }).catch(err => { console.log(err) });
 }
 
-export function getAllMarkets(){
-    axios.get(API.GET_USER_MARKETS)
-    .then(result => {
-        this.setState({userMarkets: result.data.map(m => { return { label: m.Name, value: m.MarketCode } }) });
-    }).catch(err => console.log(err));
+export function getUniqueContentMarkets() {
+    axios.get(API.getUniqueContentMarkets)
+        .then(result => {
+            this.setState({userMarkets: result.data.map(m => { return { label: m.Name, value: m.MarketCode } }) });
+        })
+        .catch(err => { console.log(err) });
 }
 
 export function registerUser(){
-    axios.post(API.REGISTER_USER, this.userDetails)
+    axios.post(API.registerUser, this.userDetails)
     .then(result => {
-        console.log(result);
         window.location.reload();
     }).catch(err => console.log(err));
 }
 
 export function deleteUser(){
-    axios.post(API.DELETE_USER, this.userDetails)
+    axios.post(API.deleteUser, this.userDetails)
     .then(result => {
         window.location.reload();
     }).catch(err => {console.log(err)});
 }
 
 export function updateUser(){
-    axios.post(API.UPDATE_USER, this.userDetails)
+    axios.post(API.updateUser, this.userDetails)
     .then(result => {
         window.location.reload();
     }).catch(err => {console.log(err)});

@@ -10,7 +10,7 @@ import EditContent from '../PageEditor/PageEditor';
 import ReactExport from "react-data-export";
 
 import './styles.css';
-import { GetUniqueContentData } from '../../server/Api'
+import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
 import * as Generic from '../../utils/generic';
 
@@ -36,7 +36,7 @@ class SearchResult extends Component {
     }
 
     componentDidMount() {
-        GetUniqueContentData.call(this);
+        API.GetUniqueContentData.call(this);
     }
     // Code Refactoring 
 

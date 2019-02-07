@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Table from "react-table";
 
-import * as API from '../../utils/endPoint';
+import * as API from '../../utils/endpoints';
 
 class FeaturePreview extends Component {
     constructor() {
@@ -13,7 +13,7 @@ class FeaturePreview extends Component {
 
     async componentDidMount() {
         //if(this.props.Type !== 'DrillDownAlias'){
-            this.drillDownAlais = await fetch(API.PAGE_ALIAS).then(res => res.clone().json());
+            this.drillDownAlais = await fetch(API.getDrillDownAliasDetails).then(res => res.clone().json());
             this.generateData()
         //}
     }

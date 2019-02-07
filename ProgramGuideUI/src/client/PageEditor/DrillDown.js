@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-
+import * as API from '../../api/ContentEditor'
 import Down from './DownIcon.png';
 import ReactTable from "react-table";
 import $ from 'jquery';
 import Preview from './FeaturePreview';
 import TextBox from '../CustomControls/TextBox';
 import LinkingPagesPreview from './LinkingPagesPreview';
-
-import DrillDownAlias from  './DrilldownAlias';
-
-let objDrillDown = {}, getCustomizedLinksData;
+import DrillDownAlias from './DrilldownAlias';
 
 class DrillDown extends Component {
 
@@ -38,7 +35,8 @@ class DrillDown extends Component {
     }
 
     componentDidMount() {
-        this.getCustomizedLinks();
+        API.getCustomizedLinksDetails.call(this);
+        // this.getCustomizedLinks();
         $('#featurePageTag1Preview').click(function () {
             if ($(this).text() === 'Preview') {
                 $('.card').attr('id', 'drillDownPreview');
@@ -59,17 +57,6 @@ class DrillDown extends Component {
                 $(this).text('Preview');
             }
         });
-
-        // $('#DrillDownAliasPreview').click(function () {
-        //     if ($(this).text() === 'Preview') {
-        //         $('.card').attr('id', 'drillDownPreview');
-        //         $(this).text('Hide');
-        //     }
-        //     else {
-        //         $('.card').attr('id', 'drillDownHide');
-        //         $(this).text('Preview');
-        //     }
-        // });
     }
 
     // Pass MetaInformation data to parent component 
@@ -89,25 +76,14 @@ class DrillDown extends Component {
             this.setState({ showTag2Preview: false });
         }
 
-        // else if ($('#DrillDownAliasPreview').text() !== 'Preview') {
-        //     $('#collapseDrillDownAlias').collapse('toggle');
-        //     $('.card').attr('id', 'drillDownHide');
-        //     $('#DrillDownAliasPreview').text('Preview');
-        //     this.isDrillDownTagValid = true;
-        //     this.setState({ showDrillDownAliasPreview: false });
-        // }
-
-
         this.objDrillDown.FeaturePageTag1 = this.refs.FeaturePageTag1.value;
         this.objDrillDown.FeaturePageTag2 = this.refs.FeaturePageTag2.value;
-        //this.objDrillDown.DrillDownAlias = this.refs.DrillDownAlias.value;
         this.props.getDrillDownData(this.objDrillDown);
     }
 
     tag1PreviewOnClick() {
         var arrSelectedTags = this.refs.FeaturePageTag1.value.toString().split('_');
         var filterCriteria = [
-            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
             { Field: "Tag_Topic", Values: arrSelectedTags[0] },
             { Field: "Tag_When", Values: arrSelectedTags[1] },
             { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
@@ -164,7 +140,6 @@ class DrillDown extends Component {
 
         var arrSelectedTags = this.refs.DrillDownAlias.value.toString().split('_');
         var filterCriteria = [
-            // { Field: "Tag_Experience", Values: arrSelectedTags[0] },
             { Field: "Tag_Topic", Values: arrSelectedTags[0] },
             { Field: "Tag_When", Values: arrSelectedTags[1] },
             { Field: "Tag_CourseType", Values: arrSelectedTags[2] },
@@ -217,31 +192,9 @@ class DrillDown extends Component {
         }
         else {
             this.setState({ disable: false });
-            // this.newLinkingPageURL.length > 0 
-            // ? this.newLinkingPageURL = {UniqueContent_ID: null, PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }
             this.newLinkingPageURL1 = [{ UniqueContent_ID: '', PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }];
             console.log(this.newLinkingPageURL1);
         }
-    }
-
-    getCustomizedLinks() {
-        console.log(this.props.setDrillDownData['UniqueContent_ID'])
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/getCustomizedLinks/?UniqueContent_ID=' + this.props.setDrillDownData['UniqueContent_ID'],
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                this.getCustomizedLinksData = data;
-                console.log(data);
-                this.getFeatureTag3Results = data.filter(m => m.Type === false);
-                this.getCustomizedFeatureTagResults = data.filter(m => m.Type === true);
-                console.log(this.getFeatureTag3Results)
-
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
     }
 
     ShowCustomizedTags() {
@@ -270,8 +223,19 @@ class DrillDown extends Component {
 
     RemoveLinkingPage = (value) => {
         this.getCustomizedFeatureTagResults = this.getCustomizedFeatureTagResults.filter(m => m.PageUrl !== value['PageUrl']);
-        this.objDrillDown.CustomizedLinksData = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
-        this.props.getDrillDownData(this.objDrillDown);
+        this.CustomizedPgLinks = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
+        this.GenerateCustomizedLinksData("CustomizedPgLinks");
+        // var data = [];
+        // if (this.featureTagOtherPages) {
+        //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
+        // }
+        // else {
+        //     data = this.CustomizedPgLinks;
+        // }
+
+        // this.objDrillDown.CustomizedLinksData = data;
+
+        // this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
 
@@ -280,10 +244,19 @@ class DrillDown extends Component {
             var PageUrl = this.newLinkingPageURL.map(m => { return m.PageUrl }).toString();
             if (this.getCustomizedFeatureTagResults.filter(m => m.PageUrl === PageUrl).length === 0) {
                 this.getCustomizedFeatureTagResults.push(this.newLinkingPageURL[0]);
-                this.objDrillDown.CustomizedLinksData = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
+                this.CustomizedPgLinks = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
+                this.GenerateCustomizedLinksData("CustomizedPgLinks");
+                // var data = [];
+                // if (this.featureTagOtherPages) {
+                //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
+                // }
+                // else {
+                //     data = this.CustomizedPgLinks;
+                // }
 
-                console.log(this.objDrillDown.CustomizedLinksData)
-                this.props.getDrillDownData(this.objDrillDown);
+                // this.objDrillDown.CustomizedLinksData = data;
+                // console.log(this.objDrillDown.CustomizedLinksData)
+                // this.props.getDrillDownData(this.objDrillDown);
                 this.setState({ showCustomizedTags: true });
             }
         }
@@ -303,9 +276,18 @@ class DrillDown extends Component {
                 var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
                 var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
 
-                this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
-                console.log(this.objDrillDown.CustomizedLinksData1);
-                this.props.getDrillDownData(this.objDrillDown);
+                this.featureTagOtherPages = xmlForpgPages + xmlFornonPgPages;
+                this.GenerateCustomizedLinksData("featureTagOtherPages");
+                // var data = [];
+                // if (this.CustomizedPgLinks) {
+                //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
+                // }
+                // else {
+                //     data = this.featureTagOtherPages;
+                // }
+                // this.objDrillDown.CustomizedLinksData = data;
+                // console.log(this.objDrillDown.CustomizedLinksData);
+                // this.props.getDrillDownData(this.objDrillDown);
                 this.refs.AnchorText.value = ''
                 this.AnchorTextEntered = false;
                 this.setState({ showFeatureTag3Pages: true });
@@ -322,8 +304,17 @@ class DrillDown extends Component {
         var xmlForpgPages = pgPages.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = "' + "" + '" AnchorText = "' + "" + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
         var xmlFornonPgPages = nonPgPages.map(m => { return '<LinkingPages PageUrl = "' + m.PageUrl + '" AnchorText = "' + m.PageTitle + '"  Type = "0" />' }).toString().replace(/,/g, ' ');
 
-        this.objDrillDown.CustomizedLinksData1 = xmlForpgPages + xmlFornonPgPages;
-        this.props.getDrillDownData(this.objDrillDown);
+        this.featureTagOtherPages = xmlForpgPages + xmlFornonPgPages;
+        this.GenerateCustomizedLinksData("featureTagOtherPages");
+        // var data = [];
+        // if (this.CustomizedPgLinks) {
+        //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
+        // }
+        // else {
+        //     data = this.featureTagOtherPages;
+        // }
+        // this.objDrillDown.CustomizedLinksData = data;
+        // this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showFeatureTag3Pages: true });
     }
 
@@ -331,19 +322,25 @@ class DrillDown extends Component {
         if (this.newLinkingPageURL1.length !== undefined) {
             this.newLinkingPageURL1[0]['PageTitle'] = this.refs.AnchorText.value;
             this.refs.AnchorText.value !== '' ? this.AnchorTextEntered = true : '';
-            // console.log(this.newLinkingPageURL1[0]['PageTitle']);
         }
     }
 
     DrillDownAliasData = (value) => {
-        if(value !== ''){
             this.objDrillDown.DrillDownAlias = '<DrilldownAlias>' + value + '</DrilldownAlias>';
             this.props.getDrillDownData(this.objDrillDown);
+    }
+
+    // Generate Customized Link Tag (CustomizedPgLinks & featureTagOtherPages)
+    GenerateCustomizedLinksData = (value) => {
+        if (value === 'featureTagOtherPages') {
+            this.CustomizedPgLinks ? this.objDrillDown.CustomizedLinksData = this.CustomizedPgLinks + this.featureTagOtherPages
+                : this.objDrillDown.CustomizedLinksData = this.featureTagOtherPages;
         }
-        else{
-            this.objDrillDown.DrillDownAlias = '';
-            this.props.getDrillDownData(this.objDrillDown);
+        else if (value === 'CustomizedPgLinks') {
+            this.featureTagOtherPages ? this.objDrillDown.CustomizedLinksData = this.CustomizedPgLinks + this.featureTagOtherPages
+                : this.objDrillDown.CustomizedLinksData = this.CustomizedPgLinks;
         }
+        this.props.getDrillDownData(this.objDrillDown);
     }
 
     render() {
@@ -357,7 +354,7 @@ class DrillDown extends Component {
 
                 <div id="collapseDrillDown" class="collapse" aria-labelledby="DrillDown" data-parent="#pageEditorSection">
                     <div class="card-body">
-                    
+
                         {/* Feature Tag Customized */}
                         <strong> Feature Page: Customized PG Links </strong>
                         <br />
@@ -432,28 +429,7 @@ class DrillDown extends Component {
 
                         <br />
 
-                        {/* Drill Down Alias Content
-                        <strong> Drill Down Alias: </strong>
-                        <br />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="txtDrillDownAlias" defaultValue={this.props.setDrillDownData['DrillDownAlias']} ref="DrillDownAlias" onChange={this.onChange.bind(this)} />
-                                    <input type="text" class="form-control input-sm" id="txtAnchorText" placeholder="Anchor Text" />
-                                    <span class="input-group-btn">
-                                        <button id="DrillDownAliasPreview" data-toggle="collapse" data-target="#collapseDrillDownAlias" aria-expanded="true" aria-controls="collapseDrillDownAlias" class="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.DrillDownAliasPreviewOnClick.bind(this)} >Preview</button>
-                                    </span>
-                                </div>
-                                <div id="collapseDrillDownAlias" class="collapse" aria-labelledby="DrillDown" data-parent="DrillDownAliasButton">
-                                    {!this.isDrillDownTagValid ? <div class="alert alert-danger" role="alert">
-                                        Invalid tag!
-                                </div> : this.state.showDrillDownAliasPreview ?
-                                        <Preview Type={'DrillDownAlias'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.DrillDownAlias === undefined ? this.props.setDrillDownData['DrillDownAlias'] : this.objDrillDown.DrillDownAlias} /> : ''}
-                                </div>
-                            </div>
-                        </div> */}
-
-                        <DrillDownAlias setData = {this.props.setDrillDownData['UniqueContent_ID']} getDrillDownAliasData = {this.DrillDownAliasData.bind(this)}/>
+                        <DrillDownAlias setData={this.props.setDrillDownData['UniqueContent_ID']} getDrillDownAliasData={this.DrillDownAliasData.bind(this)} />
 
                     </div>
                 </div>

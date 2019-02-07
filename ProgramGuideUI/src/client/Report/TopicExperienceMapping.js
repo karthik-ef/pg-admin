@@ -3,16 +3,11 @@ import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Loader from '../CustomControls/LoadingScreen';
 
-import AddUserIcon from '../Icons/UserManagement_AddUser.png';
-import EditIcon from '../Icons/UserManagement_EditUser.png';
-import DeleteUser from '../Icons/UserManagement_DeleteUser.png';
-import * as Constant from '../../utils/constant';
-
 import { GetMarkets } from '../../server/Api';
 
 import * as Generic from '../../utils/generic';
 
-import * as ENDPOINT from '../../utils/endPoint';
+import * as ENDPOINT from '../../utils/endpoints';
 
 import ReactExport from "react-data-export";
 import DownloadIcon from '../Icons/SearchResult_Download.png';
@@ -36,7 +31,7 @@ class TopicExperienceMapping extends Component {
 
     async data1() {
         for (var i = 0; i < this.state.availableMarkets.length; i++) {
-            var response = await fetch(ENDPOINT.TOPIC_EXPERIENCE_MAPPING_DETAILS + this.state.availableMarkets[i].MarketCode).then(res => res.clone().json());
+            var response = await fetch(ENDPOINT.topicExperienceMappingDetails + this.state.availableMarkets[i].MarketCode).then(res => res.clone().json());
             response.map(m => this.data.push(m));
         }
         Generic.generateTopicExperienceMappingReport.call(this);

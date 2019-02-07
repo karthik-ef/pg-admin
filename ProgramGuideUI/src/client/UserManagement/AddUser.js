@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import DropDown from '../CustomControls/DropDown';
 
-import * as API from '../../server/api_UserManagement';
+import * as API from '../../api/UserManagement';
 import * as Constant from '../../utils/constant';
 
 class AddUser extends Component {
@@ -14,7 +14,7 @@ class AddUser extends Component {
 
   componentDidMount() {
     this.roles = Constant.ROLES;
-    API.getAllMarkets.call(this);
+    API.getUniqueContentMarkets.call(this);
   }
 
   BindRoles(value) {

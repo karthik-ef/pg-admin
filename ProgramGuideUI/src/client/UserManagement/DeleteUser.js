@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import TextBox from '../CustomControls/TextBox';
 
-import * as API from '../../server/api_UserManagement';
+import * as API from '../../api/UserManagement';
 import * as Constant from '../../utils/constant';
 
 

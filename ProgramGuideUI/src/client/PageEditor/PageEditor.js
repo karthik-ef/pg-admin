@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import ExpandIcon from '../Icons/Plus.png';
-import ShrinkIcon from '../Icons/Minus.png';
 import Up from './UpIcon.png';
 import Down from './DownIcon.png';
 import $ from 'jquery';
+import * as API from '../../api/ContentEditor';
 
 //Import Editor components
 import PageTagSection from '../PageEditor/PageTagSection';
@@ -13,20 +12,7 @@ import PageContent from '../PageEditor/PageContent';
 import DrillDown from '../PageEditor/DrillDown';
 import BannerImage from '../PageEditor/BannerImage';
 import PageStatus from '../PageEditor/PageStatus';
-
 import './PageEditor.css';
-
-//Declaration
-let objPageTag, isPageTagModified; //PageTagSection
-let objParentPageUrl, isParentPageModified; //ParentPage
-let objMetaInformation, isMetaInformationModified; //MetaInformation
-let objPageContent, isPageContentModified; //PageContent
-let objDrillDown, isDrillDownModified; //DrillDown
-let objBannerImage, isBannerImageModified; //BannerImage
-let objPageStatus, isPageStatusModified; //PageStatus
-
-let objCustomizedData;
-let modifiedData = {};
 
 class PageEditor extends Component {
 
@@ -59,6 +45,8 @@ class PageEditor extends Component {
     }
 
     componentDidMount() {
+
+        API.getMaxOfUniqueContentId.call(this);
         $('#pageEditor').modal('show');
         $('.card').on('shown.bs.collapse', function () {
             if ($(this).attr('id') !== 'drillDownPreview') {
@@ -96,129 +84,35 @@ class PageEditor extends Component {
             this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : EditPage['ParentPageID'];
         }
 
-        // this.modifiedData.TagExperience = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Experience'];
-
-        console.log(this.modifiedData);
-        console.log(this.objPageTag);
-        console.log(this.isPageTagModified);
-
         var arr = this.objPageTag.toString().split('_')
-        console.log(arr);
 
-        this.modifiedData.TagKeywordTopic = this.isPageTagModified && arr.length === 14
-            ? arr[0]
-            : EditPage['Tag_Topic'];
+        this.modifiedData.TagKeywordTopic = this.isPageTagModified && arr.length === 14 ? arr[0] : EditPage['Tag_Topic'];
 
-        this.modifiedData.TagWhen = this.isPageTagModified && arr.length === 14
-            ? arr[1]
-            : EditPage['Tag_When'];
+        this.modifiedData.TagWhen = this.isPageTagModified && arr.length === 14 ? arr[1] : EditPage['Tag_When'];
 
-        this.modifiedData.TagCourseType = this.isPageTagModified && arr.length === 14
-            ? arr[2]
-            : EditPage['Tag_CourseType'];
+        this.modifiedData.TagCourseType = this.isPageTagModified && arr.length === 14 ? arr[2] : EditPage['Tag_CourseType'];
 
-        this.modifiedData.TagAgeRange = this.isPageTagModified && arr.length === 14
-            ? arr[3]
-            : EditPage['Tag_AgeRange'];
+        this.modifiedData.TagAgeRange = this.isPageTagModified && arr.length === 14 ? arr[3] : EditPage['Tag_AgeRange'];
 
-        this.modifiedData.TagDuration = this.isPageTagModified && arr.length === 14
-            ? arr[4]
-            : EditPage['Tag_Duration'];
+        this.modifiedData.TagDuration = this.isPageTagModified && arr.length === 14 ? arr[4] : EditPage['Tag_Duration'];
 
-        this.modifiedData.TagLocalOffice = this.isPageTagModified && arr.length === 14
-            ? arr[5]
-            : EditPage['Tag_LanguageOfInstruction'];
+        this.modifiedData.TagLocalOffice = this.isPageTagModified && arr.length === 14 ? arr[5] : EditPage['Tag_LanguageOfInstruction'];
 
-        this.modifiedData.TagLanguage = this.isPageTagModified && arr.length === 14
-            ? arr[6]
-            : EditPage['Tag_LanguageLearned'];
+        this.modifiedData.TagLanguage = this.isPageTagModified && arr.length === 14 ? arr[6] : EditPage['Tag_LanguageLearned'];
 
-        this.modifiedData.TagPlatform = this.isPageTagModified && arr.length === 14
-            ? arr[7]
-            : EditPage['Tag_Platform'];
+        this.modifiedData.TagPlatform = this.isPageTagModified && arr.length === 14 ? arr[7] : EditPage['Tag_Platform'];
 
-        this.modifiedData.TagContinent = this.isPageTagModified && arr.length === 14
-            ? arr[8]
-            : EditPage['Tag_Continent'];
+        this.modifiedData.TagContinent = this.isPageTagModified && arr.length === 14 ? arr[8] : EditPage['Tag_Continent'];
 
-        this.modifiedData.TagCountry = this.isPageTagModified && arr.length === 14
-            ? arr[9]
-            : EditPage['Tag_Country'];
+        this.modifiedData.TagCountry = this.isPageTagModified && arr.length === 14 ? arr[9] : EditPage['Tag_Country'];
 
-        this.modifiedData.TagState = this.isPageTagModified && arr.length === 14
-            ? arr[10]
-            : EditPage['Tag_State'];
+        this.modifiedData.TagState = this.isPageTagModified && arr.length === 14 ? arr[10] : EditPage['Tag_State'];
 
-        this.modifiedData.TagCity = this.isPageTagModified && arr.length === 14
-            ? arr[11]
-            : EditPage['Tag_City'];
+        this.modifiedData.TagCity = this.isPageTagModified && arr.length === 14 ? arr[11] : EditPage['Tag_City'];
 
-        this.modifiedData.TagFeature = this.isPageTagModified && arr.length === 14
-            ? arr[12]
-            : EditPage['Tag_Feature'];
+        this.modifiedData.TagFeature = this.isPageTagModified && arr.length === 14 ? arr[12] : EditPage['Tag_Feature'];
 
-        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified && arr.length === 14
-            ? arr[13]
-            : EditPage['AdditionalDurationDetails'];
-
-
-        // this.modifiedData.TagKeywordTopic = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Topic').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Topic'];
-
-        // this.modifiedData.TagWhen = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_When'];
-
-        // this.modifiedData.TagCourseType = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_CourseType'];
-
-        // this.modifiedData.TagAgeRange = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_AgeRange'];
-
-        // this.modifiedData.TagDuration = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Duration'];
-
-        // this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'AdditionalDetails').map(m => { return m.Values }).toString()
-        //     : EditPage['AdditionalDurationDetails'];
-
-        // this.modifiedData.TagLocalOffice = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_LanguageOfInstruction'];
-
-        // this.modifiedData.TagLanguage = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_LanguageLearned').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_LanguageLearned'];
-
-        // this.modifiedData.TagPlatform = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Platform'];
-
-        // this.modifiedData.TagContinent = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Continent'];
-
-        // this.modifiedData.TagCountry = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Country'];
-
-        // this.modifiedData.TagState = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_State'];
-
-        // this.modifiedData.TagCity = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_City'];
-
-        // this.modifiedData.TagFeature = this.isPageTagModified
-        //     ? this.objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
-        //     : EditPage['Tag_Feature'];
+        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified && arr.length === 14 ? arr[13] : EditPage['AdditionalDurationDetails'];
 
         this.modifiedData.BannerImage = this.isBannerImageModified ? this.objBannerImage['BannerImage'] : EditPage['BannerImage'];
 
@@ -239,31 +133,11 @@ class PageEditor extends Component {
         this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
         this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
 
-        this.modifiedData.UserName = JSON.parse(localStorage.getItem('Login'))['UserName'];
-
-        //API call to update the record
-        // if (EditPage['PageUrl'] === '/test/'){
-        //     this.APICall();
-        // }
+        this.modifiedData.UserName = JSON.parse(localStorage.getItem('UserName'));
 
         var tagStructure = {};
         if (this.isPageTagModified) {
             tagStructure = this.objPageTag.toString();
-            // this.objPageTag.filter(m => m.Field === 'Tag_Experience').map(m => { return m.Values }).toString() + '_' + 
-            // this.objPageTag.filter(m => m.Field === 'Tag_Topic').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_When').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_CourseType').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_AgeRange').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_Duration').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_LanguageOfInstruction').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_LanguageLearned').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_Platform').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_Continent').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_Country').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_State').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_City').map(m => { return m.Values }).toString() + '_' +
-            // this.objPageTag.filter(m => m.Field === 'Tag_Feature').map(m => { return m.Values }).toString()
-
         }
 
         if (this.Checkduplicate.filter(m => m.Tags === tagStructure).length > 0) {
@@ -273,102 +147,35 @@ class PageEditor extends Component {
         }
         else if (this.props.isNewPage !== undefined) {
             this.setState({ showDuplicateErrorForCreate: false })
-            this.CreateNewContent();
+            API.createNewPage.call(this);
         }
         else {
-            this.APICall();
+            API.updateUniqueContent.call(this);
         }
 
-        if(this.objDrillDown['DrillDownAlias'] !== undefined && this.objDrillDown['DrillDownAlias'].length > 0){
-            this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'];
+        console.log(this.objDrillDown['DrillDownAlias']);
+        if (this.objDrillDown['DrillDownAlias'] !== undefined) {
+            this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
             this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
 
 
-            this.SaveDrillDownAlias();
+            API.saveDrilldownAliasTagsDetails.call(this);
             console.log(this.objDrillDownAlias);
         }
 
+        console.log(this.objDrillDown['CustomizedLinksData']);
+        console.log(this.maxOfUniqueContentId);
         if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
-            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
-            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + this.objDrillDown['CustomizedLinksData1'] + '</CustomizedLinks>';
+            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
+            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
 
-            console.log(this.objCustomizedData.LinkPageXml)
-            this.SaveCustomizedTags()
+            console.log(this.objCustomizedData)
+            API.saveCustomizedLinksDetails.call(this);
         }
         if (!this.validation) {
             $('#pageEditor').modal('hide');
             this.props.getEditorContentData('Data updated');
         }
-    }
-
-    //Update the modified data to LIVE
-    UpdateToLive() {
-
-    }
-    CreateNewContent() {
-        console.log(this.modifiedData)
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/CreateNewContent',
-            type: 'POST',
-            dataType: 'TEXT',
-            data: this.modifiedData,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
-    }
-
-    APICall() {
-        console.log(this.modifiedData);
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/updateUniqueContent',
-            type: 'POST',
-            dataType: 'TEXT',
-            data: this.modifiedData,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
-    }
-
-    SaveCustomizedTags() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/SaveCustomizedLinks',
-            type: 'POST',
-            dataType: 'TEXT',
-            data: this.objCustomizedData,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
-    }
-
-    SaveDrillDownAlias() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/SaveDrilldownAliasTags',
-            type: 'POST',
-            dataType: 'TEXT',
-            data: this.objDrillDownAlias,
-            cache: false,
-            success: function (data) {
-                console.log(data);
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
     }
 
     // Call back methods from page section
@@ -448,7 +255,6 @@ class PageEditor extends Component {
                                 Please modify the data before saving.
                                 </div> : ''} */}
                                 <button type="button" class="btn btn-modal-default" onClick={this.Close.bind(this)}>Cancel</button>
-                                <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToLive.bind(this)}>Save and Publish</button>
                                 <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToQA.bind(this)}>Save</button>
                             </div>
                         </div>

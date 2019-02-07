@@ -7,7 +7,7 @@ import DeleteUser from '../Icons/UserManagement_DeleteUser.png';
 import AddUserPopup from './AddUserPopup'
 
 import './styles.css';
-import * as API from '../../server/api_UserManagement';
+import * as API from '../../api/UserManagement';
 import * as Constant from '../../utils/constant';
 
 
@@ -24,7 +24,7 @@ class UserDashboard extends Component {
         $('.stlying').click(function () {
             document.activeElement.blur();
         })
-        API.getUserManagementDetails.call(this);
+        API.getUserDetails.call(this);
     }
 
     userOperations(operation, event) {
@@ -37,6 +37,7 @@ class UserDashboard extends Component {
     }
 
     render() {
+        console.log(this.state.userManagementData);
         return (
             <div className="itemDiv add-users__wrapper">
                 <div className="container">

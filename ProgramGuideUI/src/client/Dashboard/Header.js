@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './header.css';
-
-import { GetMarkets } from '../../server/Api'
+import * as API from '../../api/Markets';
 
 class Header extends Component {
 
@@ -20,8 +19,8 @@ class Header extends Component {
     }
 
     componentDidMount() {
-        this.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
-        GetMarkets.call(this);
+        this.userName = JSON.parse(localStorage.getItem('UserName'));
+        API.getUserMarkets.call(this);
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 

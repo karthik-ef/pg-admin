@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import 'bootstrap';
-
-import { GetLoginDetails } from './server/Api';
-import * as Constant from './utils/constant';
 import './Login.css';
+import * as API from './api/login';
 
 class Login extends Component {
 
@@ -19,13 +17,12 @@ class Login extends Component {
         this.UserDetails = {}
         this.UserDetails.userName = this.refs.emailId.value;
         this.UserDetails.password = this.refs.password.value;
-        this.UserDetails.applicationName = Constant.APPLICATION_NAME;
 
-        GetLoginDetails.call(this);
+        API.UserAuthentication.call(this);
         event.preventDefault();
     }
 
-    Authentication() {
+    Authorization() {
         if (this.isValidUser) {
             $('#exampleModalCenter').modal('hide');
             this.props.Authentication(true)

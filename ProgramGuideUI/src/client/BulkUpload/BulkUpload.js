@@ -5,7 +5,7 @@ import $ from 'jquery';
 
 import './styles.css';
 import * as Constant from '../../utils/constant';
-import * as API from '../../server/api_BulkUpload';
+import * as API from '../../api/BulkUpload';
 
 class BulkUpload extends Component {
   constructor() {
@@ -30,7 +30,7 @@ class BulkUpload extends Component {
   }
 
   componentDidMount() {
-    API.getBulkUploadDetails.call(this);
+    //API..call(this);
   }
 
   handleChange(e) {
@@ -99,7 +99,7 @@ class BulkUpload extends Component {
         this.uploadExcelDetails.xmlData = xml.toString();
         console.log(this.uploadExcelDetails);
         // this.BulkUpload();
-        API.uploadExcelData.call(this);
+        API.BulkUpload.call(this);
 
 
       }

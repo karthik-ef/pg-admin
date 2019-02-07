@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-
 import Down from './DownIcon.png';
-
-let FamilyTreeHierarchy = [];
-let ParentPageUrl = '';
-let ParentPageID = 0;
-
 class ParentPage extends Component {
 
     constructor() {

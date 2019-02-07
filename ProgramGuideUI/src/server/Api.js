@@ -2,44 +2,46 @@ import axios from 'axios';
 import * as Constant from '../utils/constant';
 import * as Generic from '../utils/generic';
 
-export function GetLoginDetails() {
-  axios.post(Constant.USER_LOGIN_API, this.UserDetails)
-    .then(result => {
-      console.log(result.data);
-      console.log(result.data['DepartmentName'] === 'SEO')
-      if (result.data['AuthenticationResponse'] && result.data['UserName'] && result.data['DepartmentName'] === 'SEO') {
-        localStorage.setItem('LoggedInTime', Date.now());
-        localStorage.setItem('Login', JSON.stringify(result.data));
+// export function GetLoginDetails() {
+//   axios.post(Constant.USER_LOGIN_API, this.UserDetails)
+//     .then(result => {
+//       console.log(result.data);
+//       console.log(result.data['DepartmentName'] === 'SEO')
+//       if (result.data['AuthenticationResponse'] && result.data['UserName'] && result.data['DepartmentName'] === 'SEO') {
+//         localStorage.setItem('LoggedInTime', Date.now());
+//         localStorage.setItem('Login', JSON.stringify(result.data));
 
-        this.isValidUser = true;
-        this.Authentication();
-      }
-      else {
-        this.isValidUser = false;
-        this.Authentication();
-      }
-    })
-    .catch(err => { console.log(err) });
-}
+//         this.isValidUser = true;
+//         this.Authentication();
+//       }
+//       else {
+//         this.isValidUser = false;
+//         this.Authentication();
+//       }
+//     })
+//     .catch(err => { console.log(err) });
+// }
 
-export function GetUniqueContentData() {
-  console.log(localStorage.getItem('Market'));
-  axios.get(Constant.GET_UNIQUECONTENT_DATA_API + '?marketCode=' + localStorage.getItem('Market'))
-    .then(result => {
-      console.log(result.data);
-      var UniqueContentData = JSON.stringify(result.data).replace(/null/g, "\"\"");
-      this.ReportData = JSON.parse(UniqueContentData);
-      Generic.generateExcelReport.call(this);
-      this.PageUrls = result.data.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
-      this.setState({ uniqueContentData: JSON.parse(UniqueContentData) });
-    })
-    .catch(err => {
-      console.log(err);
-    })
-}
+// export function GetUniqueContentData() {
+//   console.log(localStorage.getItem('Market'));
+//   axios.get(Constant.GET_UNIQUECONTENT_DATA_API + '?marketCode=' + localStorage.getItem('Market'))
+//     .then(result => {
+//       console.log(result.data);
+//       var UniqueContentData = JSON.stringify(result.data).replace(/null/g, "\"\"");
+//       this.ReportData = JSON.parse(UniqueContentData);
+//       Generic.generateExcelReport.call(this);
+//       this.PageUrls = result.data.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
+//       this.setState({ uniqueContentData: JSON.parse(UniqueContentData) });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//     })
+// }
 
+
+//Need to remove the below 2 method
 export function GetMarkets() {
-  axios.get(Constant.GET_USERSPECIFIC_MARKETS + '?userName=' + JSON.parse(localStorage.getItem('Login'))['UserName'])
+  axios.get(Constant.GET_USERSPECIFIC_MARKETS + '?userName=' + JSON.parse(localStorage.getItem('UserName')))
     .then(result => {
       this.userSpecificMarkets = result.data;
       filterMarkets(this);

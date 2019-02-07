@@ -1,14 +1,31 @@
 import axios from 'axios';
-import * as API from '../utils/endPoint';
+import * as API from '../utils/endpoints';
 import * as Constant from '../utils/constant';
 import { dataForDropDown } from '../utils/generic';
+import * as Generic from '../utils/generic';
 
 export function getTagData(){
     getDurationTags.call(this);
 }
 
+export function GetUniqueContentData() {
+    console.log(localStorage.getItem('Market'));
+    axios.get(API.getUniqueContentDetails + localStorage.getItem('Market'))
+      .then(result => {
+        console.log(result.data);
+        var UniqueContentData = JSON.stringify(result.data).replace(/null/g, "\"\"");
+        this.ReportData = JSON.parse(UniqueContentData);
+        Generic.generateExcelReport.call(this);
+        this.PageUrls = result.data.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
+        this.setState({ uniqueContentData: JSON.parse(UniqueContentData) });
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
 function getDurationTags() {
-    axios.get(API.DURATION_TAG)
+    axios.get(API.getDurationTagDetails)
         .then(result => {
             this.Tag_Duration = dataForDropDown(result.data.map(m => {return {Value: m}}));
             getPlatformTags.call(this);
@@ -16,7 +33,7 @@ function getDurationTags() {
 }
 
  function getPlatformTags() {
-    axios.get(API.PLATFORM_TAG)
+    axios.get(API.getPlatformTagDetails)
         .then(result => {
             console.log(result);
             this.Tag_Platform = dataForDropDown(result.data.map(m => {return {Value: m}}));
@@ -25,7 +42,7 @@ function getDurationTags() {
 }
 
  function getRemainingTags() {
-    axios.get(API.REMAINING_TAG + localStorage.getItem('Market'))
+    axios.get(API.getSearchTagDetails + localStorage.getItem('Market'))
         .then(result => {
             //console.log(result.data);
             this.Tag_Topic = dataForDropDown(result.data.filter(m => m.TagName === Constant.Tag_Topic));

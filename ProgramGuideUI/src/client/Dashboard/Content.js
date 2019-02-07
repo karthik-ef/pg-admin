@@ -9,7 +9,9 @@ import TopicExperienceMapping from '../Report/TopicExperienceMapping'
 class Content extends Component {
   render() {
 
-    var Role = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
+    var Role = JSON.parse(localStorage.getItem('Role'));
+
+    console.log(Role === 'Admin' && window.location.pathname.toLowerCase() === '/adduser');
 
     if (window.location.pathname.toLowerCase() === '/') {
       window.location.pathname = '/SearchResults';

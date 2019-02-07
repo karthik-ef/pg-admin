@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-
 import Down from './DownIcon.png';
 import BannerImagePreview from '../Modal/BannerImagePreview';
-import $ from 'jquery';
+import * as API from '../../api/ContentEditor';
 
 class BannerImage extends Component {
 
@@ -16,21 +15,7 @@ class BannerImage extends Component {
     }
 
     componentDidMount() {
-        this.getBannerImage();
-    }
-
-    getBannerImage() {
-        $.ajax({
-            url: 'http://ctdev.ef.com:3000/BannerImage',
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                this.setState({createBannerImage: JSON.parse(data)});
-            }.bind(this),
-            error: function (xhr, status, err) {
-                console.log(err);
-            }
-        });
+       API.getBannerImageDetails.call(this);
     }
 
     // Pass MetaInformation data to parent component 
@@ -47,6 +32,8 @@ class BannerImage extends Component {
         console.log(value);
         this.setState({ showBannerPreview: false });
         this.refs.BannerImage.value = value;
+        this.objBannerImage.BannerImage = this.refs.BannerImage.value;
+        this.props.getBannerImageData(this.objBannerImage);
     }
 
     resetModal() {
@@ -54,7 +41,7 @@ class BannerImage extends Component {
     }
 
     render() {
-        console.log(this.state.createBannerImage['a']);
+        console.log(this.state.createBannerImage['treeStructure']);
         return (
             <div class="card">
                 <div class="card-header" id="BannerImage">

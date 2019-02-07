@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-
 import Down from './DownIcon.png';
-
-let objMetaInformation = {}
 
 class MetaInformation extends Component {
 
@@ -38,7 +35,7 @@ class MetaInformation extends Component {
                     <textarea class="form-control" rows="5" defaultValue={this.props.data['MetaDescription']} ref="MetaDescription" onBlur = {this.onBlur.bind(this)}></textarea>
                     <br />
                     <strong> Meta Robot: </strong>
-                    <input type="text" class="form-control" readOnly={JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'] !== 'Admin' ? true : false} defaultValue={this.props.data['MetaRobot']} ref="MetaRobot" onBlur = {this.onBlur.bind(this)}/>
+                    <input type="text" class="form-control" readOnly={JSON.parse(localStorage.getItem('Role')) !== 'Admin' ? true : false} defaultValue={this.props.data['MetaRobot']} ref="MetaRobot" onBlur = {this.onBlur.bind(this)}/>
                 </div>
             </div>
         </div>

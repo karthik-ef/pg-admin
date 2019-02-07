@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import * as API from '../../server/Api';
+import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
 
 import EditContent from '../PageEditor/PageEditor';

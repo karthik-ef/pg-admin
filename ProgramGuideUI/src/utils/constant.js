@@ -57,13 +57,13 @@ export const Tag_Feature = 'Tag_Feature';
 
 
 //API END POINTS
-export const GET_USER_DETAILS_API = `http://ctdev.ef.com:3000/getUserDetails/`;
-export const GET_MARKETS_API = `http://ctdev.ef.com:3000/market`;
-export const UPDATE_USER_API = `http://ctdev.ef.com:3000/updateUser`;
-export const DELETE_USER_API = `http://ctdev.ef.com:3000/DeleteUser/`;
+// export const GET_USER_DETAILS_API = `http://ctdev.ef.com:3000/getUserDetails/`;
+// export const GET_MARKETS_API = `http://ctdev.ef.com:3000/market`;
+// export const UPDATE_USER_API = `http://ctdev.ef.com:3000/updateUser`;
+// export const DELETE_USER_API = `http://ctdev.ef.com:3000/DeleteUser/`;
 
-export const USER_LOGIN_API = `http://ctdev.ef.com:3002/api/user/`;
+// export const USER_LOGIN_API = `http://ctdev.ef.com:3002/api/user/`;
 
-export const GET_UNIQUECONTENT_DATA_API = `http://ctdev.ef.com:3000/getUniqueContentResults/`;
+//export const GET_UNIQUECONTENT_DATA_API = `http://ctdev.ef.com:3000/getUniqueContentResults/`;
 export const GET_USERSPECIFIC_MARKETS = `http://ctdev.ef.com:3000/userMarkets`;
 export const GET_UNIQUECONTENT_CONTENT_MARKETS_API = `http://ctdev.ef.com:3000/getUniqueContentMarkets`;

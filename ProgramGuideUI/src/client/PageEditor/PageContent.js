@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-
 import Down from './DownIcon.png';
 import TextEditor from '../CustomControls/TextEditor';
-
-let objPageContent = {}
 
 class PageContent extends Component {
 
