@@ -18,6 +18,7 @@ class BulkUpload extends Component {
   }
 
   validateXml(data) {
+   // console.log(data);
     return data.replace(/[<>&'"]/g, function (c) {
       switch (c) {
         case '<': return '&lt;';
@@ -86,7 +87,7 @@ class BulkUpload extends Component {
         this.BulkUploadDetails = {};
 
         this.BulkUploadDetails.xmlData = this.UpdatedUniqueContentId;
-        this.BulkUploadDetails.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
+        this.BulkUploadDetails.userName = JSON.parse(localStorage.getItem('UserName'));
 
         var xml = jsonxml({
 
@@ -94,12 +95,12 @@ class BulkUpload extends Component {
         })
 
         this.uploadExcelDetails = {};
-        this.uploadExcelDetails.userName = JSON.parse(localStorage.getItem('Login'))['UserName'];
-        this.uploadExcelDetails.userRole = JSON.parse(localStorage.getItem('Login'))['Roles']['RoleName'];
+        this.uploadExcelDetails.userName = JSON.parse(localStorage.getItem('UserName'));
+        this.uploadExcelDetails.userRole = JSON.parse(localStorage.getItem('Role'));
         this.uploadExcelDetails.xmlData = xml.toString();
         console.log(this.uploadExcelDetails);
         // this.BulkUpload();
-        API.BulkUpload.call(this);
+       API.BulkUpload.call(this);
 
 
       }
