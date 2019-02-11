@@ -14,7 +14,7 @@ export const updateUser = `http://pg2-admin.ef.com/api/updateUser`;
 export const deleteUser = `http://pg2-admin.ef.com/api/deleteUser`;
 
 //Bulk Upload
-export const bulkUpload = `http://pg2-admin.ef.com/api/deleteUser`;
+export const bulkUpload = `http://pg2-admin.ef.com/api/bulkUpload`;
 
 //Search Results
 export const getMaxOfUniqueContentId = `http://pg2-admin.ef.com/api/getMaxOfUniqueContentId`;
