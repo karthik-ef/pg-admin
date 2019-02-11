@@ -17,7 +17,7 @@ export function GetUniqueContentData() {
         this.ReportData = JSON.parse(UniqueContentData);
         Generic.generateExcelReport.call(this);
         this.PageUrls = result.data.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
-        this.setState({ uniqueContentData: JSON.parse(UniqueContentData) });
+        this.setState({ uniqueContentData: result.data });
       })
       .catch(err => {
         console.log(err);
