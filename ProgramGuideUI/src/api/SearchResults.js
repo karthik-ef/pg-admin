@@ -13,6 +13,7 @@ export function GetUniqueContentData() {
     axios.get(API.getUniqueContentDetails + localStorage.getItem('Market'))
       .then(result => {
         console.log(result.data);
+        this.ReportData = result.data;
         Generic.generateExcelReport.call(this);
         this.PageUrls = result.data.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } });
         this.setState({ uniqueContentData: result.data });
