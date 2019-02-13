@@ -151,6 +151,8 @@ class Header extends Component {
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                         <Link to="/TopicExperienceMapping" className="nav-link no-padding">Topic-Experience mapping</Link>
+                                        <div class="dropdown-divider"></div>
+                                        <Link to="/SitemapGenerator" className="nav-link no-padding">Sitemap Generator</Link>
                                         </div>
                                     </li>
                                 </ul>

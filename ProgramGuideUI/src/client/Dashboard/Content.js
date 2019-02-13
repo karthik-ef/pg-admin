@@ -5,6 +5,7 @@ import AddUser from "../UserManagement/UserDashBoard";
 import BulkUpload from "../BulkUpload/BulkUpload";
 import PageHierarchy from '../PageHierarchy/pageHierarchy';
 import TopicExperienceMapping from '../Report/TopicExperienceMapping'
+import SitemapGenerator from '../Report/SitemapGenerator';
 
 class Content extends Component {
   render() {
@@ -23,7 +24,8 @@ class Content extends Component {
           : window.location.pathname.toLowerCase() === '/bulkupload' ? <BulkUpload />
             : window.location.pathname.toLowerCase() === '/pagehierarchy' ? <PageHierarchy />
               : window.location.pathname.toLowerCase() === '/topicexperiencemapping' ? <TopicExperienceMapping />
-                : '';
+                : window.location.pathname.toLowerCase() === '/sitemapgenerator' ? <SitemapGenerator />
+                  : '';
     return (
 
       <div className="contentDiv">
