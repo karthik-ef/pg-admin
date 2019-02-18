@@ -6,10 +6,12 @@
     "axios": "^0.18.0",
     "bootstrap": "^4.1.1",
     "create-react-class": "^15.6.3",
+    "file-saver": "^2.0.0",
     "inline-style-prefixer": "^5.0.1",
     "install": "^0.12.1",
     "jquery": "^3.3.1",
     "jsontoxml": "^1.0.0",
+    "moment": "^2.24.0",
     "popper.js": "^1.14.3",
     "react": "^16.4.1",
     "react-autosuggest": "^9.3.4",
@@ -27,7 +29,8 @@
     "react-table": "^6.8.6",
     "react-treebeard": "^2.1.0",
     "read-excel-file": "^2.0.2",
-    "tachyons-components": "^1.0.0-1"
+    "tachyons-components": "^1.0.0-1",
+    "xml-formatter": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",

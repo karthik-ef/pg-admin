@@ -35,3 +35,8 @@ export const createNewPage = `http://pg2-admin.ef.com/api/createNewPage`;
 //Reports
 export const topicExperienceMappingDetails = `https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetTopicExperienceMappingDetails/?mc=`
 
+//Sitemap Generator
+export const getSitemapWebsites = `http://pg2-admin.ef.com/api/getSitemapWebsites`;
+export const getSitemapAllPages = `http://pg2-admin.ef.com/api/getSitemapAllPages/?marketCode=`
+export const getPageDatabase_SearchPages = `http://pg2-admin.ef.com/api/getPageDatabase_SearchPages/?UrlPath=`
+

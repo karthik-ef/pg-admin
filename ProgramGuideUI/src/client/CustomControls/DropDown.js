@@ -29,7 +29,7 @@ var MultiSelectField = createClass({
 		};
 	},
 	handleSelectChange(value) {
-		this.setState({flag: false, SelectedValue: value});
+		this.setState({ flag: false, SelectedValue: value });
 		if (value) {
 			if (value.includes("Select All")) {
 				var difficult_tasks = [];
@@ -42,14 +42,14 @@ var MultiSelectField = createClass({
 				this.setState({ value });
 			}
 
-			else if(this.state.IdentifyName === 'Role'){
-				this.setState({ value },function(){
+			else if (this.state.IdentifyName === 'Role') {
+				this.setState({ value }, function () {
 					this.props.bindedRoleValue(value);
 				});
 			}
 
-			else if(this.state.IdentifyName === 'Market'){
-				this.setState({ value },function(){
+			else if (this.state.IdentifyName === 'Market') {
+				this.setState({ value }, function () {
 					this.props.bindedMarketValue(value);
 				});
 			}
@@ -95,8 +95,8 @@ var MultiSelectField = createClass({
 			this.state.dispalyText = '--Choose--';
 			this.state.id = 'Tags';
 
-			this.props.Tags.map(m => {if (m.label.includes('Any value except blank')) {return true} }).includes(true)? '': this.props.Tags.push({label: 'Any value except blank', value: '?'});
-			Roles = this.props.Tags.map((m) => { return m});
+			this.props.Tags.map(m => { if (m.label.includes('Any value except blank')) { return true } }).includes(true) ? '' : this.props.Tags.push({ label: 'Any value except blank', value: '?' });
+			Roles = this.props.Tags.map((m) => { return m });
 
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			this.state.multiValues = false;
@@ -116,6 +116,16 @@ var MultiSelectField = createClass({
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			// console.log(Roles);
 		}
+
+		if (this.props.Websites) {
+			this.state.IdentifyName = 'Website'
+			this.state.dispalyText = 'Select Website';
+			this.state.id = 'Website';
+			Roles = this.props.Websites.map((m) => { return m });
+			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
+			this.state.multiValues = false;
+		}
+
 
 		// console.log(Roles);
 
