@@ -59,12 +59,14 @@ export function updateUniqueContent() {
     axios.post(API.updateUniqueContent, this.modifiedData)
         .then(result => {
             console.log(result);
+            alert('Changes are successfully saved');
         }).catch(err => { console.log(err) });
 }
 
 export function createNewPage() {
     axios.post(API.createNewPage, this.modifiedData)
         .then(result => {
+            alert('Page is successfullt created');
             console.log(result);
         }).catch(err => { console.log(err) });
 }
