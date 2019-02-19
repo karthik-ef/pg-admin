@@ -153,6 +153,8 @@ class Header extends Component {
                                         <Link to="/TopicExperienceMapping" className="nav-link no-padding">Topic-Experience mapping</Link>
                                         <div class="dropdown-divider"></div>
                                         <Link to="/SitemapGenerator" className="nav-link no-padding">Sitemap Generator</Link>
+                                        <div class="dropdown-divider"></div>
+                                        <Link to="/ExportPgData" className="nav-link no-padding">Export Pg Data</Link>
                                         </div>
                                     </li>
                                 </ul>

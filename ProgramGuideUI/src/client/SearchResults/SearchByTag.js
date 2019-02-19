@@ -4,6 +4,7 @@ import Dropdown from '../CustomControls/DropDown';
 import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
 import Loader from '../CustomControls/LoadingScreen';
+import * as API_SearchResults from '../../api/SearchResults'
 
 class SearchByTag extends Component {
     constructor() {
@@ -21,7 +22,13 @@ class SearchByTag extends Component {
     // Code refactoring
 
     componentDidMount() {
-        API.getTagData.call(this);
+        if (window.location.pathname.toLowerCase() === '/exportpgdata') {
+            API_SearchResults.getUserMarkets.call(this);
+        }
+        else {
+            API.getTagData.call(this);
+        }
+
         $('#exampleModalLong').modal('show');
 
         var tagCollection = [Constant.Tag_Topic, Constant.Tag_When, Constant.Tag_CourseType, Constant.Tag_AgeRange,

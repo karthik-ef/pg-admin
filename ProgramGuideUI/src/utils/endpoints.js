@@ -22,6 +22,8 @@ export const getDurationTagDetails = `http://pg2-admin.ef.com/api/getDurationTag
 export const getPlatformTagDetails = `http://pg2-admin.ef.com/api/getPlatformTagDetails`;
 export const getSearchTagDetails = `http://pg2-admin.ef.com/api/getSearchTagDetails/?MarketCode=`;
 export const getUniqueContentDetails = `http://pg2-admin.ef.com/api/getUniqueContentDetails/?marketCode=`;
+export const getAllPageUrls = `http://pg2-admin.ef.com/api/getAllPageUrls`;
+export const exportPgData = `http://pg2-admin.ef.com/api/exportPgData/?marketCode=`;
 
 // Content Editor
 export const getBannerImagesDetails = `http://pg2-admin.ef.com/api/getBannerImagesDetails`;

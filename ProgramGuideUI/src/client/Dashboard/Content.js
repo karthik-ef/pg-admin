@@ -6,6 +6,7 @@ import BulkUpload from "../BulkUpload/BulkUpload";
 import PageHierarchy from '../PageHierarchy/pageHierarchy';
 import TopicExperienceMapping from '../Report/TopicExperienceMapping'
 import SitemapGenerator from '../Report/SitemapGenerator';
+import ExportPgData from '../Report/ExportPgData';
 
 class Content extends Component {
   render() {
@@ -25,6 +26,7 @@ class Content extends Component {
             : window.location.pathname.toLowerCase() === '/pagehierarchy' ? <PageHierarchy />
               : window.location.pathname.toLowerCase() === '/topicexperiencemapping' ? <TopicExperienceMapping />
                 : window.location.pathname.toLowerCase() === '/sitemapgenerator' ? <SitemapGenerator />
+                : window.location.pathname.toLowerCase() === '/exportpgdata' ? <ExportPgData />
                   : '';
     return (
 

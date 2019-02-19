@@ -61,18 +61,19 @@ class FilterResult extends Component {
                             <div className="filter__controls">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" className="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" value={Constant.SEARCH_BY_URL} onChange={this.searchComponentChange.bind(this)} />
-                                    <label className="custom-control-label" for="defaultInline1">{Constant.SEARCH_BY_URL}</label>
+                                    <label className="custom-control-label" for="defaultInline1">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By URL' :Constant.SEARCH_BY_URL}</label>
                                 </div>
 
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" className="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" value={Constant.SEARCH_BY_TAG} onChange={this.searchComponentChange.bind(this)} />
-                                    <label className="custom-control-label" for="defaultInline2">{Constant.SEARCH_BY_TAG}</label>
+                                    <label className="custom-control-label" for="defaultInline2">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By Tag' :Constant.SEARCH_BY_URL}</label>
                                 </div>
-
-                                <div className="custom-control custom-checkbox">
-                                    <input type="checkbox" className="custom-control-input" id="inActive" name="inlineDefaultRadiosExample" onChange={this.inActivePageChange.bind(this)} />
-                                    <label className="custom-control-label" for="inActive">{Constant.INCLUDE_INACTIVE_PAGES}</label>
-                                </div>
+                                {window.location.pathname.toLowerCase() === '/exportpgdata' ? '' :
+                                    <div className="custom-control custom-checkbox">
+                                        <input type="checkbox" className="custom-control-input" id="inActive" name="inlineDefaultRadiosExample" onChange={this.inActivePageChange.bind(this)} />
+                                        <label className="custom-control-label" for="inActive">{Constant.INCLUDE_INACTIVE_PAGES}</label>
+                                    </div>
+                                }
                             </div>
 
                         </div>
@@ -86,7 +87,7 @@ class FilterResult extends Component {
                         </div>
 
                         <div className="modal-footer">
-                            <button type="button" id="Search" className="btn btn-primary btn-modal" onClick={this.applyFilter.bind(this)}>Search</button>
+                            <button type="button" id="Search" className="btn btn-primary btn-modal" onClick={this.applyFilter.bind(this)}>{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Finish' : 'Search'}</button>
                         </div>
                     </div>
                 </div>
