@@ -39,7 +39,10 @@ class Content extends React.Component {
                         </div>
                         :
                         <div className="container">
-                            <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish to Live</button>
+                            {this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'hao.peng' ||
+                                this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'ruobing.ai'
+                                ? <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish All</button>
+                                : ''}
                         </div>
                     }
                 </div>

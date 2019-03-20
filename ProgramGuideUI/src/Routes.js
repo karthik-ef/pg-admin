@@ -21,13 +21,9 @@ export default () =>
     <Route path={Path.PageHierarchy} exact component={PageHierarchy} />
     <Route path={Path.TopicExperienceMapping} exact component={TopicExperienceMapping} />
     <Route path={Path.ExportPgData} exact component={ExportPgData} />
+    <Route path={Path.Publish} exact component={Publish} />
     {/* Components available for admin users only */}
     <Route path={Path.AddUser} exact component={storeData.getState()._loginDetails.roleName !== 'Admin' ? null : AddUser} />
     <Route path={Path.SitemapGenerator} exact component={storeData.getState()._loginDetails.roleName !== 'Admin' ? null : SitemapGenerator} />
-    <Route path={Path.Publish} exact component =
-      {storeData.getState()._loginDetails.userName.toString().toLowerCase() === 'hao.peng' ||
-      storeData.getState()._loginDetails.userName.toString().toLowerCase() === 'ruobing.ai'
-      ? Publish 
-      : null} />
     {/*  */}
   </Switch >;
