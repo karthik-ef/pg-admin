@@ -3,6 +3,7 @@ import Component from '../../Routes';
 import * as Path from '../../utils/routepath';
 import * as API from '../../api/Publish';
 import { connect } from 'react-redux';
+import Grid from '../CustomControls/Grid';
 
 class Content extends React.Component {
 
@@ -43,6 +44,8 @@ class Content extends React.Component {
                                 this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'ruobing.ai'
                                 ? <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish All</button>
                                 : ''}
+                            <Grid setData = {this.props.storeData._uniqueContentData.filter(m => m.UpdateBy === this.props.storeData._loginDetails.userName)}/>
+
                         </div>
                     }
                 </div>
