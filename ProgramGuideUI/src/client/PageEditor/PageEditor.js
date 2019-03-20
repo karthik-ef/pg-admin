@@ -13,6 +13,7 @@ import DrillDown from '../PageEditor/DrillDown';
 import BannerImage from '../PageEditor/BannerImage';
 import PageStatus from '../PageEditor/PageStatus';
 import './PageEditor.css';
+import { connect } from 'react-redux';
 
 class PageEditor extends Component {
 
@@ -70,8 +71,8 @@ class PageEditor extends Component {
     UpdateToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         if (this.props.isNewPage !== undefined) {
-            // this.modifiedData.UniqueContent_ID = EditPage['UniqueContent_ID'];
-            this.modifiedData.MarketCode = localStorage.getItem('Market');
+            this.modifiedData.UniqueContent_ID = this.maxOfUniqueContentId + 1;
+            this.modifiedData.MarketCode = this.props.storeData._selectedMarket;
             this.modifiedData.PageURL = this.props.PageUrl;
             this.modifiedData.IsActive = this.isPageStatusModified ? this.objPageStatus : false;
             this.modifiedData.ParentPageID = this.isParentPageModified ? this.objParentPageUrl : 0;
@@ -133,7 +134,7 @@ class PageEditor extends Component {
         this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
         this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
 
-        this.modifiedData.UserName = JSON.parse(localStorage.getItem('UserName'));
+        this.modifiedData.UserName = this.props.storeData._loginDetails.userName;
 
         var tagStructure = {};
         if (this.isPageTagModified) {
@@ -153,23 +154,17 @@ class PageEditor extends Component {
             API.updateUniqueContent.call(this);
         }
 
-        console.log(this.objDrillDown['DrillDownAlias']);
         if (this.objDrillDown['DrillDownAlias'] !== undefined) {
             this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
             this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
 
 
             API.saveDrilldownAliasTagsDetails.call(this);
-            console.log(this.objDrillDownAlias);
         }
 
-        console.log(this.objDrillDown['CustomizedLinksData']);
-        console.log(this.maxOfUniqueContentId);
         if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
             this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
             this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
-
-            console.log(this.objCustomizedData)
             API.saveCustomizedLinksDetails.call(this);
         }
         if (!this.validation) {
@@ -265,4 +260,4 @@ class PageEditor extends Component {
     }
 }
 
-export default PageEditor;
+export default connect((state, props) => { return { storeData: state } })(PageEditor);

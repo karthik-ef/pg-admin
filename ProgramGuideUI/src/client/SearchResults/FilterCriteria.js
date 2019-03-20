@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import SearchByTag from './SearchByTag'
 import SearchByUrl from './SearchByUrl'
-
 import * as Constant from '../../utils/constant';
 
 class FilterCriteria extends Component {
@@ -11,25 +10,25 @@ class FilterCriteria extends Component {
         this.objFilterCriteria = {};
     }
 
+    //Selected tag data
     getSearchByTagValue = (value) => {
         this.objFilterCriteria.SearchByTagResult = value;
         this.props.getFilterCriteriaResult(this.objFilterCriteria);
     }
 
+    //Selected tag data
     getSearchByUrlValue = (value) => {
         this.objFilterCriteria.SearchByUrlResult = value;
         this.props.getFilterCriteriaResult(this.objFilterCriteria);
     }
 
     render() {
-        console.log(this);
         return (
-            this.props.displayComponent === Constant.SEARCH_BY_URL ?
-                <SearchByUrl setPageUrlData={this.props.setData['PageUrls']} getSearchByUrlData={this.getSearchByUrlValue} />
+            this.props.displayComponent === Constant.SEARCH_BY_URL //Check which component to display
+                ? <SearchByUrl getSearchByUrlData={this.getSearchByUrlValue} />
                 : <SearchByTag getSearchByTagData={this.getSearchByTagValue} />
         )
     }
-
 }
 
 export default FilterCriteria;

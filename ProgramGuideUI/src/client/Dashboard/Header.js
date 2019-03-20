@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import './header.css';
-import * as API from '../../api/Markets';
+import { connect } from 'react-redux';
 
 class Header extends Component {
 
@@ -14,13 +14,10 @@ class Header extends Component {
         this.state = {
             open: false,
             option: 'Choose a market',
-            availableMarkets: []
         };
     }
 
     componentDidMount() {
-        this.userName = JSON.parse(localStorage.getItem('UserName'));
-        API.getUserMarkets.call(this);
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
@@ -40,19 +37,14 @@ class Header extends Component {
     }
 
     handleChange(e) {
-        console.log(e.target.id);
-        var selectedMarket = this.state.availableMarkets.filter(m => m.Name === e.target.id).map(m => { return m.MarketCode }).toString();
-        localStorage.setItem('Market', selectedMarket);
+        var selectedMarket = this.props.storeData._userMarkets.filter(m => m.Name === e.target.id).map(m => { return m.MarketCode }).toString();
         if (e.target.id) {
-            // this.props.changeFilter(e.target.id);
             this.setState({
                 open: false,
                 option: e.target.id
             });
         }
-        if (window.location.pathname === '/SearchResults' || window.location.pathname === '/CreatePage' || window.location.pathname === '/AddUser' || window.location.pathname === '/BulkUpload' || window.location.pathname === '/PageHierarchy') {
-            window.location.reload();
-        }
+        this.props.dispatch({ type: 'store_SelectedMarket', data: selectedMarket });
     }
 
     handleToggle(e) {
@@ -65,9 +57,8 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.state.availableMarkets);
-        console.log(!localStorage.getItem('Market'));
-        const { data } = this.props;
+        console.log(this.props.storeData._loginDetails.userName.toString().toLowerCase())
+
         const { open, option } = this.state;
         return (
             <div className="headerDiv">
@@ -85,16 +76,14 @@ class Header extends Component {
                                 {/* restyle select */}
                                 <div className="dropdown-menu__wrapper ">
                                     <div className={`pg-col__dropdown ${open ? '--expanded' : ''}`} onClick={this.handleToggle}>
-                                        <span className="pg-selected-market">{!localStorage.getItem('Market') ? option :
-                                            this.state.availableMarkets.filter(m => m.MarketCode === localStorage.getItem('Market'))
-                                                .map(m => { return m.Name }).toString()}</span>
+                                        <span className="pg-selected-market">{option}</span>
                                     </div>
                                     {
                                         !open ? <span></span> :
                                             <div className="pg-col__options">
                                                 <ul className="pg-col__item-wrapper">
                                                     {
-                                                        this.state.availableMarkets.map((d, i) => {
+                                                        this.props.storeData._userMarkets.map((d, i) => {
                                                             return (
                                                                 <li
                                                                     id={d.Name}
@@ -116,7 +105,7 @@ class Header extends Component {
                             {/* Display Profile Information */}
                             <div className="profileDiv">
                                 <nav className="navbar navbar-light">
-                                    <p className="user__name">{this.userName}</p>
+                                    <p className="user__name">{this.props.storeData._loginDetails.userName}</p>
                                     <button type="button" className="btn btn-black" onClick={this.Logout.bind(this)}>Logout</button>
                                 </nav>
                             </div>
@@ -136,27 +125,46 @@ class Header extends Component {
                                     <li className="nav-item">
                                         <Link to="/CreatePage" className="nav-link no-padding">Create Page</Link>
                                     </li>
-                                    <li className="nav-item">
-                                        <Link to="/AddUser" className="nav-link no-padding">Add User</Link>
-                                    </li>
+                                    {this.props.storeData._loginDetails.roleName !== 'Admin'
+                                        ? ''
+                                        :
+                                        <li className="nav-item">
+                                            <Link to="/AddUser" className="nav-link no-padding">Add User</Link>
+                                        </li>
+                                    }
                                     <li className="nav-item">
                                         <Link to="/BulkUpload" className="nav-link no-padding">Bulk Upload</Link>
                                     </li>
                                     <li className="nav-item">
                                         <Link to="/PageHierarchy" className="nav-link no-padding">Page Hierarchy</Link>
                                     </li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle no-padding" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <li className="nav-item dropdown">
+                                        <a className="nav-link dropdown-toggle no-padding" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Report
                                         </a>
-                                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <Link to="/TopicExperienceMapping" className="nav-link no-padding">Topic-Experience mapping</Link>
-                                        <div class="dropdown-divider"></div>
-                                        <Link to="/SitemapGenerator" className="nav-link no-padding">Sitemap Generator</Link>
-                                        <div class="dropdown-divider"></div>
-                                        <Link to="/ExportPgData" className="nav-link no-padding">Export Pg Data</Link>
+                                        <div className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                            <Link to="/TopicExperienceMapping" className="nav-link no-padding">Topic-Experience mapping</Link>
+                                            {this.props.storeData._loginDetails.roleName !== 'Admin'
+                                                ? ''
+                                                :
+                                                <div>
+                                                    <div className="dropdown-divider"></div>
+                                                    <Link to="/SitemapGenerator" className="nav-link no-padding">Sitemap Generator</Link>
+                                                </div>
+                                            }
+                                            <div className="dropdown-divider"></div>
+                                            <Link to="/ExportPgData" className="nav-link no-padding">Export Pg Data</Link>
                                         </div>
                                     </li>
+                                    {this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'ruobing.ai'
+                                        || this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'hao.peng'
+                                        ?
+                                        <li className="nav-item">
+                                            <Link to="/Publish" className="nav-link no-padding">Publish</Link>
+                                        </li>
+                                        : ''
+                                    }
+
                                 </ul>
                             </div>
                         </nav>
@@ -167,4 +175,4 @@ class Header extends Component {
     }
 }
 
-export default Header;
+export default connect((state, props) => { return { storeData: state } })(Header);

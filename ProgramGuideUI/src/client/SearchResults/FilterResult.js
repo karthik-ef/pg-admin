@@ -15,8 +15,6 @@ class FilterResult extends Component {
         }
     }
 
-    //Code Refactoring
-
     componentDidMount() {
         $('#exampleModalLong').modal('show');
         $('#defaultInline1').attr('checked', true);
@@ -46,10 +44,7 @@ class FilterResult extends Component {
     //Pass value back to parent
     filterCriteriaResult = (value) => {
         this.filterResultsData = value;
-        console.log(value);
     }
-
-    //
 
     render() {
         return (
@@ -61,17 +56,17 @@ class FilterResult extends Component {
                             <div className="filter__controls">
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" className="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample" value={Constant.SEARCH_BY_URL} onChange={this.searchComponentChange.bind(this)} />
-                                    <label className="custom-control-label" for="defaultInline1">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By URL' :Constant.SEARCH_BY_URL}</label>
+                                    <label className="custom-control-label" htmlFor="defaultInline1">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By URL' :Constant.SEARCH_BY_URL}</label>
                                 </div>
 
                                 <div className="custom-control custom-radio custom-control-inline">
                                     <input type="radio" className="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample" value={Constant.SEARCH_BY_TAG} onChange={this.searchComponentChange.bind(this)} />
-                                    <label className="custom-control-label" for="defaultInline2">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By Tag' :Constant.SEARCH_BY_URL}</label>
+                                    <label className="custom-control-label" htmlFor="defaultInline2">{window.location.pathname.toLowerCase() === '/exportpgdata' ? 'Export By Tag' :Constant.SEARCH_BY_TAG}</label>
                                 </div>
                                 {window.location.pathname.toLowerCase() === '/exportpgdata' ? '' :
                                     <div className="custom-control custom-checkbox">
                                         <input type="checkbox" className="custom-control-input" id="inActive" name="inlineDefaultRadiosExample" onChange={this.inActivePageChange.bind(this)} />
-                                        <label className="custom-control-label" for="inActive">{Constant.INCLUDE_INACTIVE_PAGES}</label>
+                                        <label className="custom-control-label" htmlFor="inActive">{Constant.INCLUDE_INACTIVE_PAGES}</label>
                                     </div>
                                 }
                             </div>
@@ -83,7 +78,7 @@ class FilterResult extends Component {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <FilterCriteria setData={this.props.setData} displayComponent={this.state.searchComponentToDisplay} getFilterCriteriaResult={this.filterCriteriaResult.bind(this)} />
+                            <FilterCriteria displayComponent={this.state.searchComponentToDisplay} getFilterCriteriaResult={this.filterCriteriaResult.bind(this)} />
                         </div>
 
                         <div className="modal-footer">

@@ -16,28 +16,33 @@ class AddUserPopup extends Component {
         $('#exampleModalLong').modal('show');
     }
 
-    modalClose(){
+    modalClose() {
         this.props.getUserModalData(true);
     }
-   
+
+    ComponentData() {
+        $('#exampleModalLong').modal('hide');
+        this.props.getUserModalData(true);
+    }
+    
     render() {
         return (
-            <div className="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+            <div className="modal fade" id="exampleModalLong" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true" data-backdrop="static" data-keyboard="false">
                 <div className="modal-dialog" role="document">
                     <div className="modal-content">
                         <div className="modal-header">
                             <br />
-                            
+
                             <button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={this.modalClose.bind(this)}>
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div className="modal-body">
-                           {this.props.setData.userOperation === Constant.ADD_USER 
-                            ? <AddUser setData = {this.props.setData}/>
-                            : this.props.setData.userOperation === Constant.EDIT_USER 
-                            ? <EditUser setData = {this.props.setData} /> 
-                            : <DeleteUser setData = {this.props.setData} />}
+                            {this.props.setData.userOperation === Constant.ADD_USER
+                                ? <AddUser setData={this.props.setData} getAddUserData={this.ComponentData.bind(this)} />
+                                : this.props.setData.userOperation === Constant.EDIT_USER
+                                    ? <EditUser setData={this.props.setData} getEditUserData={this.ComponentData.bind(this)} />
+                                    : <DeleteUser setData={this.props.setData} getDeleteUserData={this.ComponentData.bind(this)} />}
                         </div>
                     </div>
                 </div>

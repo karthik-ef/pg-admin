@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import * as API from '../../api/ContentEditor'
 import Down from './DownIcon.png';
-import ReactTable from "react-table";
 import $ from 'jquery';
 import Preview from './FeaturePreview';
 import TextBox from '../CustomControls/TextBox';
@@ -170,12 +169,10 @@ class DrillDown extends Component {
     }
 
     getSelectedValue = (value) => {
-        console.log(this.newLinkingPageURL.length);
         if (this.getCustomizedLinksData.filter(m => m.PageUrl === value).length === 0 &&
             this.props.UniqueContentData.filter(m => m.PageUrl === value).length !== 0) {
             this.setState({ isPgUrl: true });
             this.newLinkingPageURL = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { UniqueContent_ID: m.UniqueContent_ID, PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
-            console.log(this.newLinkingPageURL);
         }
         else {
             this.newLinkingPageURL = {}
@@ -188,12 +185,10 @@ class DrillDown extends Component {
             this.AnchorTextEntered = true
             this.setState({ disable: true });
             this.newLinkingPageURL1 = this.props.UniqueContentData.filter(m => m.PageUrl === value).map(m => { return { UniqueContent_ID: m.UniqueContent_ID, PageUrl: m.PageUrl, PageTitle: m.PageTitle, BannerImage: '', LabelTag: '' } });
-            console.log(this.newLinkingPageURL1);
         }
         else {
             this.setState({ disable: false });
             this.newLinkingPageURL1 = [{ UniqueContent_ID: '', PageUrl: value, PageTitle: this.refs.AnchorText.value, BannerImage: '', LabelTag: '' }];
-            console.log(this.newLinkingPageURL1);
         }
     }
 
@@ -225,17 +220,6 @@ class DrillDown extends Component {
         this.getCustomizedFeatureTagResults = this.getCustomizedFeatureTagResults.filter(m => m.PageUrl !== value['PageUrl']);
         this.CustomizedPgLinks = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
         this.GenerateCustomizedLinksData("CustomizedPgLinks");
-        // var data = [];
-        // if (this.featureTagOtherPages) {
-        //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
-        // }
-        // else {
-        //     data = this.CustomizedPgLinks;
-        // }
-
-        // this.objDrillDown.CustomizedLinksData = data;
-
-        // this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showCustomizedTags: true });
     }
 
@@ -246,17 +230,6 @@ class DrillDown extends Component {
                 this.getCustomizedFeatureTagResults.push(this.newLinkingPageURL[0]);
                 this.CustomizedPgLinks = this.getCustomizedFeatureTagResults.map(m => { return '<LinkingPages Id="' + m.UniqueContent_ID + '"  PageUrl = ""  AnchorText = ""  Type = "1"/>' }).toString().replace(/,/g, ' ');
                 this.GenerateCustomizedLinksData("CustomizedPgLinks");
-                // var data = [];
-                // if (this.featureTagOtherPages) {
-                //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
-                // }
-                // else {
-                //     data = this.CustomizedPgLinks;
-                // }
-
-                // this.objDrillDown.CustomizedLinksData = data;
-                // console.log(this.objDrillDown.CustomizedLinksData)
-                // this.props.getDrillDownData(this.objDrillDown);
                 this.setState({ showCustomizedTags: true });
             }
         }
@@ -278,16 +251,6 @@ class DrillDown extends Component {
 
                 this.featureTagOtherPages = xmlForpgPages + xmlFornonPgPages;
                 this.GenerateCustomizedLinksData("featureTagOtherPages");
-                // var data = [];
-                // if (this.CustomizedPgLinks) {
-                //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
-                // }
-                // else {
-                //     data = this.featureTagOtherPages;
-                // }
-                // this.objDrillDown.CustomizedLinksData = data;
-                // console.log(this.objDrillDown.CustomizedLinksData);
-                // this.props.getDrillDownData(this.objDrillDown);
                 this.refs.AnchorText.value = ''
                 this.AnchorTextEntered = false;
                 this.setState({ showFeatureTag3Pages: true });
@@ -306,15 +269,6 @@ class DrillDown extends Component {
 
         this.featureTagOtherPages = xmlForpgPages + xmlFornonPgPages;
         this.GenerateCustomizedLinksData("featureTagOtherPages");
-        // var data = [];
-        // if (this.CustomizedPgLinks) {
-        //     data = this.CustomizedPgLinks + this.featureTagOtherPages;
-        // }
-        // else {
-        //     data = this.featureTagOtherPages;
-        // }
-        // this.objDrillDown.CustomizedLinksData = data;
-        // this.props.getDrillDownData(this.objDrillDown);
         this.setState({ showFeatureTag3Pages: true });
     }
 
@@ -345,26 +299,26 @@ class DrillDown extends Component {
 
     render() {
         return (
-            <div class="card">
-                <div class="card-header" id="DrillDown">
+            <div className="card">
+                <div className="card-header" id="DrillDown">
                     <p data-toggle="collapse" data-target="#collapseDrillDown" aria-expanded="true" aria-controls="collapseDrillDown"> <strong >
                         Drill down  <span className="floatLeft"> <img src={Down} alt="Logo" /></span>
                     </strong></p>
                 </div>
 
-                <div id="collapseDrillDown" class="collapse" aria-labelledby="DrillDown" data-parent="#pageEditorSection">
-                    <div class="card-body">
+                <div id="collapseDrillDown" className="collapse" aria-labelledby="DrillDown" data-parent="#pageEditorSection">
+                    <div className="card-body">
 
                         {/* Feature Tag Customized */}
                         <strong> Feature Page: Customized PG Links </strong>
                         <br />
-                        <button id="customizedTagsPreview" class="btn btn-primary btn-modal" type="submit" onClick={this.ShowCustomizedTags.bind(this)}>Show Customized Tags</button>
+                        <button id="customizedTagsPreview" className="btn btn-primary btn-modal" type="submit" onClick={this.ShowCustomizedTags.bind(this)}>Show Customized Tags</button>
                         <br />
                         {this.state.showCustomizedTags
                             ? <div> <LinkingPagesPreview setLinkingPageData={this.getCustomizedFeatureTagResults} DeleteRow={this.RemoveLinkingPage.bind(this)} /> <br />
-                                <div class="input-group input-group-sm" >
+                                <div className="input-group input-group-sm" >
                                     <TextBox setData={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} getData={this.getSelectedValue.bind(this)} />
-                                    <button class="btn btn-primary btn-modal" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
+                                    <button className="btn btn-primary btn-modal" type="submit" onClick={this.AddLinkingPage.bind(this)}>Add linking page </button>
                                 </div> </div> : ''}
 
                         <br />
@@ -372,17 +326,17 @@ class DrillDown extends Component {
                         {/* Feature Tag 1 Content */}
                         <strong> Feature Tag Page 1: </strong>
                         <br />
-                        <div class="Yes">
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <div class="input-group input-group-sm">
-                                        <input type="text" class="form-control input-sm" id="txtFeaturePageTag1" defaultValue={this.props.setDrillDownData['FeaturePageTag1']} ref="FeaturePageTag1" onChange={this.onChange.bind(this)} />
-                                        <span class="input-group-btn">
-                                            <button id="featurePageTag1Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag1" aria-expanded="true" aria-controls="collapseFeaturePageTag1" class="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag1PreviewOnClick.bind(this)} >Preview</button>
+                        <div className="Yes">
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    <div className="input-group input-group-sm">
+                                        <input type="text" className="form-control input-sm" id="txtFeaturePageTag1" defaultValue={this.props.setDrillDownData['FeaturePageTag1']} ref="FeaturePageTag1" onChange={this.onChange.bind(this)} />
+                                        <span className="input-group-btn">
+                                            <button id="featurePageTag1Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag1" aria-expanded="true" aria-controls="collapseFeaturePageTag1" className="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag1PreviewOnClick.bind(this)} >Preview</button>
                                         </span>
                                     </div>
-                                    <div id="collapseFeaturePageTag1" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
-                                        {!this.isTag1Valid ? <div class="alert alert-danger" role="alert">
+                                    <div id="collapseFeaturePageTag1" className="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
+                                        {!this.isTag1Valid ? <div className="alert alert-danger" role="alert">
                                             Invalid tag!
                                                                 </div> : this.state.showTag1Preview ?
                                                 <Preview Type={'featurePageTag1'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag1 === undefined ? this.props.setDrillDownData['FeaturePageTag1'] : this.objDrillDown.FeaturePageTag1} /> : ''}
@@ -394,16 +348,16 @@ class DrillDown extends Component {
                         {/* Feature Tag 2 Content */}
                         <strong> Feature Tag Page 2: </strong>
                         <br />
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="input-group input-group-sm">
-                                    <input type="text" class="form-control input-sm" id="txtFeaturePageTag2" defaultValue={this.props.setDrillDownData['FeaturePageTag2']} ref="FeaturePageTag2" onChange={this.onChange.bind(this)} />
-                                    <span class="input-group-btn">
-                                        <button id="featurePageTag2Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag2" aria-expanded="true" aria-controls="collapseFeaturePageTag2" class="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag2PreviewOnClick.bind(this)} >Preview</button>
+                        <div className="row">
+                            <div className="col-sm-12">
+                                <div className="input-group input-group-sm">
+                                    <input type="text" className="form-control input-sm" id="txtFeaturePageTag2" defaultValue={this.props.setDrillDownData['FeaturePageTag2']} ref="FeaturePageTag2" onChange={this.onChange.bind(this)} />
+                                    <span className="input-group-btn">
+                                        <button id="featurePageTag2Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag2" aria-expanded="true" aria-controls="collapseFeaturePageTag2" className="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag2PreviewOnClick.bind(this)} >Preview</button>
                                     </span>
                                 </div>
-                                <div id="collapseFeaturePageTag2" class="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
-                                    {!this.isTag2Valid ? <div class="alert alert-danger" role="alert">
+                                <div id="collapseFeaturePageTag2" className="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
+                                    {!this.isTag2Valid ? <div className="alert alert-danger" role="alert">
                                         Invalid tag!
                                                                 </div> : this.state.showTag2Preview ?
                                             <Preview Type={'featurePageTag2'} UniqueContentData={this.props.UniqueContentData} setData={this.objDrillDown.FeaturePageTag2 === undefined ? this.props.setDrillDownData['FeaturePageTag2'] : this.objDrillDown.FeaturePageTag2} /> : ''}
@@ -415,14 +369,14 @@ class DrillDown extends Component {
                         {/* Feature Tag 3 */}
                         <strong>Feature Tag: Other pages </strong>
                         <br />
-                        <button id="featureTag3Preview" class="btn btn-primary btn-modal" type="submit" onClick={this.ShowfeatureTag3.bind(this)}>Show Pages</button>
+                        <button id="featureTag3Preview" className="btn btn-primary btn-modal" type="submit" onClick={this.ShowfeatureTag3.bind(this)}>Show Pages</button>
                         <br />
                         {this.state.showFeatureTag3Pages
                             ? <div> <LinkingPagesPreview setLinkingPageData={this.getFeatureTag3Results} DeleteRow={this.RemoveFeatureTag3Links.bind(this)} /> <br />
-                                <div class="input-group input-group-sm" >
+                                <div className="input-group input-group-sm" >
                                     <TextBox Id="FeatureTag3" setData={this.props.UniqueContentData.filter(m => m.IsActive).map(m => { return { name: m.PageUrl } })} selectedValueForFeatureTag3={this.getSelectedFeatureTag3Value.bind(this)} />
                                     <input required type="text" onBlur={this.getAnchorText.bind(this)} disabled={this.state.disable} ref="AnchorText" placeholder="Anchor text" />
-                                    <button class="btn btn-primary btn-modal" type="submit" onClick={this.AddFeatureTag3Links.bind(this)}>Add linking page </button>
+                                    <button className="btn btn-primary btn-modal" type="submit" onClick={this.AddFeatureTag3Links.bind(this)}>Add linking page </button>
                                 </div>
                             </div>
                             : ''}

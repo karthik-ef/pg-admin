@@ -1,19 +1,20 @@
 import axios from 'axios';
 import * as API from '../utils/endpoints';
+import * as StoreData from '../../src/store/api_store';
 
-export function getBannerImageDetails() {
-    axios.get(API.getBannerImagesDetails)
-        .then(result => {
-            console.log(result.data);
-            this.setState({ createBannerImage: result.data });
-        }).catch(err => { console.log(err) });
-}
+// export function getBannerImageDetails() {
+//     axios.get(API.getBannerImagesDetails)
+//         .then(result => {
+//             console.log(result.data);
+//             this.setState({ createBannerImage: result.data });
+//         }).catch(err => { console.log(err) });
+// }
 
 export function getMaxOfUniqueContentId() {
     axios.get(API.getMaxOfUniqueContentId)
         .then(result => {
             console.log(result.data);
-            this.maxOfUniqueContentId = Number(result.data.map(m => {return m.UniqueContent_ID}));
+            this.maxOfUniqueContentId = Number(result.data.map(m => { return m.UniqueContent_ID }));
         }).catch(err => { console.log(err) });
 }
 
@@ -58,14 +59,22 @@ export function saveDrilldownAliasTagsDetails() {
 export function updateUniqueContent() {
     axios.post(API.updateUniqueContent, this.modifiedData)
         .then(result => {
-            console.log(result);
+            //Remove all pages for the edited market
+            this.props.dispatch({ type: 'store_RemoveEditedPage', data: this.props.storeData._uniqueContentData.filter(m => m.MarketCode !== this.modifiedData.MarketCode) })
+            //Fetch the latest pages for the edited market
+            this.props.dispatch(StoreData.UniqueContent(this.modifiedData.MarketCode));
             alert('Changes are successfully saved');
         }).catch(err => { console.log(err) });
 }
 
 export function createNewPage() {
+    console.log(this.modifiedData);
     axios.post(API.createNewPage, this.modifiedData)
         .then(result => {
+            //Remove all pages for the edited market
+            this.props.dispatch({ type: 'store_RemoveEditedPage', data: this.props.storeData._uniqueContentData.filter(m => m.MarketCode !== this.modifiedData.MarketCode) })
+            //Fetch the latest pages for the edited market
+            this.props.dispatch(StoreData.UniqueContent(this.modifiedData.MarketCode));
             alert('Page is successfullt created');
             console.log(result);
         }).catch(err => { console.log(err) });

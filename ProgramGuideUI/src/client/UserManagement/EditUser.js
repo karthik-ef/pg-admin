@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import DropDown from '../CustomControls/DropDown';
 import TextBox from '../CustomControls/TextBox';
-
+import $ from 'jquery';
 import * as API from '../../api/UserManagement';
 import * as Constant from '../../utils/constant';
+import { connect } from 'react-redux';
 
 class EditUser extends Component {
 
@@ -12,16 +13,14 @@ class EditUser extends Component {
     this.state = { isVisible: true }
   }
 
-
-  componentDidMount() {
-    this.roles = Constant.ROLES;
-    API.getUniqueContentMarkets.call(this);
-  }
-
   BindRoles(value) {
-    this.selectedUserRoles === Constant.ADMIN && value === Constant.GENERAL ? this.selectedUserMarkets = Constant.EMPTY_STRING : Constant.EMPTY_STRING;
+    //Reset selected market if any
+    this.selectedUserMarkets = undefined;
     this.selectedUserRoles = value
-    this.selectedUserRoles === Constant.ADMIN ? this.selectedUserMarkets = this.state.userMarkets.map(m => { return m.value }).toLocaleString() : Constant.EMPTY_STRING;
+    //If admin then assign all markets
+    this.selectedUserMarkets = this.selectedUserRoles === Constant.ADMIN
+      ? this.props.storeData._efCom_OrganicSearch_Markets.map(m => { return m.MarketCode }).toLocaleString()
+      : this.selectedUserMarkets
     this.setState({ isVisible: this.selectedUserRoles === Constant.ADMIN ? false : true });
   }
 
@@ -30,11 +29,13 @@ class EditUser extends Component {
   }
 
   getSelectedValue(value) {
-    if (value && JSON.stringify(this.props.setData.userNameList).toLowerCase().includes(value.toLowerCase())) {
+    if (value && JSON.stringify(this.props.storeData._userDashboardData.map(m => { return m.UserName })
+      .filter((x, i, a) => { return a.indexOf(x) === i })
+      .map(m => { return { name: m } })).toLowerCase().includes(value.toLowerCase())) {
       this.userName = value;
       this.isValidUser = true;
-      this.selectedUserRoles = this.props.setData.state.userManagementData.filter(m => m.UserName === value)[0]["RoleName"];
-      this.selectedUserMarkets = this.props.setData.state.userManagementData.filter(m => m.UserName === value).map(m => m.MarketCode);
+      this.selectedUserRoles = this.props.storeData._userDashboardData.filter(m => m.UserName === value)[0]["RoleName"];
+      this.selectedUserMarkets = this.props.storeData._userDashboardData.filter(m => m.UserName === value).map(m => m.MarketCode);
       this.setState({ isVisible: this.selectedUserRoles === Constant.ADMIN ? false : true });
     }
     else {
@@ -44,12 +45,17 @@ class EditUser extends Component {
   }
 
   updateUser() {
-    if (this.isValidUser) {
+    if (!this.selectedUserMarkets) {
+      alert(Constant.ERROR_MARKET_EMPTY);
+    }
+    else if (this.isValidUser) {
       this.userDetails = {};
       this.userDetails.userName = this.userName;
       this.userDetails.rolesXml = '<userpermission xmlns=""> <role rolename ="' + this.selectedUserRoles + '"/> </userpermission>';
       this.userDetails.marketCodeXml = '<userpermission xmlns="">' + this.selectedUserMarkets.split(',').map(m => { return '<market marketCode="' + m + '"/>' }).toString().replace(/,/g, ' ') + '</userpermission>'
+      console.log(this.userDetails);
       API.updateUser.call(this);
+      this.props.getEditUserData(true);
     }
     else {
       alert(Constant.ERROR_INVALID_USER);
@@ -65,20 +71,35 @@ class EditUser extends Component {
           <form className="form-horizontal" >
             <div className="form-group row">
               <div className="col-sm-12">
-                <TextBox setData={this.props.setData.userNameList} getData={this.getSelectedValue.bind(this)} />
+                <TextBox
+                  setData={this.props.storeData._userDashboardData.map(m => { return m.UserName })
+                    .filter((x, i, a) => { return a.indexOf(x) === i }).map(m => { return { name: m } })}
+                  getData={this.getSelectedValue.bind(this)}
+                />
               </div>
             </div>
 
             <div className="form-group row">
               <div className="col-sm-12">
-                <DropDown Roles={this.roles} multiSelect={true} bindedRoleValue={this.BindRoles.bind(this)} SetInitalValue={this.selectedUserRoles} />
+                <DropDown
+                  Roles={Constant.ROLES}
+                  multiSelect={true}
+                  bindedRoleValue={this.BindRoles.bind(this)}
+                  SetInitalValue={this.selectedUserRoles}
+                />
               </div>
             </div>
 
             {this.state.isVisible ?
               <div className="form-group row">
                 <div className="col-sm-12">
-                  <DropDown Markets={this.state.userMarkets} multiSelect={true} bindedMarketValue={this.BindMarkets.bind(this)} SetInitalValue={this.selectedUserMarkets} />
+                  <DropDown
+                    Markets={this.props.storeData._efCom_OrganicSearch_Markets
+                      .map(m => { return { label: m.Name, value: m.MarketCode } })}
+                    multiSelect={true}
+                    bindedMarketValue={this.BindMarkets.bind(this)}
+                    SetInitalValue={this.selectedUserMarkets}
+                  />
                 </div>
               </div>
               : ''}
@@ -93,4 +114,4 @@ class EditUser extends Component {
     );
   }
 }
-export default EditUser;
+export default connect((state, props) => { return { storeData: state } })(EditUser);

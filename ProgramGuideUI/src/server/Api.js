@@ -40,23 +40,23 @@ import * as Generic from '../utils/generic';
 
 
 //Need to remove the below 2 method
-export function GetMarkets() {
-  axios.get(Constant.GET_USERSPECIFIC_MARKETS + '?userName=' + JSON.parse(localStorage.getItem('UserName')))
-    .then(result => {
-      this.userSpecificMarkets = result.data;
-      filterMarkets(this);
-    })
-    .catch(err => { console.log(err) });
-}
-//Add comment 
-function filterMarkets(instance) {
-  axios.get(Constant.GET_UNIQUECONTENT_CONTENT_MARKETS_API)
-    .then(res => {
-      var uniqueContentMarkets = res.data;
-      instance.setState({
-        availableMarkets: instance.userSpecificMarkets.filter(m => uniqueContentMarkets.map(m => { return m.MarketCode })
-          .includes(m.MarketCode)).sort((a, b) => a.Name.localeCompare(b.Name))
-      });
-    })
-    .catch(err => console.log(err));
-}
+// export function GetMarkets() {
+//   axios.get(Constant.GET_USERSPECIFIC_MARKETS + '?userName=' + JSON.parse(localStorage.getItem('UserName')))
+//     .then(result => {
+//       this.userSpecificMarkets = result.data;
+//       filterMarkets(this);
+//     })
+//     .catch(err => { console.log(err) });
+// }
+// //Add comment 
+// function filterMarkets(instance) {
+//   axios.get(Constant.GET_UNIQUECONTENT_CONTENT_MARKETS_API)
+//     .then(res => {
+//       var uniqueContentMarkets = res.data;
+//       instance.setState({
+//         availableMarkets: instance.userSpecificMarkets.filter(m => uniqueContentMarkets.map(m => { return m.MarketCode })
+//           .includes(m.MarketCode)).sort((a, b) => a.Name.localeCompare(b.Name))
+//       });
+//     })
+//     .catch(err => console.log(err));
+// }

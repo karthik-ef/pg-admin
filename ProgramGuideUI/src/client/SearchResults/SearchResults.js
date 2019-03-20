@@ -10,11 +10,11 @@ import EditContent from '../PageEditor/PageEditor';
 import ReactExport from "react-data-export";
 
 import './styles.css';
-import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
 import * as Generic from '../../utils/generic';
 
 import Loader from '../CustomControls/LoadingScreen';
+import { connect } from 'react-redux';
 
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
@@ -28,17 +28,11 @@ class SearchResult extends Component {
         this.EditPageRow = [];
         this.objContent = {}
         this.state = {
-            uniqueContentData: [],
             showSearchFilterModal: false,
             showEditContentModal: false,
             isFilterApplied: false
         };
     }
-
-    componentDidMount() {
-        API.GetUniqueContentData.call(this);
-    }
-    // Code Refactoring 
 
     //Show filter Pop-up
     applyFilter() {
@@ -47,13 +41,10 @@ class SearchResult extends Component {
 
     //Reset the state
     clearFilter() {
-        this.ReportData = this.state.uniqueContentData;
-        Generic.generateExcelReport.call(this);
         this.setState({ isFilterApplied: false });
     }
 
     filterResultData = (value) => {
-        console.log(value)
         if (!value) {
             this.setState({ showSearchFilterModal: false });
             return;
@@ -62,52 +53,51 @@ class SearchResult extends Component {
         else if (value.SearchByUrlResult) {
             this.filteredBy = Constant.SEARCH_BY_URL;
             this.filterCriteria = value.SearchByUrlResult;
-            this.filteredUniqueContentResult = this.state.uniqueContentData.filter(m => m.PageUrl === value.SearchByUrlResult)
+            this.filteredUniqueContentResult = this.props.storeData._uniqueContentData
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket && m.PageUrl === value.SearchByUrlResult);
         }
         //Filter search result based on TAG
         else {
-            var objUniqueContent = this.state.uniqueContentData;
+            var objUniqueContent = this.props.storeData._uniqueContentData.filter(m => m.MarketCode === this.props.storeData._selectedMarket);
             this.filteredBy = Constant.SEARCH_BY_TAG;
             var selectedTag = Generic.createSelectedTagArr(value.SearchByTagResult);
             this.filterCriteria = value.SearchByTagResult.slice(0, value.SearchByTagResult.lastIndexOf('_'));
             if (!value.IsActivePage) objUniqueContent = objUniqueContent.filter(m => m.IsActive);
-            console.log(selectedTag);
             this.filteredUniqueContentResult = objUniqueContent.flexFilter(selectedTag.filter(m => m.Values !== '*' && m.Field !== 'Duration details'));
         }
-        this.ReportData = this.filteredUniqueContentResult;
-        Generic.generateExcelReport.call(this);
         this.setState({ isFilterApplied: true, showSearchFilterModal: false });
     }
 
     editorContentData = (value) => {
-
-        if (value === 'Data updated') window.location.reload();
+        // if (value === 'Data updated') window.location.reload();
         //window.location.reload();
         this.setState({ showEditContentModal: !this.state.showEditContentModal });
     }
     //
 
     render() {
-        this.searchResultsData = this.state.isFilterApplied ? this.filteredUniqueContentResult : this.state.uniqueContentData;
-        console.log(localStorage.getItem('Market'));
-        console.log(this.searchResultsData);
-        console.log(!this.searchResultsData);
-        if ( localStorage.getItem('Market') !== null && this.searchResultsData.length === 0) {
-            return (
-                <Loader/>
-            )
-        }
-        else {
-            //Data for reactTable
-            this.searchResultsData = this.state.isFilterApplied ? this.filteredUniqueContentResult : this.state.uniqueContentData;
-            return (
-                <div className="itemDiv search__results--wrapper">
-                    {!localStorage.getItem('Market')
-                        ? <div className="container">
-                            <div className="alert alert-danger" role="alert">
-                                <p>{Constant.ERROR_SELECT_MARKET}</p>
-                            </div>
-                        </div> :
+        this.searchResultsData = !this.props.storeData._selectedMarket
+            ? []
+            : this.state.isFilterApplied
+                ? this.filteredUniqueContentResult
+                : this.props.storeData._uniqueContentData.filter(m => m.MarketCode === this.props.storeData._selectedMarket);
+
+        //Generate data for the excel report
+        this.ExcelData = this.searchResultsData.length > 0 ? Generic.generateExcelReport(this.searchResultsData) : [];
+
+        return (
+            !this.props.storeData._selectedMarket //Check if market is selected
+                ? <div className="itemDiv search__results--wrapper">
+                    <div className="container">
+                        <div className="alert alert-danger" role="alert">
+                            <p>{Constant.ERROR_SELECT_MARKET}</p>
+                        </div>
+                    </div>
+                </div>
+                : !this.searchResultsData.length > 0  // Check if there are records for the selected market in unique content table 
+                    ? <Loader />
+                    // Else render the data table
+                    : <div className="itemDiv search__results--wrapper">
                         <div className="container">
                             {/* Alert Message */}
                             {this.state.isFilterApplied
@@ -122,7 +112,7 @@ class SearchResult extends Component {
                             }
 
                             {/* Search result Filter Pop-up */}
-                            {this.state.showSearchFilterModal ? <FilterResult setData={this} getFilterResultData={this.filterResultData.bind(this)} /> : ''}
+                            {this.state.showSearchFilterModal ? <FilterResult getFilterResultData={this.filterResultData.bind(this)} /> : ''}
 
                             {/* Content Editor */}
                             {this.state.showEditContentModal ? <EditContent EditPageRow={this.EditPageRow} getEditorContentData={this.editorContentData.bind(this)} /> : null}
@@ -176,22 +166,11 @@ class SearchResult extends Component {
                                             console.log(!rowInfo)
                                             if (rowInfo) {
                                                 var objContent = {};
-                                                objContent.UniqueContentData = this.state.uniqueContentData;
+                                                objContent.UniqueContentData = this.props.storeData._uniqueContentData.filter(m => m.MarketCode === this.props.storeData._selectedMarket);
                                                 objContent.EditRowData = rowInfo['original'];
                                                 this.EditPageRow = objContent;
                                                 this.setState({ showEditContentModal: true })
                                             }
-                                            // console.log("A Td Element was clicked!");
-                                            // console.log("it produced this event:", e);
-                                            // console.log("It was in this column:", column);
-                                            // console.log("It was in this row:", rowInfo);
-                                            // console.log("It was in this table instance:", instance);
-
-                                            // IMPORTANT! React-Table uses onClick internally to trigger
-                                            // events like expanding SubComponents and pivots.
-                                            // By default a custom 'onClick' handler will override this functionality.
-                                            // If you want to fire the original onClick handler, call the
-                                            // 'handleOriginal' function.
                                             if (handleOriginal) {
                                                 handleOriginal();
                                             }
@@ -206,11 +185,10 @@ class SearchResult extends Component {
                                 className="-striped -highlight pg-search__table"
                             />
                         </div>
-                    }
-                </div>
-            );
-        }
+                        }
+                    </div>
+        )
     }
 }
 
-export default SearchResult;
+export default connect((state, props) => { return { storeData: state } })(SearchResult);

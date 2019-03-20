@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import $ from 'jquery';
 import Dropdown from '../CustomControls/DropDown';
-import * as API from '../../api/SearchResults';
 import * as Constant from '../../utils/constant';
-import Loader from '../CustomControls/LoadingScreen';
-import * as API_SearchResults from '../../api/SearchResults'
+import { connect } from 'react-redux';
+import { dataForDropDown } from '../../utils/generic';
+import * as Path from '../../utils/routepath';
 
 class SearchByTag extends Component {
     constructor() {
         super();
-        this.isComponentLoaded = false;
         this.tagDurationAdditionalInfoRef = React.createRef();
-        this.Tag_Topic_Value = this.Tag_When_Value = this.Tag_CourseType_Value = this.Tag_AgeRange_Value = this.Tag_Duration_Value
+        this.Tag_Topic_Value
+            = this.Tag_When_Value = this.Tag_CourseType_Value = this.Tag_AgeRange_Value = this.Tag_Duration_Value
             = this.Tag_LanguageOfInstruction_Value = this.Tag_LanguageLearned_Value = this.Tag_Platform_Value = this.Tag_Continent_Value
             = this.Tag_Country_Value = this.Tag_State_Value = this.Tag_City_Value = this.Tag_Feature_Value = "*";
 
@@ -22,25 +22,24 @@ class SearchByTag extends Component {
     // Code refactoring
 
     componentDidMount() {
-        if (window.location.pathname.toLowerCase() === '/exportpgdata') {
-            API_SearchResults.getUserMarkets.call(this);
-        }
-        else {
-            API.getTagData.call(this);
-        }
-
         $('#exampleModalLong').modal('show');
 
-        var tagCollection = [Constant.Tag_Topic, Constant.Tag_When, Constant.Tag_CourseType, Constant.Tag_AgeRange,
-        Constant.Tag_Duration, Constant.Tag_Duration_Details, Constant.Tag_LanguageOfInstruction, Constant.Tag_LanguageLearned, Constant.Tag_Platform, Constant.Tag_Continent,
-        Constant.Tag_Country, Constant.Tag_State, Constant.Tag_City, Constant.Tag_Feature]
+        Constant.Tag_Collection.forEach(element => {
+            element === Constant.Tag_Duration // Drop down data for duration tag
+                ? this[element] = dataForDropDown(this.props.storeData._durationTags.map(m => { return { Value: m } }))
+                : element === Constant.Tag_Platform // Drop down data for platform tag
+                    ? this[element] = dataForDropDown(this.props.storeData._platformTags.map(m => { return { Value: m } }))
+                    //Else drop down data for rest of the tags
+                    : window.location.pathname === Path.ExportPgData //drop down data for other tags for user markets
+                        ? this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element)
+                            .map(m => { return m.Value })
+                            .filter((x, i, a) => { return a.indexOf(x) === i }).map(m => { return { Value: m } }))
+                        //Else drop down data for other tags only for selected market
+                        : this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element && m.MarketCode === this.props.storeData._selectedMarket)
+                            .map(m => { return { Value: m.Value } }))
+        });
 
-        if (this.props.ValueFromDb) {
-            tagCollection.forEach(element => {
-                this.selectedTagValue(element, this.props.ValueFromDb[element]);
-            });
-        }
-
+        this.buildDropDownComponent();
     }
 
     selectedTagValue = (tagName, selectedValue) => {
@@ -55,64 +54,51 @@ class SearchByTag extends Component {
     }
 
     buildDropDownComponent() {
-        var tagCollection = [Constant.Tag_Topic, Constant.Tag_When, Constant.Tag_CourseType, Constant.Tag_AgeRange,
-        Constant.Tag_Duration, Constant.Tag_Duration_Details, Constant.Tag_LanguageOfInstruction, Constant.Tag_LanguageLearned, Constant.Tag_Platform, Constant.Tag_Continent,
-        Constant.Tag_Country, Constant.Tag_State, Constant.Tag_City, Constant.Tag_Feature]
-
         var leftDropDownComponent = [];
         var rightDropDownComponent = [];
         this.tagComponent = [];
         var rowCount = 7; // Number of row displayed
 
-        tagCollection.forEach((element, index) => {
+        Constant.Tag_Collection.forEach((element, index) => {
             if (index % 2 === 0) {
                 //Left drop down component
-                leftDropDownComponent.push(<div class="col-md-6">
-                    <div class="tag__select">
-                        <label for="exampleInputEmail1"><strong>{element}</strong></label>
+                leftDropDownComponent.push(<div className="col-md-6">
+                    <div className="tag__select">
+                        <label htmlFor="exampleInputEmail1"><strong>{element}</strong></label>
                         {element === Constant.Tag_Duration_Details
-                            ? <input type="text" ref={this.tagDurationAdditionalInfoRef} onBlur={this.selectedTagValue.bind(this, element)} class="form-control" defaultValue={this.props.ValueFromDb ? this.props.ValueFromDb['AdditionalDurationDetails'] : ''} />
+                            ? <input type="text" ref={this.tagDurationAdditionalInfoRef} onBlur={this.selectedTagValue.bind(this, element)} className="form-control" defaultValue={this.props.ValueFromDb ? this.props.ValueFromDb['AdditionalDurationDetails'] : ''} />
                             : <Dropdown Tags={this[element]} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb[element] : ''} bindedValue={this.selectedTagValue.bind(this, element)} />}
                     </div>
                 </div>)
             }
             else {
                 //Right drop down component
-                rightDropDownComponent.push(<div class="col-md-6">
-                    <div class="tag__select">
-                        <label for="exampleInputEmail1"><strong>{element}</strong></label>
+                rightDropDownComponent.push(<div className="col-md-6">
+                    <div className="tag__select">
+                        <label htmlFor="exampleInputEmail1"><strong>{element}</strong></label>
                         {element === Constant.Tag_Duration_Details
-                            ? <input type="text" ref={this.tagDurationAdditionalInfoRef} onBlur={this.selectedTagValue.bind(this, element)} class="form-control" defaultValue={this.props.ValueFromDb ? this.props.ValueFromDb['AdditionalDurationDetails'] : ''} />
+                            ? <input type="text" ref={this.tagDurationAdditionalInfoRef} onBlur={this.selectedTagValue.bind(this, element)} className="form-control" defaultValue={this.props.ValueFromDb ? this.props.ValueFromDb['AdditionalDurationDetails'] : ''} />
                             : <Dropdown Tags={this[element]} multiSelect={true} SetInitalValue={this.props.ValueFromDb ? this.props.ValueFromDb[element] : ''} bindedValue={this.selectedTagValue.bind(this, element)} />}
                     </div>
                 </div>)
             }
+            // Check if it's opened from content editor and assign corresponding value
+            this.props.ValueFromDb ? this.selectedTagValue(element, this.props.ValueFromDb[element]) : '';
+
         });
 
         // 
         for (var index = 0; index < rowCount; index++) {
-            this.tagComponent.push(<div class="row" key={index}>
+            this.tagComponent.push(<div className="row" key={index}>
                 {leftDropDownComponent[index]}
                 {rightDropDownComponent[index]}
             </div>
             )
         }
-        this.isComponentLoaded = true;
         this.setState({ refreshPage: !this.state.refreshPage });
     }
 
     render() {
-        console.log(this);
-        if (!this.isComponentLoaded) {
-            return (
-
-                <div><strong>Loading....</strong></div>
-                // <div class="tag__select">
-                //     <Loader />
-                // </div >
-            )
-        }
-        else {
             return (
                 <div >
                     <br />
@@ -128,8 +114,7 @@ class SearchByTag extends Component {
                     </label>
                 </div>
             );
-        }
     }
 }
 
-export default SearchByTag;
+export default connect((state, props) => { return { storeData: state } })(SearchByTag);

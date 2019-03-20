@@ -1,4 +1,4 @@
-export const ROLES = [{ label: 'Admin', value: 'Admin' }, { label: 'General', value: 'General' }]
+export const ROLES = [{ label: 'Admin', value: 'Admin' }, { label: 'General', value: 'General' }, {label: 'Power', value: 'Power'}]
 export const APPLICATION_NAME = 'PROGRAMGUIDE';
 export const SEARCH_URL_HEADER = 'If you know the URL of the page, please enter below';
 export const SEARCH_TAG_HEADER = 'Please use the options below to specify one or more tags to start your search';
@@ -54,6 +54,9 @@ export const Tag_State = 'Tag_State';
 export const Tag_City = 'Tag_City';
 export const Tag_Feature = 'Tag_Feature';
 
+export const Tag_Collection = [Tag_Topic, Tag_When, Tag_CourseType, Tag_AgeRange, Tag_Duration, Tag_Duration_Details, 
+    Tag_LanguageOfInstruction, Tag_LanguageLearned,Tag_Platform, Tag_Continent,Tag_Country, Tag_State, Tag_City, Tag_Feature]
+
 
 
 //API END POINTS
@@ -67,3 +70,15 @@ export const Tag_Feature = 'Tag_Feature';
 //export const GET_UNIQUECONTENT_DATA_API = `http://ctdev.ef.com:3000/getUniqueContentResults/`;
 export const GET_USERSPECIFIC_MARKETS = `http://ctdev.ef.com:3000/userMarkets`;
 export const GET_UNIQUECONTENT_CONTENT_MARKETS_API = `http://ctdev.ef.com:3000/getUniqueContentMarkets`;
+
+//Sitemap 
+export const rootXMLOpen = '<?xml version="1.0" encoding="UTF-8"?> <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
+export const rootXMLClose = '</urlset>';
+export const xmlUrlOpen = '<url>';
+export const xmlUrlClose = '</url>';
+export const xmlLocOpen = '<loc> https://';
+export const xmlLocClose = '</loc>';
+export const xmlLastmodOpen = '<lastmod>';
+export const xmlLastmodClose = '</lastmod>';
+export const xmlPriorityOpen = '<priority>'
+export const xmlPriorityClose = '</priority>'

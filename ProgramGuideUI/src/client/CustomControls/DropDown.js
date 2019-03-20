@@ -31,15 +31,17 @@ var MultiSelectField = createClass({
 	handleSelectChange(value) {
 		this.setState({ flag: false, SelectedValue: value });
 		if (value) {
-			if (value.includes("Select All")) {
+			if (value.toString().split(',').includes("Select All")) {
 				var difficult_tasks = [];
 				value = Roles.forEach(element => {
 					if (element.value !== "Select All") {
 						difficult_tasks.push(element.value);
 					}
 				});
-				value = difficult_tasks;
-				this.setState({ value });
+				//value = difficult_tasks;
+				this.setState({ SelectedValue: difficult_tasks.toString() }, function () {
+					this.props.bindedMarketValue(difficult_tasks.toString());
+				});
 			}
 
 			else if (this.state.IdentifyName === 'Role') {
@@ -60,7 +62,14 @@ var MultiSelectField = createClass({
 			}
 		}
 		else {
-			this.setState({ value });
+			if (this.state.IdentifyName === 'Market') {
+				this.setState({ value }, function () {
+					this.props.bindedMarketValue(value);
+				});
+			}
+			else {
+				this.setState({ value });
+			}
 		}
 
 	},
@@ -78,7 +87,7 @@ var MultiSelectField = createClass({
 	},
 
 	render() {
-		let Market = [];
+		//let Market = [];
 		if (this.props.Roles) {
 			this.state.IdentifyName = 'Role'
 			this.state.dispalyText = 'Select Role';
@@ -86,8 +95,6 @@ var MultiSelectField = createClass({
 			Roles = this.props.Roles.map((m) => { return m });
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			this.state.multiValues = false;
-
-			// console.log('Roles')
 		}
 
 		if (this.props.Tags) {
@@ -100,21 +107,22 @@ var MultiSelectField = createClass({
 
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			this.state.multiValues = false;
-			// console.log('Roles')
 		}
 
 		if (this.props.Markets) {
 			this.state.IdentifyName = 'Market'
 			this.state.dispalyText = 'Select Market(s)';
-			// console.log('Markets')
-			// obj.Name
-			Market.push({ label: 'Select All', value: 'Select All' });
-			Roles = this.props.Markets.map((m) => { return m });
-			Market.push(Roles);
-			Roles.unshift({ label: 'Select All', value: 'Select All' });
-			console.log(Roles);
+			Roles = this.props.Markets.map((m) => { return m })
+				.sort((a, b) => {
+					if (a.label < b.label) return -1;
+					if (a.label > b.label) return 1;
+					return 0;
+				});
+
+			this.state.SelectedValue && this.state.SelectedValue.toString().split(',').length === this.props.Markets.length
+				? '' : Roles.unshift({ label: 'Select All', value: 'Select All' });
+			this.state.value
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
-			// console.log(Roles);
 		}
 
 		if (this.props.Websites) {
@@ -125,9 +133,6 @@ var MultiSelectField = createClass({
 			this.state.flag && this.props.SetInitalValue ? this.state.value = this.props.SetInitalValue : this.state.value = this.state.SelectedValue;
 			this.state.multiValues = false;
 		}
-
-
-		// console.log(Roles);
 
 		const { value } = this.state;
 		return (

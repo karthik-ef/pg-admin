@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
 import Loader from '../CustomControls/LoadingScreen';
-
-import { GetMarkets } from '../../server/Api';
-
 import * as Generic from '../../utils/generic';
 
 import * as ENDPOINT from '../../utils/endpoints';
 
 import ReactExport from "react-data-export";
 import DownloadIcon from '../Icons/SearchResult_Download.png';
+import { connect } from 'react-redux';
+
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
@@ -20,18 +19,15 @@ class TopicExperienceMapping extends Component {
         super();
         this.data = [];
         this.state = {
-            availableMarkets: [],
             flag: false
         }
     }
 
-    componentDidMount() {
-        GetMarkets.call(this);
-    }
-
     async data1() {
-        for (var i = 0; i < this.state.availableMarkets.length; i++) {
-            var response = await fetch(ENDPOINT.topicExperienceMappingDetails + this.state.availableMarkets[i].MarketCode).then(res => res.clone().json());
+        this.dataFetchInProgress = true;
+        this.data = [];
+        for (var i = 0; i < this.props.storeData._userMarkets.length; i++) {
+            var response = await fetch(ENDPOINT.topicExperienceMappingDetails + this.props.storeData._userMarkets[i].MarketCode).then(res => res.clone().json());
             response.map(m => this.data.push(m));
         }
         Generic.generateTopicExperienceMappingReport.call(this);
@@ -39,16 +35,12 @@ class TopicExperienceMapping extends Component {
     }
 
     render() {
-        this.state.availableMarkets.length > 0 && !this.state.flag ? this.data1() : ''
-
-        if (!this.state.flag) {
-            return (
-                <Loader />
-            )
-        }
-        else {
-            return (
-                <div className="itemDiv add-users__wrapper">
+        !this.dataFetchInProgress && this.props.storeData._userMarkets
+            && this.props.storeData._userMarkets.length > 0 && !this.state.flag ? this.data1() : ''
+        return (
+            !this.state.flag
+                ? <Loader />
+                : <div className="itemDiv add-users__wrapper">
                     <div className="container">
                         <ReactTable
                             data={this.data}
@@ -115,8 +107,7 @@ class TopicExperienceMapping extends Component {
                         />
                     </div>
                 </div>
-            );
-        }
+        )
     }
 }
-export default TopicExperienceMapping;
+export default connect((state, props) => { return { storeData: state } })(TopicExperienceMapping);

@@ -1,11 +1,12 @@
 import * as Constant from './constant';
+import xmlFormat from 'xml-formatter';
+import { saveAs } from 'file-saver';
 
 export function dataForDropDown(data) {
     return data.map(m => { return { label: m.Value, value: m.Value } });
 }
 
 export function createSelectedTagArr(tagData) {
-    console.log(tagData);
     var arrSelectedTags = tagData.split('_');
     var filterCriteria = [
         { Field: Constant.Tag_Topic, Values: arrSelectedTags[0] },
@@ -27,11 +28,11 @@ export function createSelectedTagArr(tagData) {
     return filterCriteria;
 }
 
-export function generateExcelReport() {
-    this.ExcelData = [
+export function generateExcelReport(ReportData) {
+    return ([
         {
             columns: Constant.EXPORT_TO_EXCEL_COLUMNS,
-            data: this.ReportData.map(m => {
+            data: ReportData.map(m => {
                 return [{ value: m.UniqueContent_ID.toString() }, { value: m.MarketCode }, { value: m.PageUrl },
                 { value: m.Tag_Topic }, { value: m.Tag_When }, { value: m.Tag_CourseType }, { value: m.Tag_AgeRange },
                 { value: m.Tag_Duration }, { value: m.AdditionalDurationDetails }, { value: m.Tag_LanguageOfInstruction }, { value: m.Tag_LanguageLearned }, { value: m.Tag_Platform }, { value: m.Tag_Continent },
@@ -44,8 +45,7 @@ export function generateExcelReport() {
                 { value: m.ParentPageID.toString() }]
             })
         }
-    ]
-
+    ])
 }
 
 export function generateTopicExperienceMappingReport() {
@@ -57,6 +57,13 @@ export function generateTopicExperienceMappingReport() {
             })
         }
     ]
+}
+
+export function generateSitemapXml(xmlReport, fileName){
+    console.log(xmlReport);
+    console.log(fileName);
+    var blob = new Blob([xmlFormat(xmlReport)], { type: "text/xml" });
+    saveAs(blob, fileName);
 }
 
 Array.prototype.flexFilter = function (info) {

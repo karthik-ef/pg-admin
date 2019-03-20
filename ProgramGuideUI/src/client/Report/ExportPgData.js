@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import FilterResult from '../SearchResults/FilterResult';
-import * as API from '../../api/SearchResults';
 import $ from 'jquery';
-import * as ENDPOINT from '../../utils/endpoints';
 import * as Generic from '../../utils/generic';
 import ReactExport from "react-data-export";
+import { connect } from 'react-redux';
+import DropDown from '../CustomControls/DropDown';
 
 // Excel Declarations
 const ExcelFile = ReactExport.ExcelFile;
@@ -13,91 +13,113 @@ const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 class ExportPgData extends Component {
     constructor() {
         super();
-        this.isVisible = true;
+        this.isDisabled = true;
+        this.customizedData = [];
         this.state = { isDataLoaded: false, customize: false };
-    }
-    componentDidMount() {
-        $('#gridRadios1').attr('checked', true);
-        API.getAllPageUrls.call(this);
+        this.selectedMarket = [];
     }
 
     filterResultData = (value) => {
         if (value.SearchByUrlResult) {
-            var uniqueContentData =  this.UniqueContentData;
-            this.ReportData = uniqueContentData.filter(m => m.PageUrl === value.SearchByUrlResult);
-            Generic.generateExcelReport.call(this);
+            this.filterType = 'Search URL:';
+            this.filterCriteria = value.SearchByUrlResult
+            this.customizedData = this.props.storeData._uniqueContentData
+                .filter(m => m.PageUrl === value.SearchByUrlResult && this.selectedMarket.includes(m.MarketCode));
         }
         else if (value.SearchByTagResult) {
-            var uniqueContentData =  this.UniqueContentData;
+            this.filterType = 'Search Tag:';
+            this.filterCriteria = value.SearchByTagResult
             var selectedTag = Generic.createSelectedTagArr(value.SearchByTagResult);
-            this.ReportData = uniqueContentData.flexFilter(selectedTag.filter(m => m.Values !== '*' &&  m.Values !== '' && m.Field !== 'Duration details'));
-            Generic.generateExcelReport.call(this);
+            this.customizedData = this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode))
+                .flexFilter(selectedTag
+                    .filter(m => m.Values !== '*' && m.Values !== '' && m.Field !== 'Duration details'));
         }
         else {
-            
+            this.customizedData = [];
         }
         this.setState({ customize: false });
     }
-
-    searchComponentChange(event) {
-        if (event.target.value === "Customize") {
-            this.setState({ customize: true });
+    BindMarkets(value) {
+        if (!value) {
+            this.isDisabled = true;
+            this.customizedData = [];
+            this.selectedMarket = [];
         }
         else {
-            this.ReportData = this.UniqueContentData;
-            Generic.generateExcelReport.call(this);
-            this.setState({ customize: false });
+            this.selectedMarket = value.split(',');
+            console.log(this.selectedMarket);
+            this.isDisabled = false;
         }
-    }
+        // Comment
+        if (this.customizedData.length > 0) {
 
-    ExportData() {
-        this.refs.FileName.value = '';
-        this.isVisible = true;
+            if (this.filterType === 'Search URL:') {
+                this.customizedData = this.props.storeData._uniqueContentData
+                    .filter(m => m.PageUrl === this.filterCriteria && this.selectedMarket.includes(m.MarketCode));
+            }
+            else {
+                var selectedTag = Generic.createSelectedTagArr(this.filterCriteria);
+                this.customizedData = this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode))
+                    .flexFilter(selectedTag
+                        .filter(m => m.Values !== '*' && m.Values !== '' && m.Field !== 'Duration details'));
+            }
+        }
         this.setState({});
     }
 
-    FileNameOnChange() {
-        this.isVisible = this.refs.FileName.value ? false : true;
-        this.setState({});
+    customize() {
+        this.setState({ customize: true });
     }
 
     render() {
+
+        //Generate data for excel report
+        this.ExcelData = this.props.storeData._uniqueContentData && !this.customizedData.length > 0
+            ? Generic.generateExcelReport(this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode)))
+            : Generic.generateExcelReport(this.customizedData);
+
         return (
             <div className="itemDiv add-users__wrapper">
                 <div className="container">
-                    <label for="exampleInputEmail1"><strong>Export options:</strong></label>
-                    <br />
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="DownloadAll" onChange={this.searchComponentChange.bind(this)} />
-                        <label class="form-check-label" for="gridRadios1">
-                            Export data for all available markets
-                         </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="Customize" onChange={this.searchComponentChange.bind(this)} />
-                        <label class="form-check-label" for="gridRadios2">
-                            Customize
-                        </label>
-                    </div>
-                    <br />
-
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="input-group">
-                                <input type="text" className="form-control" ref="FileName" placeholder="Export data file name" onChange={this.FileNameOnChange.bind(this)} />
-                                <div class="input-group-append">
-                                    <ExcelFile filename={this.refs.FileName ? this.refs.FileName.value : ''} element={<button class="btn btn-primary" type="button" disabled={this.isVisible} onClick={this.ExportData.bind(this)}  >Export</button>}>
-                                        <ExcelSheet dataSet={this.ExcelData} name="Result" />
-                                    </ExcelFile>
-                                </div>
+                    {this.selectedMarket.length > 0
+                        ?
+                        this.customizedData.length > 0
+                            ?
+                            <div className="alert alert-info" role="alert">
+                                <span className="alert-text__info strong__text"> Filter Applied! </span> <br />
+                                <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.customizedData.length}</span> <br />
+                                <span className="alert-text__info strong__text">{this.filterType}</span> <span className="alert-text__info secondary__text">{this.filterCriteria}</span>
                             </div>
+                            :
+                            <div className="alert alert-info" role="alert">
+                                <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode)).length}</span> <br />
+                            </div>
+                        : ''
+                    }
+                    {this.state.customize ? <FilterResult getFilterResultData={this.filterResultData.bind(this)} /> : ''}
+                    <label htmlFor="exampleInputEmail1"><strong>Select Market(s) to export the data</strong></label>
+                    <div className="row">
+                        <div className="input-group">
+                            <div className="col-sm-4">
+                                <DropDown
+                                    Markets={this.props.storeData._efCom_OrganicSearch_Markets
+                                        .map(m => { return { label: m.Name, value: m.MarketCode } })}
+                                    multiSelect={true}
+                                    bindedMarketValue={this.BindMarkets.bind(this)}
+                                />
+                            </div>
+                            <button className="btn btn-dark" type="button" disabled={this.isDisabled} onClick={this.customize.bind(this)} >Customize</button>
                         </div>
                     </div>
-                    {this.state.customize ? <FilterResult setData={this} getFilterResultData={this.filterResultData.bind(this)} /> : ''}
+                    <br />
+                    <ExcelFile filename="PG-Data"
+                        element={<button className="btn btn-primary" type="button" disabled={this.isDisabled}>Export</button>}>
+                        <ExcelSheet dataSet={this.ExcelData} name="Result" />
+                    </ExcelFile>
                 </div>
             </div>
         );
     }
 }
 
-export default ExportPgData;
+export default connect((state, props) => { return { storeData: state } })(ExportPgData);

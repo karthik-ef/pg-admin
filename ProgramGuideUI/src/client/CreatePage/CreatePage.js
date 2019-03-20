@@ -6,6 +6,8 @@ import EditContent from '../PageEditor/PageEditor';
 
 import './styles.css';
 
+import { connect } from 'react-redux';
+
 class CreatePage extends Component {
 
   constructor() {
@@ -13,45 +15,36 @@ class CreatePage extends Component {
     this.errorMessage = '';
     this.state = {
       refreshPage: false,
-      showContentEditorModal : false
+      showContentEditorModal: false
     }
   }
-
-  componentDidMount() {
-    API.GetUniqueContentData.call(this);
-  }
-
 
   editorContentData = (value) => {
     if (value) {
-      API.GetUniqueContentData.call(this);
       this.refs.ParentPageUrl.value = '';
       this.setState({ showContentEditorModal: !this.state.showContentEditorModal })
     }
-}
+  }
 
   createNewPage() {
     this.PageUrl = this.refs.ParentPageUrl.value;
-    console.log(this.PageUrls);
-    var validate = !/\s/.test(this.PageUrl) && /^\//.test(this.PageUrl) && this.PageUrl.endsWith('/');
+    var isValidUrl = !/\s/.test(this.PageUrl) && /^\//.test(this.PageUrl) && this.PageUrl.endsWith('/');
 
-    if (localStorage.getItem('Market') === null || localStorage.getItem('Market') === '' || localStorage.getItem('Market') === 'select') {
-      this.errorMessage = Constant.ERROR_SELECT_MARKET;
-    }
-    else if (!validate) {
-      this.errorMessage = Constant.ERROR_INVALID_PAGEURL;
-    }
-    else if (this.PageUrls.filter(m => m.name === this.PageUrl).length > 0) {
-      this.errorMessage = Constant.ERROR_PAGEURL_EXIST;
-    }
-    else {
-      this.errorMessage = '';
-      this.setState({ showContentEditorModal: !this.state.showContentEditorModal })
-    }
-    this.setState({ refreshPage: true });
+
+    this.errorMessage = !isValidUrl // Check if it's valid page url
+      ? Constant.ERROR_INVALID_PAGEURL
+      : !this.props.storeData._selectedMarket // Check if market is selected
+        ? Constant.ERROR_SELECT_MARKET
+        : this.props.storeData._uniqueContentData
+          .filter(m => m.MarketCode === this.props.storeData._selectedMarket && m.PageUrl === this.PageUrl).length > 0 // Check if page alread exist for the selected market
+          ? Constant.ERROR_PAGEURL_EXIST
+          : Constant.EMPTY_STRING;
+
+    this.setState(!this.errorMessage ? { showContentEditorModal: !this.state.showContentEditorModal } : { refreshPage: true });
   }
 
   render() {
+    console.log(this.props);
     return (
       <div className="itemDiv create-page">
         <div className="container">
@@ -66,8 +59,10 @@ class CreatePage extends Component {
               </div>
               <br />
 
-              {this.state.showContentEditorModal ? <EditContent uniqueResult = {this.state.uniqueContentData} isNewPage = {true} PageUrl={this.PageUrl} getEditorContentData={this.editorContentData.bind(this)} /> : ''}
-
+              {this.state.showContentEditorModal ? <EditContent uniqueResult={this.props.storeData._uniqueContentData
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket)} 
+                isNewPage={true} PageUrl={this.PageUrl} 
+                getEditorContentData={this.editorContentData.bind(this)} /> : ''}
 
               {this.errorMessage
                 ? <div className="alert alert-danger" role="alert">
@@ -82,4 +77,4 @@ class CreatePage extends Component {
   }
 }
 
-export default CreatePage;
+export default connect((state, props) => { return { storeData: state } })(CreatePage);

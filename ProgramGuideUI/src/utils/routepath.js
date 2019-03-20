@@ -1,0 +1,10 @@
+export const Default = '/';
+export const SearchResults = '/SearchResults';
+export const CreatePage = '/CreatePage';
+export const AddUser = '/AddUser';
+export const BulkUpload = '/BulkUpload';
+export const PageHierarchy = '/PageHierarchy';
+export const TopicExperienceMapping = '/TopicExperienceMapping';
+export const SitemapGenerator = '/SitemapGenerator';
+export const ExportPgData = '/ExportPgData';
+export const Publish = '/Publish';

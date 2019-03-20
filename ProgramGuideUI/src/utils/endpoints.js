@@ -22,8 +22,8 @@ export const getDurationTagDetails = `http://pg2-admin.ef.com/api/getDurationTag
 export const getPlatformTagDetails = `http://pg2-admin.ef.com/api/getPlatformTagDetails`;
 export const getSearchTagDetails = `http://pg2-admin.ef.com/api/getSearchTagDetails/?MarketCode=`;
 export const getUniqueContentDetails = `http://pg2-admin.ef.com/api/getUniqueContentDetails/?marketCode=`;
-export const getAllPageUrls = `http://pg2-admin.ef.com/api/getAllPageUrls`;
 export const exportPgData = `http://pg2-admin.ef.com/api/exportPgData/?marketCode=`;
+export const getUniqueContentPage = `http://pg2-admin.ef.com/api/getUniqueContentPage/?pageUrl=`;
 
 // Content Editor
 export const getBannerImagesDetails = `http://pg2-admin.ef.com/api/getBannerImagesDetails`;
@@ -41,4 +41,14 @@ export const topicExperienceMappingDetails = `https://ctdev.ef.com/common/ef-ser
 export const getSitemapWebsites = `http://pg2-admin.ef.com/api/getSitemapWebsites`;
 export const getSitemapAllPages = `http://pg2-admin.ef.com/api/getSitemapAllPages/?marketCode=`
 export const getPageDatabase_SearchPages = `http://pg2-admin.ef.com/api/getPageDatabase_SearchPages/?UrlPath=`
+export const getSitemapSearchPages = `http://pg2-admin.ef.com/api/getSitemapSearchPages/?webSiteName=`;
+export const getSitemapMinisites = `https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/Sitemapping/?mc=we&website=`;
+export const getDomainName = `http://pg2-admin.ef.com/api/getDomainName/?marketCode=`;
+export const getHreflangMappingDetails = `http://pg2-admin.ef.com/api/getHreflangMappingDetails`;
 
+//Email Notification
+export const sendEmail = `http://pg2-admin.ef.com/api/sendEmail`;
+export const getNewlyCreatedPages = `http://pg2-admin.ef.com/api/getNewlyCreatedPages`;
+
+//Publish to LIVE
+export const publishToLive = `http://pg2-admin.ef.com/api/publishToLive`;

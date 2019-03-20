@@ -114,7 +114,7 @@ class DrilldownAlias extends Component {
                                         sortable: false,
                                         width: 80,
                                         Cell: row => (
-                                            <button class="btn btn-danger btn-sm" type="submit" >Remove</button>
+                                            <button className="btn btn-danger btn-sm" type="submit" >Remove</button>
                                         )
                                     }
                                 ]
@@ -138,14 +138,14 @@ class DrilldownAlias extends Component {
                     />
                     : ''}
                 <br />
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="txtDrillDownAlias" ref="DrilldownAlias" />
-                            <input type="text" class="form-control input-sm" id="txtAnchorText" placeholder="Anchor Text" ref="AnchorText" />
-                            <span class="input-group-btn">
+                <div className="row">
+                    <div className="col-sm-12">
+                        <div className="input-group">
+                            <input type="text" className="form-control" id="txtDrillDownAlias" ref="DrilldownAlias" />
+                            <input type="text" className="form-control input-sm" id="txtAnchorText" placeholder="Anchor Text" ref="AnchorText" />
+                            <span className="input-group-btn">
                                 {/* <button id="DrillDownAliasPreview" class="btn btn-primary btn-modal" type="submit" onClick={this.previewData.bind(this)} >Preview</button> */}
-                                <button id="AnchorText" class="btn btn-primary btn-modal" type="submit" onClick={this.addDrillDownAliasData.bind(this)}> Add </button>
+                                <button id="AnchorText" className="btn btn-primary btn-modal" type="submit" onClick={this.addDrillDownAliasData.bind(this)}> Add </button>
                             </span>
                         </div>
                     </div>
