@@ -43,7 +43,6 @@ export const getSitemapAllPages = `http://ctdev.ef.com:3001/api/getSitemapAllPag
 export const getPageDatabase_SearchPages = `http://ctdev.ef.com:3001/api/getPageDatabase_SearchPages/?UrlPath=`
 export const getSitemapSearchPages = `http://ctdev.ef.com:3001/api/getSitemapSearchPages/?webSiteName=`;
 export const getSitemapMinisites = `https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/Sitemapping/?mc=we&website=`;
-export const getDomainName = `http://ctdev.ef.com:3001/api/getDomainName/?marketCode=`;
 export const getHreflangMappingDetails = `http://ctdev.ef.com:3001/api/getHreflangMappingDetails`;
 
 //Email Notification

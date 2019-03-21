@@ -25,9 +25,10 @@ function generateMinisiteXML() {
     i === 0 ? previousPageID = element.itemID : ''; // Initialize previousPageID
     i === 0 ? rootPageID = element.itemID : ''; // Save the rootpage ID which will be used for priority
 
-    domainName = this.domainName.toString().slice(-1) === '/'
-      ? this.domainName.toString().slice(0, -1)
-      : this.domainName
+    domainName = this.props.storeData._sitemapMarkets.filter(m => m.HreflangCode === element.marketCode).map(m => m.DomainName).toString();
+    domainName = domainName.toString().slice(-1) === '/'
+      ? domainName.toString().slice(0, -1)
+      : domainName
 
     // Step 1 - Check if it's a new page
     if (isDifferentMinisitePage) {
@@ -94,12 +95,6 @@ export async function getSitemapMinisites() {
         // console.log(result.data.filter(m => m.marketCode === 'en'));
       }).catch(err => { console.log(err) });
   }
-}
-
-export async function getDomainName() {
-  await axios.get(API.getDomainName + this.selectedMarket)
-    .then(result => { this.domainName = result.data[0].LocalDomain })
-    .catch(err => { console.log(err) });
 }
 
 export async function getSitemapSearchPages() {

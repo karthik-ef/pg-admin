@@ -44,7 +44,6 @@ class SitemapGenerator extends Component {
 
       for (const item of this.Markets.split(',')) {
         this.selectedMarket = item;
-        await API.getDomainName.call(this);
         this.xmlFileName = 'sitemap-' + this.selectedWebsite.replace('/', '').toLowerCase() + '-' + this.selectedMarket.toLowerCase() + '.xml';
         //Check the type of website
         this.props.storeData._sitemapWebsites
