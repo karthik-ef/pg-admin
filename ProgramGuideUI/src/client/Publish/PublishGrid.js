@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import Table from "react-table";
 import DeleteIcon from '../Icons/Delete.png';
 
-class Grid extends Component {
+class PublishGrid extends Component {
+
+    Publish(){
+        
+    }
 
     render() {
         return (
@@ -11,7 +15,7 @@ class Grid extends Component {
                 minRows={0}
                 columns={[{
                     Header: <div>
-                        <button className="btn btn-primary" type="button" >Publish to LIVE</button>
+                        <button className="btn btn-primary" type="button" onClick = {this.Publish.bind(this)} >Publish to LIVE</button>
                     </div>,
                     columns: [
                         {
@@ -63,4 +67,4 @@ class Grid extends Component {
     }
 }
 
-export default Grid;
+export default PublishGrid;

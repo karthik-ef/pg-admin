@@ -3,7 +3,7 @@ import Component from '../../Routes';
 import * as Path from '../../utils/routepath';
 import * as API from '../../api/Publish';
 import { connect } from 'react-redux';
-import Grid from '../CustomControls/Grid';
+import Grid from './PublishGrid';
 import * as Constant from '../../utils/constant';
 
 class Content extends React.Component {
@@ -39,8 +39,6 @@ class Content extends React.Component {
     }
 
     render() {
-        console.log(this.props.storeData._loginDetails.roleName);
-        console.log(this.gridData = this.props.storeData._uniqueContentData.filter(m => m.UpdateBy === this.props.storeData._loginDetails.userName && m.MarketCode === this.props.storeData._selectedMarket));
 
         this.gridData.length === 0 || this.currentMarket !== this.props.storeData._selectedMarket
             ? this.props.storeData._loginDetails.roleName === 'Admin' // Publish Data for Admin Users
@@ -72,7 +70,7 @@ class Content extends React.Component {
                             : <div className="container">
                                 {this.gridData.length === 0
                                     ? <div className="alert alert-danger" role="alert">
-                                        <p>No Data available to publish.</p>
+                                        <p>No data available to publish.</p>
                                     </div>
                                     : <div>
                                         <div className="alert alert-info" role="alert">
