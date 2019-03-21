@@ -87,19 +87,26 @@ function amount(state = defaultState, action) {
       ...state, _isSitemapExecuting: action.data
     }
   }
-   //Store markets list for sitemap
-   else if (action.type === 'store_SitemapMarkets') {
+  //Store markets list for sitemap
+  else if (action.type === 'store_SitemapMarkets') {
     return {
       ...state, _sitemapMarkets: action.data
     }
   }
-   //Store sitemap minsites data
-   else if (action.type === 'store_SitemapMinisitesData') {
+  //Store sitemap minsites data
+  else if (action.type === 'store_SitemapMinisitesData') {
     return {
       ...state, _sitemapMinisitesData: action.data
     }
   }
-  
+
+  //Store sitemap minsites data
+  else if (action.type === 'store_NewPagesDetails') {
+    return {
+      ...state, _newPagesDetails: action.data
+    }
+  }
+
   return state;
 }
 

@@ -11,14 +11,14 @@ export function SendNotification() {
         .catch(err => { console.log(err) });
 }
 
-export function checkNewlyCreatePage() {
-    axios.get(API.getNewlyCreatedPages)
-        .then(result => {
-            console.log(result.data);
-            this.newlyCreatedPages = result.data;
-        })
-        .catch(err => { console.log(err) });
-}
+// export function checkNewlyCreatePage() {
+//     axios.get(API.getNewlyCreatedPages)
+//         .then(result => {
+//             console.log(result.data);
+//             this.newlyCreatedPages = result.data;
+//         })
+//         .catch(err => { console.log(err) });
+// }
 
 export function publishToLive() {
     axios.get(API.publishToLive)

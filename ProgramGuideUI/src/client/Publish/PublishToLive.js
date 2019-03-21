@@ -5,6 +5,7 @@ import * as API from '../../api/Publish';
 import { connect } from 'react-redux';
 import Grid from './PublishGrid';
 import * as Constant from '../../utils/constant';
+import * as Store from '../../store/api_store';
 
 class Content extends React.Component {
 
@@ -16,21 +17,31 @@ class Content extends React.Component {
 
     componentDidMount() {
         this.sucessMessage = false;
-        API.checkNewlyCreatePage.call(this);
+        //API.checkNewlyCreatePage.call(this);
+        this.props.dispatch(Store.NewPages.call(this));
     }
 
     publishToLive() {
+        //Check if any news pages are created after the last publish
+        if (this.props.storeData._newPagesDetails.length > 0) {
+            this.newlyCreatedPageDetails = {
+                toAddress: 'karthik.subbarayappa@ef.com',
+                pageDetails: this.props.storeData._newPagesDetails
+            };
+            //Send email notification to the users
+            API.SendNotification.call(this);
+        }
 
         // API.publishToLive.call(this);
         //Check if any news pages are created after the last publish
-        if (this.newlyCreatedPages.length > 0) {
-            this.newlyCreatedPageDetails = {};
-            this.newlyCreatedPageDetails.toAddress = 'karthik.subbarayappa@ef.com, Hao.peng@ef.com';
-            this.newlyCreatedPageDetails.pageDetails = this.newlyCreatedPages;
+        // if (this.newlyCreatedPages.length > 0) {
+        //     this.newlyCreatedPageDetails = {};
+        //     this.newlyCreatedPageDetails.toAddress = 'karthik.subbarayappa@ef.com';
+        //     this.newlyCreatedPageDetails.pageDetails = this.newlyCreatedPages;
 
-            //Send email notification to the users
-            // API.SendNotification.call(this);
-        }
+        //     //Send email notification to the users
+        //     // API.SendNotification.call(this);
+        // }
     }
 
     DeletedPages(page) {
@@ -39,6 +50,8 @@ class Content extends React.Component {
     }
 
     render() {
+
+        console.log(this.props.storeData._store_NewPagesDetails);
 
         this.gridData.length === 0 || this.currentMarket !== this.props.storeData._selectedMarket
             ? this.props.storeData._loginDetails.roleName === 'Admin' // Publish Data for Admin Users

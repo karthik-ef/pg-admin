@@ -64,6 +64,16 @@ class PublishGrid extends Component {
         }
 
         API.publishExistingPages.call(this);
+
+        if (this.props.storeData._newPagesDetails.length > 0) {
+            this.newlyCreatedPageDetails = {
+                toAddress: 'karthik.subbarayappa@ef.com',
+                pageDetails: this.props.storeData._newPagesDetails
+            };
+            //Send email notification to the users
+            API.SendNotification.call(this);
+        }
+
     }
 
     publishNewPages() {

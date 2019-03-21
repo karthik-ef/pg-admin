@@ -155,3 +155,12 @@ export function SitemapMarkets() {
             .catch(err => { console.log(err) });
     }
 }
+
+// Store newly created pages
+export function NewPages() {
+    return (dispatch) => {
+        axios.get(EndPoint.getNewlyCreatedPages)
+            .then(result => { dispatch({ type: 'store_NewPagesDetails', data: result.data }) })
+            .catch(err => { console.log(err) });
+    }
+}
