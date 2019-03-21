@@ -28,3 +28,13 @@ export function publishToLive() {
         })
         .catch(err => { console.log(err) });
 }
+
+//Publish exisiting pages to LIVE
+export function publishExistingPages() {
+    axios.post(API.bulkUpload, this.existingPageDetails)
+        .then(result => {
+            alert('Changes are published to LIVE')
+        })
+        .catch(err => { console.log(err) });
+}
+
