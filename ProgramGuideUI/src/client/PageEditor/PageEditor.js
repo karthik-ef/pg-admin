@@ -66,7 +66,8 @@ class PageEditor extends Component {
     modalClosed() {
         this.props.getEditorContentData('closed');
     }
-
+    UpdateToLive() {
+    }
     //Update the modified data to QA
     UpdateToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
@@ -251,6 +252,7 @@ class PageEditor extends Component {
                                 </div> : ''} */}
                                 <button type="button" class="btn btn-modal-default" onClick={this.Close.bind(this)}>Cancel</button>
                                 <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToQA.bind(this)}>Save</button>
+                                <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToLive.bind(this)}>Publish</button>
                             </div>
                         </div>
                     </div>
