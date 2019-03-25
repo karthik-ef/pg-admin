@@ -25,5 +25,11 @@ export default () =>
     {/* Components available for admin users only */}
     <Route path={Path.AddUser} exact component={storeData.getState()._loginDetails.roleName !== 'Admin' ? null : AddUser} />
     <Route path={Path.SitemapGenerator} exact component={storeData.getState()._loginDetails.roleName !== 'Admin' ? null : SitemapGenerator} />
+    <Route path={Path.Publish} exact component={storeData.getState()._loginDetails.userName === 'karthik.subbarayappa' ||
+      storeData.getState()._loginDetails.userName === 'hao.peng' ||
+      storeData.getState()._loginDetails.userName === 'ruobing.ai'
+      ? Publish
+      : ''} />
+
     {/*  */}
   </Switch >;

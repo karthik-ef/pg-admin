@@ -3,7 +3,6 @@ import Component from '../../Routes';
 import * as Path from '../../utils/routepath';
 import * as API from '../../api/Publish';
 import { connect } from 'react-redux';
-import Grid from './PublishGrid';
 import * as Constant from '../../utils/constant';
 import * as Store from '../../store/api_store';
 
@@ -44,65 +43,20 @@ class Content extends React.Component {
         // }
     }
 
-    DeletedPages(page) {
-        this.gridData = this.gridData.filter(m => m.UniqueContent_ID !== page.UniqueContent_ID);
-        this.setState({});
-    }
-
     render() {
 
-        console.log(this.props.storeData._store_NewPagesDetails);
-
-        this.gridData.length === 0 || this.currentMarket !== this.props.storeData._selectedMarket
-            ? this.props.storeData._loginDetails.roleName === 'Admin' // Publish Data for Admin Users
-                ? this.gridData = this.props.storeData._uniqueContentData.filter(m => m.MarketCode === this.props.storeData._selectedMarket)
-                : this.props.storeData._loginDetails.roleName === 'General' // Publish Data for General Users
-                    ? this.gridData = this.props.storeData._uniqueContentData.filter(m => m.UpdateBy === this.props.storeData._loginDetails.userName && m.MarketCode === this.props.storeData._selectedMarket)
-                    : this.props.storeData._loginDetails.roleName === 'Power' // Publish Data for Power Users
-                        ? this.gridData = this.props.storeData._uniqueContentData.filter(m => m.MarketCode === this.props.storeData._selectedMarket)
-                        : ''
-            : ''
-
-        this.currentMarket = this.props.storeData._selectedMarket;
-
         return (
-            <div className="itemDiv add-users__wrapper">
+            < div className="itemDiv add-users__wrapper" >
                 <div className="container">
                     {this.sucessMessage //Display success message after publishing the data
                         ? <div className="alert alert-success" role="alert">
                             <p>Changes are successfully publish to live. It may take few minutes to refresh the database.</p>
                         </div>
-                        : !this.props.storeData._selectedMarket //Check if market is selected
-                            ? <div className="itemDiv search__results--wrapper">
-                                <div className="container">
-                                    <div className="alert alert-danger" role="alert">
-                                        <p>{Constant.ERROR_SELECT_MARKET}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            : <div className="container">
-                                {this.gridData.length === 0
-                                    ? <div className="alert alert-danger" role="alert">
-                                        <p>No data available to publish.</p>
-                                    </div>
-                                    : <div>
-                                        <div className="alert alert-info" role="alert">
-                                            <p className="alert-text__info strong__text"> {this.gridData.length} pages will be published to LIVE. </p>
-                                        </div>
-                                        <br />
-                                        {this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'hao.peng' ||
-                                            this.props.storeData._loginDetails.userName.toString().toLowerCase() === 'ruobing.ai'
-                                            ? <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish All</button>
-                                            : ''}
-                                        <Grid DeletedRow={this.DeletedPages.bind(this)} setData={this.gridData} />
-                                        {/* <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish to LIVE</button> */}
-                                    </div>
-                                }
-                            </div>
+                        : <button className="btn btn-primary" type="button" onClick={this.publishToLive.bind(this)}>Publish to LIVE</button>
                     }
                 </div>
-            </div >
-        );
+            </div>
+        )
     }
 }
 

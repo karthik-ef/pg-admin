@@ -156,9 +156,15 @@ class Header extends Component {
                                             <Link to="/ExportPgData" className="nav-link no-padding">Export Pg Data</Link>
                                         </div>
                                     </li>
-                                    <li className="nav-item">
-                                        <Link to="/Publish" className="nav-link no-padding">Publish</Link>
-                                    </li>
+                                    {this.props.storeData._loginDetails.userName === 'karthik.subbarayappa' ||
+                                        this.props.storeData._loginDetails.userName === 'hao.peng' ||
+                                        this.props.storeData._loginDetails.userName === 'ruobing.ai'
+                                        ?
+                                        < li className="nav-item">
+                                            <Link to="/Publish" className="nav-link no-padding">Publish</Link>
+                                        </li>
+                                        : ''
+                                    }
                                 </ul>
                             </div>
                         </nav>
