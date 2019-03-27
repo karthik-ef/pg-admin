@@ -26,7 +26,8 @@ class SearchResult extends Component {
         super();
         this.export = false;
         this.EditPageRow = [];
-        this.objContent = {}
+        this.objContent = {};
+        this.selectedMarket = '';
         this.state = {
             showSearchFilterModal: false,
             showEditContentModal: false,
@@ -71,11 +72,22 @@ class SearchResult extends Component {
     editorContentData = (value) => {
         // if (value === 'Data updated') window.location.reload();
         //window.location.reload();
-        this.setState({ showEditContentModal: !this.state.showEditContentModal });
+        this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
     }
     //
 
     render() {
+
+        //Clear the filter if market is changed
+        this.state.isFilterApplied = this.selectedMarket.length > 0 & this.selectedMarket !== this.props.storeData._selectedMarket
+            ? false
+            : this.state.isFilterApplied
+
+        //Assign selected market to local variable 
+        this.selectedMarket = this.props.storeData._selectedMarket
+            ? this.props.storeData._selectedMarket
+            : this.selectedMarket
+
         this.searchResultsData = !this.props.storeData._selectedMarket
             ? []
             : this.state.isFilterApplied
@@ -94,7 +106,7 @@ class SearchResult extends Component {
                         </div>
                     </div>
                 </div>
-                : !this.searchResultsData.length > 0  // Check if there are records for the selected market in unique content table 
+                : !this.searchResultsData.length > 0 && !this.state.isFilterApplied  // Check if there are records for the selected market in unique content table 
                     ? <Loader />
                     // Else render the data table
                     : <div className="itemDiv search__results--wrapper">
