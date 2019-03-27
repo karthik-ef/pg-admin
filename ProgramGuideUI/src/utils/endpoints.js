@@ -24,6 +24,7 @@ export const getSearchTagDetails = `http://ctdev.ef.com:3001/api/getSearchTagDet
 export const getUniqueContentDetails = `http://ctdev.ef.com:3001/api/getUniqueContentDetails/?marketCode=`;
 export const exportPgData = `http://ctdev.ef.com:3001/api/exportPgData/?marketCode=`;
 export const getUniqueContentPage = `http://ctdev.ef.com:3001/api/getUniqueContentPage/?pageUrl=`;
+export const getCreatePageTagDetails = `http://ctdev.ef.com:3001/api/getCreatePageTagDetails`;
 
 // Content Editor
 export const getBannerImagesDetails = `http://ctdev.ef.com:3001/api/getBannerImagesDetails`;
