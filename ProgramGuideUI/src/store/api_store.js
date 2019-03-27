@@ -164,3 +164,12 @@ export function NewPages() {
             .catch(err => { console.log(err) });
     }
 }
+
+// Store newly created pages
+export function CreatePageTags() {
+    return (dispatch) => {
+        axios.get(EndPoint.getCreatePageTagDetails)
+            .then(result => { dispatch({ type: 'store_CreatePageTags', data: result.data }) })
+            .catch(err => { console.log(err) });
+    }
+}

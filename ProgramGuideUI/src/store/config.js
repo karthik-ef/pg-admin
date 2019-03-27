@@ -106,6 +106,13 @@ function amount(state = defaultState, action) {
       ...state, _newPagesDetails: action.data
     }
   }
+  //Store createpage tags
+  else if (action.type === 'store_CreatePageTags') {
+    return {
+      ...state, _createPageTags: action.data
+    }
+  }
+  
 
   return state;
 }

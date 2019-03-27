@@ -7,6 +7,7 @@ import EditContent from '../PageEditor/PageEditor';
 import './styles.css';
 
 import { connect } from 'react-redux';
+import * as StoreData from '../../store/api_store';
 
 class CreatePage extends Component {
 
@@ -17,6 +18,12 @@ class CreatePage extends Component {
       refreshPage: false,
       showContentEditorModal: false
     }
+  }
+
+  componentDidMount() {
+    !this.props.storeData._createPageTags
+      ? this.props.dispatch(StoreData.CreatePageTags.call(this))
+      : '';
   }
 
   editorContentData = (value) => {
@@ -60,8 +67,8 @@ class CreatePage extends Component {
               <br />
 
               {this.state.showContentEditorModal ? <EditContent uniqueResult={this.props.storeData._uniqueContentData
-                .filter(m => m.MarketCode === this.props.storeData._selectedMarket)} 
-                isNewPage={true} PageUrl={this.PageUrl} 
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket)}
+                isNewPage={true} PageUrl={this.PageUrl}
                 getEditorContentData={this.editorContentData.bind(this)} /> : ''}
 
               {this.errorMessage
