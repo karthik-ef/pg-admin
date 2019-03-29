@@ -10,11 +10,6 @@ class SearchByTag extends Component {
     constructor() {
         super();
         this.tagDurationAdditionalInfoRef = React.createRef();
-        this.Tag_Topic_Value
-            = this.Tag_When_Value = this.Tag_CourseType_Value = this.Tag_AgeRange_Value = this.Tag_Duration_Value
-            = this.Tag_LanguageOfInstruction_Value = this.Tag_LanguageLearned_Value = this.Tag_Platform_Value = this.Tag_Continent_Value
-            = this.Tag_Country_Value = this.Tag_State_Value = this.Tag_City_Value = this.Tag_Feature_Value = "*";
-
         this.state = {
             refreshPage: false
         }
@@ -38,6 +33,19 @@ class SearchByTag extends Component {
                 }
             }
         }
+
+        //Set the default tag for each tag as * while filtering and 00 while creating new page
+        this.props.ValueFromDb && this.props.ValueFromDb.length === 0
+            //Create Page
+            ? this.Tag_Topic_Value
+            = this.Tag_When_Value = this.Tag_CourseType_Value = this.Tag_AgeRange_Value = this.Tag_Duration_Value
+            = this.Tag_LanguageOfInstruction_Value = this.Tag_LanguageLearned_Value = this.Tag_Platform_Value = this.Tag_Continent_Value
+            = this.Tag_Country_Value = this.Tag_State_Value = this.Tag_City_Value = this.Tag_Feature_Value = "00"
+            //Search Filter
+            : this.Tag_Topic_Value
+            = this.Tag_When_Value = this.Tag_CourseType_Value = this.Tag_AgeRange_Value = this.Tag_Duration_Value
+            = this.Tag_LanguageOfInstruction_Value = this.Tag_LanguageLearned_Value = this.Tag_Platform_Value = this.Tag_Continent_Value
+            = this.Tag_Country_Value = this.Tag_State_Value = this.Tag_City_Value = this.Tag_Feature_Value = "*"
 
         this.props.ValueFromDb && this.props.ValueFromDb.length === 0
             //Tag values for create page
@@ -110,7 +118,9 @@ class SearchByTag extends Component {
                 </div>)
             }
             // Check if it's opened from content editor and assign corresponding value
-            this.props.ValueFromDb ? this.selectedTagValue(element, this.props.ValueFromDb[element]) : '';
+            this.props.ValueFromDb && this.props.ValueFromDb.length !== 0
+                ? this.selectedTagValue(element, this.props.ValueFromDb[element])
+                : '';
 
         });
 

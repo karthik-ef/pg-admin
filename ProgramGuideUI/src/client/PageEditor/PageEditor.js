@@ -88,52 +88,116 @@ class PageEditor extends Component {
 
         var arr = this.objPageTag.toString().split('_')
 
-        this.modifiedData.TagKeywordTopic = this.isPageTagModified && arr.length === 14 ? arr[0] : EditPage['Tag_Topic'];
+        this.modifiedData.TagKeywordTopic = this.isPageTagModified && arr.length === 14
+            ? arr[0]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Topic'];
 
-        this.modifiedData.TagWhen = this.isPageTagModified && arr.length === 14 ? arr[1] : EditPage['Tag_When'];
+        this.modifiedData.TagWhen = this.isPageTagModified && arr.length === 14
+            ? arr[1]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_When'];
 
-        this.modifiedData.TagCourseType = this.isPageTagModified && arr.length === 14 ? arr[2] : EditPage['Tag_CourseType'];
+        this.modifiedData.TagCourseType = this.isPageTagModified && arr.length === 14
+            ? arr[2]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_CourseType'];
 
-        this.modifiedData.TagAgeRange = this.isPageTagModified && arr.length === 14 ? arr[3] : EditPage['Tag_AgeRange'];
+        this.modifiedData.TagAgeRange = this.isPageTagModified && arr.length === 14
+            ? arr[3]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_AgeRange'];
 
-        this.modifiedData.TagDuration = this.isPageTagModified && arr.length === 14 ? arr[4] : EditPage['Tag_Duration'];
+        this.modifiedData.TagDuration = this.isPageTagModified && arr.length === 14
+            ? arr[4]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Duration'];
 
-        this.modifiedData.TagLocalOffice = this.isPageTagModified && arr.length === 14 ? arr[5] : EditPage['Tag_LanguageOfInstruction'];
+        this.modifiedData.TagLocalOffice = this.isPageTagModified && arr.length === 14
+            ? arr[5]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_LanguageOfInstruction'];
 
-        this.modifiedData.TagLanguage = this.isPageTagModified && arr.length === 14 ? arr[6] : EditPage['Tag_LanguageLearned'];
+        this.modifiedData.TagLanguage = this.isPageTagModified && arr.length === 14
+            ? arr[6]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_LanguageLearned'];
 
-        this.modifiedData.TagPlatform = this.isPageTagModified && arr.length === 14 ? arr[7] : EditPage['Tag_Platform'];
+        this.modifiedData.TagPlatform = this.isPageTagModified && arr.length === 14
+            ? arr[7]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Platform'];
 
-        this.modifiedData.TagContinent = this.isPageTagModified && arr.length === 14 ? arr[8] : EditPage['Tag_Continent'];
+        this.modifiedData.TagContinent = this.isPageTagModified && arr.length === 14
+            ? arr[8]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Continent'];
 
-        this.modifiedData.TagCountry = this.isPageTagModified && arr.length === 14 ? arr[9] : EditPage['Tag_Country'];
+        this.modifiedData.TagCountry = this.isPageTagModified && arr.length === 14
+            ? arr[9]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Country'];
 
-        this.modifiedData.TagState = this.isPageTagModified && arr.length === 14 ? arr[10] : EditPage['Tag_State'];
+        this.modifiedData.TagState = this.isPageTagModified && arr.length === 14
+            ? arr[10]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_State'];
 
-        this.modifiedData.TagCity = this.isPageTagModified && arr.length === 14 ? arr[11] : EditPage['Tag_City'];
+        this.modifiedData.TagCity = this.isPageTagModified && arr.length === 14
+            ? arr[11]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_City'];
 
-        this.modifiedData.TagFeature = this.isPageTagModified && arr.length === 14 ? arr[12] : EditPage['Tag_Feature'];
+        this.modifiedData.TagFeature = this.isPageTagModified && arr.length === 14
+            ? arr[12]
+            : this.props.isNewPage !== undefined ? '00' : EditPage['Tag_Feature'];
 
-        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified && arr.length === 14 ? arr[13] : EditPage['AdditionalDurationDetails'];
+        this.modifiedData.TagDurationAdditionalDetails = this.isPageTagModified && arr.length === 14
+            ? arr[13]
+            : this.props.isNewPage !== undefined ? '' : EditPage['AdditionalDurationDetails'];
 
-        this.modifiedData.BannerImage = this.isBannerImageModified ? this.objBannerImage['BannerImage'] : EditPage['BannerImage'];
+        this.modifiedData.BannerImage = this.isBannerImageModified
+            ? this.objBannerImage['BannerImage']
+            : this.props.isNewPage !== undefined ? '' : EditPage['BannerImage'];
 
-        this.modifiedData.MetaTitle = this.isMetaInformationModified ? this.objMetaInformation['MetaTitle'] : EditPage['MetaTitle'];
-        this.modifiedData.MetaDescription = this.isMetaInformationModified ? this.objMetaInformation['MetaDescription'] : EditPage['MetaDescription'];
-        this.modifiedData.MetaRobot = this.isMetaInformationModified ? this.objMetaInformation['MetaRobot'] : EditPage['MetaRobot'];
+        this.modifiedData.MetaTitle = this.isMetaInformationModified
+            ? this.objMetaInformation['MetaTitle']
+            : this.props.isNewPage !== undefined ? '' : EditPage['MetaTitle'];
+        this.modifiedData.MetaDescription = this.isMetaInformationModified
+            ? this.objMetaInformation['MetaDescription']
+            : this.props.isNewPage !== undefined ? '' : EditPage['MetaDescription'];
+        this.modifiedData.MetaRobot = this.isMetaInformationModified
+            ? this.objMetaInformation['MetaRobot']
+            : this.props.isNewPage !== undefined ? '' : EditPage['MetaRobot'];
 
-        this.modifiedData.PageTitle = this.isPageContentModified && this.objPageContent['PageTitle'] !== undefined ? this.objPageContent['PageTitle'] : EditPage['PageTitle'];
-        this.modifiedData.VisibleIntroText = this.isPageContentModified && this.objPageContent['VisibleIntroText'] !== undefined ? this.objPageContent['VisibleIntroText'] : EditPage['VisibleIntroText'];
-        this.modifiedData.HiddenIntroText = this.isPageContentModified && this.objPageContent['HiddenIntroText'] !== undefined ? this.objPageContent['HiddenIntroText'] : EditPage['HiddenIntroText'];
-        this.modifiedData.SubHeader1 = this.isPageContentModified && this.objPageContent['SubHeader1'] !== undefined ? this.objPageContent['SubHeader1'] : EditPage['SubHeader1'];
-        this.modifiedData.SubHeader2 = this.isPageContentModified && this.objPageContent['SubHeader2'] !== undefined ? this.objPageContent['SubHeader2'] : EditPage['SubHeader2'];
-        this.modifiedData.ContentText1 = this.isPageContentModified && this.objPageContent['ContentText1'] !== undefined ? this.objPageContent['ContentText1'] : EditPage['ContentText1'];
-        this.modifiedData.ContentText2 = this.isPageContentModified && this.objPageContent['ContentText2'] !== undefined ? this.objPageContent['ContentText2'] : EditPage['ContentText2'];
-        this.modifiedData.BreadcrumbText = this.isPageContentModified && this.objPageContent['BreadcrumbText'] !== undefined ? this.objPageContent['BreadcrumbText'] : EditPage['BreadcrumbText'];
+        this.modifiedData.PageTitle = this.isPageContentModified && this.objPageContent['PageTitle'] !== undefined
+            ? this.objPageContent['PageTitle']
+            : this.props.isNewPage !== undefined ? '' : EditPage['PageTitle'];
+
+        this.modifiedData.VisibleIntroText = this.isPageContentModified && this.objPageContent['VisibleIntroText'] !== undefined
+            ? this.objPageContent['VisibleIntroText']
+            : this.props.isNewPage !== undefined ? '' : EditPage['VisibleIntroText'];
+
+        this.modifiedData.HiddenIntroText = this.isPageContentModified && this.objPageContent['HiddenIntroText'] !== undefined
+            ? this.objPageContent['HiddenIntroText']
+            : this.props.isNewPage !== undefined ? '' : EditPage['HiddenIntroText'];
+
+        this.modifiedData.SubHeader1 = this.isPageContentModified && this.objPageContent['SubHeader1'] !== undefined
+            ? this.objPageContent['SubHeader1']
+            : this.props.isNewPage !== undefined ? '' : EditPage['SubHeader1'];
+
+        this.modifiedData.SubHeader2 = this.isPageContentModified && this.objPageContent['SubHeader2'] !== undefined
+            ? this.objPageContent['SubHeader2']
+            : this.props.isNewPage !== undefined ? '' : EditPage['SubHeader2'];
+
+        this.modifiedData.ContentText1 = this.isPageContentModified && this.objPageContent['ContentText1'] !== undefined
+            ? this.objPageContent['ContentText1']
+            : this.props.isNewPage !== undefined ? '' : EditPage['ContentText1'];
+
+        this.modifiedData.ContentText2 = this.isPageContentModified && this.objPageContent['ContentText2'] !== undefined
+            ? this.objPageContent['ContentText2']
+            : this.props.isNewPage !== undefined ? '' : EditPage['ContentText2'];
+
+        this.modifiedData.BreadcrumbText = this.isPageContentModified && this.objPageContent['BreadcrumbText'] !== undefined
+            ? this.objPageContent['BreadcrumbText']
+            : this.props.isNewPage !== undefined ? '' : EditPage['BreadcrumbText'];
 
 
-        this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined ? this.objDrillDown['FeaturePageTag1'] : EditPage['FeaturePageTag1'];
-        this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined ? this.objDrillDown['FeaturePageTag2'] : EditPage['FeaturePageTag2'];
+        this.modifiedData.FeaturePageTag1 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag1'] !== undefined
+            ? this.objDrillDown['FeaturePageTag1']
+            : this.props.isNewPage !== undefined ? '' : EditPage['FeaturePageTag1'];
+
+        this.modifiedData.FeaturePageTag2 = this.isDrillDownModified && this.objDrillDown['FeaturePageTag2'] !== undefined
+            ? this.objDrillDown['FeaturePageTag2']
+            : this.props.isNewPage !== undefined ? '' : EditPage['FeaturePageTag2'];
 
         this.modifiedData.UserName = this.props.storeData._loginDetails.userName;
 

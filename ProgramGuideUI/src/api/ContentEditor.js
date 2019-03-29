@@ -75,7 +75,7 @@ export function createNewPage() {
             this.props.dispatch({ type: 'store_RemoveEditedPage', data: this.props.storeData._uniqueContentData.filter(m => m.MarketCode !== this.modifiedData.MarketCode) })
             //Fetch the latest pages for the edited market
             this.props.dispatch(StoreData.UniqueContent(this.modifiedData.MarketCode));
-            alert('Page is successfullt created');
+            alert('Page is successfully created');
             console.log(result);
         }).catch(err => { console.log(err) });
 }
