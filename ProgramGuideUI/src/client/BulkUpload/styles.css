@@ -65,6 +65,9 @@
     color: white;
   }
 
-  .table td, .table th {
+  .table tr, .table td {
       padding-top: 0;
   }
+.table p{
+  margin-top: 0.5rem;
+}

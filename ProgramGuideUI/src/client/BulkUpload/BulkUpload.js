@@ -12,8 +12,13 @@ class BulkUpload extends Component {
     super()
     this.state = {
       fileName: Constant.NO_FILE_CHOSEN,
+      bulkUploadDetailsData: []
     }
     this.handleChange = this.handleChange.bind(this)
+  }
+
+  componentDidMount() {
+    API.getBulkUploadDetails.call(this);
   }
 
   validateXml(data) {
@@ -73,6 +78,12 @@ class BulkUpload extends Component {
 
         if (this.validationFailed) return;
 
+        this.UpdatedUniqueContentId = '<BatchDetails xmlns="">' + excelContent.map(m => { return '<BatchRow UniqueContent_ID="' + m.UniqueContent['UniqueContent_ID'] + '"/>' }).toString().replace(/,/g, ' ') + '</BatchDetails>'
+        this.BulkUploadDetails = {
+          xmlData: this.UpdatedUniqueContentId,
+          userName: this.props.storeData._loginDetails.userName
+        };
+
         var xml = jsonxml({ XmlDocument: excelContent });
 
         this.uploadExcelDetails = {};
@@ -104,6 +115,15 @@ class BulkUpload extends Component {
           <input type="submit" value="Upload" onClick={this.uploadExcelData.bind(this)} id="tnSubmit" className={`btn btn-primary btn-modal ${this.state.fileName === Constant.NO_FILE_CHOSEN ? '-disabled' : ''} `} />
         </div>
         <br />
+        {this.state.bulkUploadDetailsData.length > 0 ?
+          <table className="table table-borderless" id="bulkUploadBatchDetails">
+            <tbody>
+              <p><b>Batches not published to LIVE</b></p>
+              {this.state.bulkUploadDetailsData}
+            </tbody>
+          </table>
+          : ''
+        }
       </div>
     );
   }
