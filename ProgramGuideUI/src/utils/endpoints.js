@@ -54,3 +54,4 @@ export const getNewlyCreatedPages = `http://ctdev.ef.com:3001/api/getNewlyCreate
 
 //Publish to LIVE
 export const publishToLive = `http://ctdev.ef.com:3001/api/publishToLive`;
+export const publishBulkUpload = `http://ctdev.ef.com:3001/api/publishBulkUpload`;

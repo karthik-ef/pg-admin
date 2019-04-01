@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 
 class BulkUpload extends Component {
   constructor() {
-    super()
+    super();
     this.state = {
       fileName: Constant.NO_FILE_CHOSEN,
       bulkUploadDetailsData: []
@@ -96,6 +96,47 @@ class BulkUpload extends Component {
         alert('Error! Header names of the uploaded file is either incorrect or missing or not in the expected sequence.')
       }
     });
+  }
+
+  Publish(batchId) {
+    var xmlBatchData = [];
+    console.log(this.batchDetails);
+    var UniqueContentIDs = this.batchDetails.filter(m => m.BATCH_ID === batchId).map(m => { return m.UniqueContent_ID });
+    console.log(UniqueContentIDs);
+    console.log(batchId);
+    var selectedBatchData = this.props.storeData._uniqueContentData.filter(m => UniqueContentIDs.includes(m.UniqueContent_ID))
+      .map(m => {
+        return [m.UniqueContent_ID, m.MarketCode, m.PageUrl, m.Tag_Topic, m.Tag_When, m.Tag_CourseType, m.Tag_AgeRange,
+        m.Tag_Duration, m.AdditionalDurationDetails, m.Tag_LanguageOfInstruction, m.Tag_LanguageLearned, m.Tag_Platform, m.Tag_Continent,
+        m.Tag_Country, m.Tag_State, m.Tag_City, m.Tag_Feature, m.BannerImage, m.MetaTitle, m.MetaDescription, m.MetaRobot, m.PageTitle,
+        m.VisibleIntroText, m.HiddenIntroText, m.SubHeader1, m.SubHeader2, m.ContentText1, m.ContentText2, m.BreadcrumbText,
+        m.FeaturePageTag1, m.FeaturePageTag2, m.ParentPageID, m.IsActive, m.InsertDate, m.UpdateDate, m.UpdateBy]
+      });
+    console.log(selectedBatchData);
+    selectedBatchData.forEach((element, index) => {
+      var formatedContent = [];
+      element.forEach((content, i) => {
+        i === 0 || i === 31 || i === 32
+          ? ''
+          : content = content !== null ? this.validateXml(content) : content;
+        formatedContent.push(content)
+      });
+      //Construct key value pair
+      xmlBatchData.push({
+        UniqueContent: formatedContent.reduce(function (result, field, index) {
+          result[Constant.UniqueContentColumns[index]] = field;
+          return result;
+        }, {})
+      });
+    });
+
+    this.publishToLiveData = {
+      batchId: batchId,
+      userName: this.props.storeData._loginDetails.userName,
+      xmlData: jsonxml({ XmlDocument: xmlBatchData })
+    };
+
+    API.publishBulkUpload.call(this);
   }
 
   render() {
