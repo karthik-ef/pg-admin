@@ -79,3 +79,10 @@ export function createNewPage() {
             console.log(result);
         }).catch(err => { console.log(err) });
 }
+
+export function publishToLive(){
+    axios.post(API.publishContentEditor, this.modifiedData)
+        .then(result => {
+            alert('Page is successfully published');
+        }).catch(err => { console.log(err) });
+}

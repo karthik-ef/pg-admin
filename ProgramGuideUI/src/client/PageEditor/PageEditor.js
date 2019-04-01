@@ -66,10 +66,26 @@ class PageEditor extends Component {
     modalClosed() {
         this.props.getEditorContentData('closed');
     }
-    UpdateToLive() {
+
+    updatePageAlias() {
+        let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        if (this.objDrillDown['DrillDownAlias'] !== undefined) {
+            this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
+            this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
+            API.saveDrilldownAliasTagsDetails.call(this);
+        }
     }
-    //Update the modified data to QA
-    UpdateToQA() {
+
+    updateCustomizedLinks() {
+        let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
+            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
+            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
+            API.saveCustomizedLinksDetails.call(this);
+        }
+    }
+
+    getModifiedData() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         if (this.props.isNewPage !== undefined) {
             this.modifiedData.UniqueContent_ID = this.maxOfUniqueContentId + 1;
@@ -201,37 +217,51 @@ class PageEditor extends Component {
 
         this.modifiedData.UserName = this.props.storeData._loginDetails.userName;
 
-        var tagStructure = {};
-        if (this.isPageTagModified) {
-            tagStructure = this.objPageTag.toString();
-        }
+        // var tagStructure = {};
+        // if (this.isPageTagModified) {
+        //     tagStructure = this.objPageTag.toString();
+        // }
 
-        if (this.Checkduplicate.filter(m => m.Tags === tagStructure).length > 0) {
-            this.validation = true;
-            this.setState({ showDuplicateErrorForCreate: true });
+        // if (this.Checkduplicate.filter(m => m.Tags === tagStructure).length > 0) {
+        //     this.validation = true;
+        //     this.setState({ showDuplicateErrorForCreate: true });
 
-        }
-        else if (this.props.isNewPage !== undefined) {
-            this.setState({ showDuplicateErrorForCreate: false })
-            API.createNewPage.call(this);
-        }
-        else {
-            API.updateUniqueContent.call(this);
-        }
-
-        if (this.objDrillDown['DrillDownAlias'] !== undefined) {
-            this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
-            this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
+        // }
+        // else if (this.props.isNewPage !== undefined) {
+        //     this.setState({ showDuplicateErrorForCreate: false })
+        //     API.createNewPage.call(this);
+        // }
+        // else {
+        //     API.updateUniqueContent.call(this);
+        // }
 
 
-            API.saveDrilldownAliasTagsDetails.call(this);
-        }
 
-        if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
-            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
-            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
-            API.saveCustomizedLinksDetails.call(this);
-        }
+
+        // if (!this.validation) {
+        //     $('#pageEditor').modal('hide');
+        //     this.props.getEditorContentData('Data updated');
+        // }
+    }
+
+    async UpdateToLive() {
+        await this.getModifiedData();
+        await this.UpdateToQA();
+        await this.updatePageAlias();
+        await this.updateCustomizedLinks();
+        await API.publishToLive.call(this);
+    }
+    //Update the modified data to QA
+    async UpdateToQA() {
+        await this.getModifiedData();
+
+        this.props.isNewPage !== undefined
+            ? API.createNewPage.call(this)
+            : API.updateUniqueContent.call(this);
+
+        await this.updatePageAlias();
+        await this.updateCustomizedLinks();
+
         if (!this.validation) {
             $('#pageEditor').modal('hide');
             this.props.getEditorContentData('Data updated');
