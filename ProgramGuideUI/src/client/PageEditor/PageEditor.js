@@ -247,8 +247,6 @@ class PageEditor extends Component {
     async UpdateToLive() {
         await this.getModifiedData();
         await this.UpdateToQA();
-        await this.updatePageAlias();
-        await this.updateCustomizedLinks();
         await API.publishToLive.call(this);
     }
     //Update the modified data to QA
