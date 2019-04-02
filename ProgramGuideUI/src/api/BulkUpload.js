@@ -7,8 +7,30 @@ export function BulkUpload() {
     axios.post(API.bulkUpload, this.uploadExcelDetails)
         .then(result => {
             bulkUploadDetail.call(this);
-            this.props.dispatch(StoreData.UniqueContent(this.props.storeData._userMarkets
-                .map(m => { return m.MarketCode }).join(',').toString()));
+
+            //Remove all pages for the edited market
+            this.props.dispatch({
+                type: 'store_RemoveEditedPage',
+                data: this.props.storeData._uniqueContentData
+                    .filter(m => !this.uploadedMarketsList
+                        .map(m => m.MarketCode)
+                        .filter((x, i, a) => { return a.indexOf(x) === i })
+                        .includes(m.MarketCode))
+            })
+            //Fetch the latest pages for the edited market
+            var marketsList = this.uploadedMarketsList
+                .map(m => { return m.MarketCode })
+                .filter((x, i, a) => { return a.indexOf(x) === i });
+            var beginSlice = 0;
+            var endSlice = 2;
+
+            for (var i = 0; i < marketsList.length / 2; i++) {
+                this.props.dispatch(StoreData.UniqueContent(marketsList.slice(beginSlice, endSlice).join(',').toString()));
+
+                beginSlice = endSlice;
+                endSlice = endSlice + 2;
+            }
+
             alert('File is uploaded sucessfully');
         }).catch(err => { console.log(err) });
 }
@@ -45,9 +67,9 @@ export function getBulkUploadDetails() {
 export function publishBulkUpload() {
     console.log(this.publishToLiveData);
     axios.post(API.publishBulkUpload, this.publishToLiveData)
-        .then(result => { 
+        .then(result => {
             getBulkUploadDetails.call(this);
-            alert('Success') 
+            alert('Success')
         })
         .catch(err => { console.log(err) });
 }

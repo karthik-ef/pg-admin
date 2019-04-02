@@ -46,6 +46,7 @@ class BulkUpload extends Component {
     var file = document.getElementById("file-upload").files[0];
     readXlsxFile(file, { sheet: 1 }).then((data) => {
       var excelContent = [];
+      this.uploadedMarketsList = [];
       this.validationFailed = false;
       if (JSON.stringify(Constant.EXPORT_TO_EXCEL_COLUMNS.toLocaleString().toUpperCase().split(',')) === JSON.stringify(data[0].toLocaleString().toUpperCase().split(','))) {
         data.forEach((element, index) => {
@@ -63,6 +64,10 @@ class BulkUpload extends Component {
               else {
                 content = content !== null ? this.validateXml(content) : content;
               }
+
+              i === 1
+                ?  this.uploadedMarketsList.push({ MarketCode: content })
+                : ''
               formatedContent.push(content)
             });
             //Construct key value pair
