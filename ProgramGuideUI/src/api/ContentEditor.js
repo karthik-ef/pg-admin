@@ -40,7 +40,7 @@ export function getDrillDownAliasDetails() {
         }).catch(err => { console.log(err) });
 }
 
-export function saveCustomizedLinksDetails() {
+export function saveCustomizedLinksDetailsQA() {
     console.log(this.objCustomizedData);
     axios.post(API.saveCustomizedLinksDetails, this.objCustomizedData)
         .then(result => {
@@ -48,7 +48,23 @@ export function saveCustomizedLinksDetails() {
         }).catch(err => { console.log(err) });
 }
 
-export function saveDrilldownAliasTagsDetails() {
+export function saveDrilldownAliasTagsDetailsQA() {
+    console.log(this.objDrillDownAlias);
+    axios.post(API.saveDrilldownAliasTagsDetails, this.objDrillDownAlias)
+        .then(result => {
+            console.log(result);
+        }).catch(err => { console.log(err) });
+}
+
+export function saveCustomizedLinksDetailsLive() {
+    console.log(this.objCustomizedData);
+    axios.post(API.saveCustomizedLinksDetails, this.objCustomizedData)
+        .then(result => {
+            console.log(result);
+        }).catch(err => { console.log(err) });
+}
+
+export function saveDrilldownAliasTagsDetailsLive() {
     console.log(this.objDrillDownAlias);
     axios.post(API.saveDrilldownAliasTagsDetails, this.objDrillDownAlias)
         .then(result => {

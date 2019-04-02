@@ -67,21 +67,39 @@ class PageEditor extends Component {
         this.props.getEditorContentData('closed');
     }
 
-    updatePageAlias() {
+    updatePageAliasToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         if (this.objDrillDown['DrillDownAlias'] !== undefined) {
             this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
             this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
-            API.saveDrilldownAliasTagsDetails.call(this);
+            API.saveDrilldownAliasTagsDetailsQA.call(this);
         }
     }
 
-    updateCustomizedLinks() {
+    updateCustomizedLinksToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
             this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
             this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
-            API.saveCustomizedLinksDetails.call(this);
+            API.saveCustomizedLinksDetailsQA.call(this);
+        }
+    }
+
+    updatePageAliasToLIVE() {
+        let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        if (this.objDrillDown['DrillDownAlias'] !== undefined) {
+            this.objDrillDownAlias.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
+            this.objDrillDownAlias.DrilldownAliasXml = this.objDrillDown['DrillDownAlias'];
+            API.saveDrilldownAliasTagsDetailsLive.call(this);
+        }
+    }
+
+    updateCustomizedLinksToLIVE() {
+        let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
+        if (this.objDrillDown['CustomizedLinksData'] !== undefined) {
+            this.objCustomizedData.UniqueContent_ID = EditPage['UniqueContent_ID'] ? EditPage['UniqueContent_ID'] : this.maxOfUniqueContentId + 1;
+            this.objCustomizedData.LinkPageXml = '<CustomizedLinks>' + this.objDrillDown['CustomizedLinksData'] + '</CustomizedLinks>';
+            API.saveCustomizedLinksDetailsLive.call(this);
         }
     }
 
@@ -247,6 +265,8 @@ class PageEditor extends Component {
     async UpdateToLive() {
         await this.getModifiedData();
         await this.UpdateToQA();
+        await this.updatePageAliasToLIVE();
+        await this.updateCustomizedLinksToLIVE();
         await API.publishToLive.call(this);
     }
     //Update the modified data to QA
@@ -257,8 +277,8 @@ class PageEditor extends Component {
             ? API.createNewPage.call(this)
             : API.updateUniqueContent.call(this);
 
-        await this.updatePageAlias();
-        await this.updateCustomizedLinks();
+        await this.updatePageAliasToQA();
+        await this.updateCustomizedLinksToQA();
 
         if (!this.validation) {
             $('#pageEditor').modal('hide');
