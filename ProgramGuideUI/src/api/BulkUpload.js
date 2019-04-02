@@ -69,7 +69,7 @@ export function publishBulkUpload() {
     axios.post(API.publishBulkUpload, this.publishToLiveData)
         .then(result => {
             getBulkUploadDetails.call(this);
-            alert('Success')
+            alert('Changes successfully published to LIVE')
         })
         .catch(err => { console.log(err) });
 }
