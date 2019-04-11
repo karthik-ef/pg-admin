@@ -66,12 +66,25 @@ function EfCom_OrganicSearch_UserMarkets(EfCom20_Content_UserMarkets) {
                 for (var i = 0; i < marketsList.length / 2; i++) {
                     dispatch(UniqueContent(marketsList.slice(beginSlice, endSlice).join(',').toString()));
                     dispatch(OtherTags(marketsList.slice(beginSlice, endSlice).join(',').toString()));
-
+                    dispatch(SuggestedKeywords(marketsList.slice(beginSlice, endSlice).join(',').toString()));
                     beginSlice = endSlice;
                     endSlice = endSlice + 2;
                 }
                 dispatch({ type: 'store_UserMarkets', data: userMarkets });
 
+            })
+            .catch(err => { console.log(err) });
+    }
+}
+
+//Store Suggested keywords data
+export function SuggestedKeywords(marketCode) {
+    return (dispatch) => {
+        axios.get(EndPoint.getKeywords + marketCode)
+            .then(result => {
+                result.data.length
+                    ? dispatch({ type: 'store_SuggestedKeywords', data: result.data })
+                    : ''
             })
             .catch(err => { console.log(err) });
     }

@@ -4,7 +4,8 @@ import thunk from 'redux-thunk';
 
 var defaultState = {
   _uniqueContentData: [],
-  _uniqueContentTags: []
+  _uniqueContentTags: [],
+  _suggestedKeywords: []
 };
 
 function amount(state = defaultState, action) {
@@ -112,7 +113,14 @@ function amount(state = defaultState, action) {
       ...state, _createPageTags: action.data
     }
   }
-  
+  //Store createpage tags
+  else if (action.type === 'store_SuggestedKeywords') {
+    return {
+      ...state, _suggestedKeywords: state._suggestedKeywords.concat(action.data)
+    }
+  }
+
+
 
   return state;
 }
