@@ -14,6 +14,7 @@ import BannerImage from '../PageEditor/BannerImage';
 import PageStatus from '../PageEditor/PageStatus';
 import './PageEditor.css';
 import { connect } from 'react-redux';
+import SuggestedKeywords from './SuggestedKeywords';
 
 class PageEditor extends Component {
 
@@ -348,6 +349,7 @@ class PageEditor extends Component {
                                 <div class="accordion" id="pageEditorSection">
                                     <PageTagSection data={EditPage} SelectedValue={this.PageTagSection.bind(this)} />
                                     <ParentPage UniqueContentData={UniqueContentData} setParentPageData={EditPage['ParentPageID']} getParentPageData={this.ParentPageSection.bind(this)} />
+                                    <SuggestedKeywords />
                                     <MetaInformation data={EditPage} MetaInformation={this.MetaInformationSection.bind(this)} />
                                     <PageContent setPageContentData={EditPage} getPageContentData={this.PageContentSection.bind(this)} />
                                     <DrillDown setDrillDownData={EditPage} getDrillDownData={this.DrillDownSection.bind(this)} UniqueContentData={UniqueContentData.filter(m => m.PageUrl !== EditPage['PageUrl'])} />
