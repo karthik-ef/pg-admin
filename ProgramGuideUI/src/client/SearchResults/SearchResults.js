@@ -55,7 +55,7 @@ class SearchResult extends Component {
             this.filteredBy = Constant.SEARCH_BY_KEYWORD;
             this.filterCriteria = value.SearchByKeywordResult;
             this.filteredUniqueContentResult = this.props.storeData._uniqueContentData
-                .filter(m => m.MarketCode === this.props.storeData._selectedMarket && m.PageUrl === value.SearchByUrlResult);
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket && m.PageUrl.includes(value.SearchByKeywordResult));
         }
         //Filter search result based on URL
         else if (value.SearchByUrlResult) {
