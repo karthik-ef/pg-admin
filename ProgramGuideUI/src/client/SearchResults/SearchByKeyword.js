@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-import TextBox from '../CustomControls/TextBox';
-
 import * as Constant from '../../utils/constant';
 import './SearchByUrl.css';
-
-import * as Path from '../../utils/routepath';
 import { connect } from 'react-redux';
 
 class SearchByKeyword extends Component {
 
-    getSelectedValue(value) {
-        this.props.getSearchByUrlData(value)
+    handleOnBlur() {
+        this.props.getSearchByKeywordData(this.refs.keyword.value);
     }
 
     render() {
@@ -22,7 +18,7 @@ class SearchByKeyword extends Component {
                     <div className="search__wrapper">
                         <label htmlFor="inputPassword" className="col-form-label"><strong>{Constant.KEYWORD}</strong></label>
                         <div>
-                            <input type="text" className="form-control create-input" />
+                            <input type="text" className="form-control create-input" ref="keyword" onBlur={this.handleOnBlur.bind(this)} />
                         </div>
                     </div>
                 </div>

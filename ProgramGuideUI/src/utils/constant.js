@@ -7,7 +7,7 @@ export const PAGE_URL = 'Page URL:';
 export const KEYWORD = 'Keyword:';
 export const SEARCH_BY_URL = 'Search By URL';
 export const SEARCH_BY_TAG = 'Search By Tag';
-export const SEARCH_BY_KEYWORD = 'Search by Keyword';
+export const SEARCH_BY_KEYWORD = 'Search By Keyword';
 export const SELECTED_TAG_HEADER = 'Seleted Tags:';
 export const INCLUDE_INACTIVE_PAGES = 'Include Inactive Pages';
 

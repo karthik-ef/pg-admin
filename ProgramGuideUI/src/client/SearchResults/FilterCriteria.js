@@ -23,13 +23,19 @@ class FilterCriteria extends Component {
         this.props.getFilterCriteriaResult(this.objFilterCriteria);
     }
 
+    //Selected keyword
+    getSearchByKeywordValue = (value) => {
+        this.objFilterCriteria.SearchByKeywordResult = value;
+        this.props.getFilterCriteriaResult(this.objFilterCriteria);
+    }
+
     render() {
         return (
             this.props.displayComponent === Constant.SEARCH_BY_URL //Check which component to display
                 ? <SearchByUrl getSearchByUrlData={this.getSearchByUrlValue} />
                 : this.props.displayComponent === Constant.SEARCH_BY_TAG
                     ? <SearchByTag getSearchByTagData={this.getSearchByTagValue} />
-                    : <SearchByKeyword />
+                    : <SearchByKeyword getSearchByKeywordData = {this.getSearchByKeywordValue}/>
         )
     }
 }

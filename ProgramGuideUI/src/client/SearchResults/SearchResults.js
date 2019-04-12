@@ -50,6 +50,13 @@ class SearchResult extends Component {
             this.setState({ showSearchFilterModal: false });
             return;
         }
+        //Filter search result based on Keyword
+        else if (value.SearchByKeywordResult) {
+            this.filteredBy = Constant.SEARCH_BY_KEYWORD;
+            this.filterCriteria = value.SearchByKeywordResult;
+            this.filteredUniqueContentResult = this.props.storeData._uniqueContentData
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket && m.PageUrl === value.SearchByUrlResult);
+        }
         //Filter search result based on URL
         else if (value.SearchByUrlResult) {
             this.filteredBy = Constant.SEARCH_BY_URL;
@@ -116,7 +123,7 @@ class SearchResult extends Component {
                                 ? <div className="alert alert-info" role="alert">
                                     <span className="alert-text__info strong__text"> Filter Applied! </span> <br />
                                     <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.searchResultsData.length}</span> <br />
-                                    <span className="alert-text__info strong__text">Search URL:</span> <span className="alert-text__info secondary__text">{this.filterCriteria}</span>
+                                    <span className="alert-text__info strong__text">{this.filteredBy}:</span> <span className="alert-text__info secondary__text">{this.filterCriteria}</span>
                                 </div>
                                 : <div className="alert alert-info" role="alert">
                                     <p className="alert-text__info strong__text"> Showing {this.searchResultsData.length} Page Urls </p>
