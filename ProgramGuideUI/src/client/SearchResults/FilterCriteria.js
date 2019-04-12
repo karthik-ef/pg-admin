@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import SearchByTag from './SearchByTag'
 import SearchByUrl from './SearchByUrl'
 import * as Constant from '../../utils/constant';
+import SearchByKeyword from './SearchByKeyword';
 
 class FilterCriteria extends Component {
 
@@ -26,7 +27,9 @@ class FilterCriteria extends Component {
         return (
             this.props.displayComponent === Constant.SEARCH_BY_URL //Check which component to display
                 ? <SearchByUrl getSearchByUrlData={this.getSearchByUrlValue} />
-                : <SearchByTag getSearchByTagData={this.getSearchByTagValue} />
+                : this.props.displayComponent === Constant.SEARCH_BY_TAG
+                    ? <SearchByTag getSearchByTagData={this.getSearchByTagValue} />
+                    : <SearchByKeyword />
         )
     }
 }
