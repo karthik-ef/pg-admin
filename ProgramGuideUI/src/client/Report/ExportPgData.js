@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import FilterResult from '../SearchResults/FilterResult';
-import $ from 'jquery';
 import * as Generic from '../../utils/generic';
-import ReactExport from "react-data-export";
 import { connect } from 'react-redux';
 import DropDown from '../CustomControls/DropDown';
-
-// Excel Declarations
-const ExcelFile = ReactExport.ExcelFile;
-const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
+import { saveAs } from 'file-saver';
+import XLSX from 'xlsx';
 
 class ExportPgData extends Component {
     constructor() {
@@ -71,13 +67,34 @@ class ExportPgData extends Component {
         this.setState({ customize: true });
     }
 
+    exportToExcel() {
+        /*Excel data */
+        var excelData = this.props.storeData._uniqueContentData && !this.customizedData.length > 0
+            ? this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode))
+            : this.customizedData;
+
+        /* make the worksheet */
+        var ws = XLSX.utils.json_to_sheet(excelData);
+
+        /* add to workbook */
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "UniqueContentData");
+
+        /* write workbook (use type 'binary') */
+        var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+        /* generate a download */
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+
+        saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "PG-Data.xlsx");
+    }
+
     render() {
-
-        //Generate data for excel report
-        this.ExcelData = this.props.storeData._uniqueContentData && !this.customizedData.length > 0
-            ? Generic.generateExcelReport(this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode)))
-            : Generic.generateExcelReport(this.customizedData);
-
         return (
             <div className="itemDiv add-users__wrapper">
                 <div className="container">
@@ -112,10 +129,7 @@ class ExportPgData extends Component {
                         </div>
                     </div>
                     <br />
-                    <ExcelFile filename="PG-Data"
-                        element={<button className="btn btn-primary" type="button" disabled={this.isDisabled}>Export</button>}>
-                        <ExcelSheet dataSet={this.ExcelData} name="Result" />
-                    </ExcelFile>
+                    <button className="btn btn-primary" type="button" onClick={this.exportToExcel.bind(this)} >Export</button>
                 </div>
             </div>
         );
