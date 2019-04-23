@@ -42,6 +42,7 @@ class SearchResult extends Component {
 
     //Reset the state
     clearFilter() {
+        this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
         this.setState({ isFilterApplied: false });
     }
 
@@ -72,16 +73,38 @@ class SearchResult extends Component {
             this.filterCriteria = value.SearchByTagResult.slice(0, value.SearchByTagResult.lastIndexOf('_'));
             if (!value.IsActivePage) objUniqueContent = objUniqueContent.filter(m => m.IsActive);
             this.filteredUniqueContentResult = objUniqueContent.flexFilter(selectedTag.filter(m => m.Values !== '*' && m.Field !== 'Duration details'));
+
+            var arrSelectedTags = this.filterCriteria.split('_');
+            var objFilterCriteria = {
+                [Constant.Tag_Topic]: arrSelectedTags[0],
+                [Constant.Tag_When]: arrSelectedTags[1],
+                [Constant.Tag_CourseType]: arrSelectedTags[2],
+                [Constant.Tag_AgeRange]: arrSelectedTags[3],
+                [Constant.Tag_Duration]: arrSelectedTags[4],
+                [Constant.Tag_LanguageOfInstruction]: arrSelectedTags[5],
+                [Constant.Tag_LanguageLearned]: arrSelectedTags[6],
+                [Constant.Tag_Platform]: arrSelectedTags[7],
+                [Constant.Tag_Continent]: arrSelectedTags[8],
+                [Constant.Tag_Country]: arrSelectedTags[9],
+                [Constant.Tag_State]: arrSelectedTags[10],
+                [Constant.Tag_City]: arrSelectedTags[11],
+                [Constant.Tag_Feature]: arrSelectedTags[12],
+                [Constant.Tag_Duration_Details]: arrSelectedTags[13]
+            }
+
+            this.props.dispatch({ type: 'Store_FilterTagCriteria', data: objFilterCriteria });
         }
         this.setState({ isFilterApplied: true, showSearchFilterModal: false });
     }
 
     editorContentData = (value) => {
-        // if (value === 'Data updated') window.location.reload();
-        //window.location.reload();
-        value === 'closed'
-            ? this.setState({ showEditContentModal: !this.state.showEditContentModal })
-            : this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
+        if (value === 'closed') {
+            this.setState({ showEditContentModal: !this.state.showEditContentModal });
+        }
+        else {
+            this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
+            this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
+        }
     }
     //
 

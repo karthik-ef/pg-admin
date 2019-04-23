@@ -120,6 +120,12 @@ function amount(state = defaultState, action) {
     }
   }
 
+  else if (action.type === 'Store_FilterTagCriteria') {
+    return {
+      ...state, _filterTagCriteria: action.data
+    }
+  }
+
 
 
   return state;
