@@ -229,7 +229,6 @@ class SearchResult extends Component {
                                 className="-striped -highlight pg-search__table"
                             />
                         </div>
-                        }
                     </div>
         )
     }
