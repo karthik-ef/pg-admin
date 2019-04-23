@@ -63,11 +63,6 @@ class PageEditor extends Component {
         });
     }
 
-    // Pass the value to parent component
-    modalClosed() {
-        this.props.getEditorContentData('closed');
-    }
-
     updatePageAliasToQA() {
         let EditPage = this.props.EditPageRow !== undefined ? this.props.EditPageRow['EditRowData'] : [];
         if (this.objDrillDown['DrillDownAlias'] !== undefined) {
@@ -321,6 +316,11 @@ class PageEditor extends Component {
     PageStatusSection = (value) => {
         this.isPageStatusModified = true;
         this.objPageStatus = value;
+    }
+
+    // Pass the value to parent component
+    modalClosed() {
+        this.props.getEditorContentData('closed');
     }
 
     Close() {

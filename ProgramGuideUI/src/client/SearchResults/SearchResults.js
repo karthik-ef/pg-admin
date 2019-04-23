@@ -79,7 +79,9 @@ class SearchResult extends Component {
     editorContentData = (value) => {
         // if (value === 'Data updated') window.location.reload();
         //window.location.reload();
-        this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
+        value === 'closed'
+            ? this.setState({ showEditContentModal: !this.state.showEditContentModal })
+            : this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
     }
     //
 
