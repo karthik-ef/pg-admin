@@ -1,6 +1,7 @@
 import * as Constant from './constant';
 import xmlFormat from 'xml-formatter';
 import { saveAs } from 'file-saver';
+import XLSX from 'xlsx';
 
 export function dataForDropDown(data) {
     return data.map(m => { return { label: m.Value, value: m.Value } });
@@ -59,7 +60,7 @@ export function generateTopicExperienceMappingReport() {
     ]
 }
 
-export function generateSitemapXml(xmlReport, fileName){
+export function generateSitemapXml(xmlReport, fileName) {
     console.log(xmlReport);
     console.log(fileName);
     var blob = new Blob([xmlFormat(xmlReport)], { type: "text/xml" });
@@ -110,4 +111,26 @@ Array.prototype.flexFilter = function (info) {
 
     // Give us a new array containing the objects matching the filter criteria
     return matches;
+}
+
+export function ExportExcel(excelData, sheetName, reportName) {
+    /* make the worksheet */
+    var ws = XLSX.utils.json_to_sheet(excelData);
+
+    /* add to workbook */
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, sheetName);
+
+    /* write workbook (use type 'binary') */
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+
+    /* generate a download */
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length);
+        var view = new Uint8Array(buf);
+        for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+        return buf;
+    }
+
+    saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), reportName + '.xlsx');
 }

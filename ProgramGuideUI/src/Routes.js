@@ -8,6 +8,7 @@ import PageHierarchy from "./client/PageHierarchy/pageHierarchy";
 import TopicExperienceMapping from './client/Report/TopicExperienceMapping';
 import SitemapGenerator from './client/Report/SitemapGenerator';
 import ExportPgData from './client/Report/ExportPgData';
+import AgeGroup from './client/Report/AgeReport';
 import Publish from './client/Publish/PublishToLive';
 import * as Path from '../src/utils/routepath';
 import storeData from './store/config';
@@ -21,6 +22,8 @@ export default () =>
     <Route path={Path.PageHierarchy} exact component={PageHierarchy} />
     <Route path={Path.TopicExperienceMapping} exact component={TopicExperienceMapping} />
     <Route path={Path.ExportPgData} exact component={ExportPgData} />
+    <Route path={Path.AgeGroup} exact component={AgeGroup} />
+
     <Route path={Path.Publish} exact component={Publish} />
     {/* Components available for admin users only */}
     <Route path={Path.AddUser} exact component={storeData.getState()._loginDetails.roleName !== 'Admin' ? null : AddUser} />

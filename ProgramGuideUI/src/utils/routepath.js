@@ -7,4 +7,5 @@ export const PageHierarchy = '/PageHierarchy';
 export const TopicExperienceMapping = '/TopicExperienceMapping';
 export const SitemapGenerator = '/SitemapGenerator';
 export const ExportPgData = '/ExportPgData';
+export const AgeGroup = '/AgeGroup';
 export const Publish = '/Publish';
