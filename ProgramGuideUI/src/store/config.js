@@ -126,6 +126,24 @@ function amount(state = defaultState, action) {
     }
   }
 
+  else if (action.type === 'Store_AgeGroupReportGenerated') {
+    return {
+      ...state, _ageGroupReportGenerated: action.data
+    }
+  }
+
+  else if (action.type === 'Store_AgeGroupReportData') {
+    return {
+      ...state, _ageGroupReportData: action.data
+    }
+  }
+
+  else if (action.type === 'Store_AgeGroupReportMarketCode') {
+    return {
+      ...state, _ageGroupMarketCode: action.data
+    }
+  }
+
 
 
   return state;
