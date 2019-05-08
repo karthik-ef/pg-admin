@@ -88,7 +88,7 @@ class AgeReport extends Component {
                     ? <div className="itemDiv add-users__wrapper">
                         <div className="container">
                             <div className="alert alert-info" role="alert">
-                                <span className="alert-text__info strong__text">We are processing your request to generate the Age Group Report now, it may take a few minutes. Please come back later.</span> <br />
+                                <span className="alert-text__info strong__text">We are processing your request to generate the report, it may take few minutes. Please come back later.</span> <br />
                             </div>
                         </div>
                     </div>

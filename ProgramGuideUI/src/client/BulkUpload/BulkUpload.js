@@ -43,6 +43,11 @@ class BulkUpload extends Component {
   }
 
   uploadExcelData() {
+
+    Array.prototype.diff = function (a) {
+      return this.filter(function (i) { return a.indexOf(i) < 0; });
+    };
+
     var file = document.getElementById("file-upload").files[0];
     readXlsxFile(file, { sheet: 1 }).then((data) => {
       var excelContent = [];
@@ -58,7 +63,7 @@ class BulkUpload extends Component {
               if (i === 0 || i === 31) {
                 if (isNaN(content)) {
                   this.validationFailed = true;
-                  alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should contain numeric value. Please correct and upload again');
+                  alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should contain numeric value for ' + element[2] +' page. Please correct and upload again.');
                 }
               }
               else {
@@ -66,7 +71,7 @@ class BulkUpload extends Component {
               }
 
               i === 1
-                ?  this.uploadedMarketsList.push({ MarketCode: content })
+                ? this.uploadedMarketsList.push({ MarketCode: content })
                 : ''
               formatedContent.push(content)
             });
@@ -98,17 +103,34 @@ class BulkUpload extends Component {
         API.BulkUpload.call(this);
       }
       else {
-        alert('Error! Header names of the uploaded file is either incorrect or missing or not in the expected sequence.')
+
+        var missingColumn = Constant.EXPORT_TO_EXCEL_COLUMNS.diff(data[0])
+        var errorMessage = missingColumn.length === 1
+          ? ' column is missing from the uploaded excel file. Please correct and upload again.'
+          : ' columns are missing from the uploaded excel file. Please correct and upload again.';
+        if (missingColumn.length) {
+          alert(missingColumn + errorMessage);
+        }
+
+        else {
+          for (var i = 0; i < Constant.EXPORT_TO_EXCEL_COLUMNS.length; i++) {
+            if (Constant.EXPORT_TO_EXCEL_COLUMNS[i].toLocaleString().toUpperCase() !== data[0][i].toLocaleString().toUpperCase()) {
+              if (i === 0) {
+                alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should be the first column. Please correct and upload again.');
+                return;
+              }
+              alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column is expected after ' + data[0][i - 1] + ' column. Please correct and upload again.');
+              return;
+            }
+          }
+        }
       }
     });
   }
 
   Publish(batchId) {
     var xmlBatchData = [];
-    console.log(this.batchDetails);
     var UniqueContentIDs = this.batchDetails.filter(m => m.BATCH_ID === batchId).map(m => { return m.UniqueContent_ID });
-    console.log(UniqueContentIDs);
-    console.log(batchId);
     var selectedBatchData = this.props.storeData._uniqueContentData.filter(m => UniqueContentIDs.includes(m.UniqueContent_ID))
       .map(m => {
         return [m.UniqueContent_ID, m.MarketCode, m.PageUrl, m.Tag_Topic, m.Tag_When, m.Tag_CourseType, m.Tag_AgeRange,
@@ -117,7 +139,6 @@ class BulkUpload extends Component {
         m.VisibleIntroText, m.HiddenIntroText, m.SubHeader1, m.SubHeader2, m.ContentText1, m.ContentText2, m.BreadcrumbText,
         m.FeaturePageTag1, m.FeaturePageTag2, m.ParentPageID, m.IsActive, m.InsertDate, m.UpdateDate, m.UpdateBy]
       });
-    console.log(selectedBatchData);
     selectedBatchData.forEach((element, index) => {
       var formatedContent = [];
       element.forEach((content, i) => {
