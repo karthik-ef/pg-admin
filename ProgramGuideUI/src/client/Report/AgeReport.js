@@ -46,7 +46,7 @@ class AgeReport extends Component {
                     PageUrl: pageUrl,
                     MarketCode: marketCode,
                     AgeGroupCode: m.AgeGroupCode,
-                    AgeRange: m.SystemAgeStart + '-' + m.SystemAgeEnd,
+                    Tag_AgeRange: m.SystemAgeStart + '-' + m.SystemAgeEnd,
                     Products: m.MappedProducts
                 })) : '';
         }
@@ -122,9 +122,9 @@ class AgeReport extends Component {
                                                 sortable: false,
                                             },
                                             {
-                                                Header: <strong>Age Range</strong>,
+                                                Header: <strong>Tag_AgeRange</strong>,
                                                 id: "AgeRange",
-                                                accessor: d => d.AgeRange,
+                                                accessor: d => d.Tag_AgeRange,
                                                 sortable: false,
                                             },
                                             {
