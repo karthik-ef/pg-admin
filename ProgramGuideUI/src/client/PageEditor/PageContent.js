@@ -9,6 +9,10 @@ class PageContent extends Component {
     constructor() {
         super();
         this.objPageContent = {};
+
+        this.state = {
+            showVisibleIntroHtml: false
+        }
     }
 
     // TextEditor onChange event
