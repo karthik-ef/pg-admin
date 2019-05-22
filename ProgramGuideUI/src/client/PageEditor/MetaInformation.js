@@ -35,7 +35,7 @@ class MetaInformation extends Component {
                         <strong> Meta Description: </strong>
                         <textarea class="form-control" rows="5" defaultValue={this.props.data['MetaDescription']} ref="MetaDescription" onBlur={this.onBlur.bind(this)}></textarea>
                         <br />
-                        <strong> Meta Robot: </strong>
+                        <strong> Meta Keywords: </strong>
                         <input type="text" class="form-control" readOnly={this.props.storeData._loginDetails.roleName !== 'Admin'? true : false} defaultValue={this.props.data['MetaRobot']} ref="MetaRobot" onBlur={this.onBlur.bind(this)} />
                     </div>
                 </div>
