@@ -98,13 +98,14 @@ class SearchResult extends Component {
     }
 
     editorContentData = (value) => {
-        if (value === 'closed') {
-            this.setState({ showEditContentModal: !this.state.showEditContentModal });
-        }
-        else {
-            this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
-            this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
-        }
+        this.setState({ showEditContentModal: !this.state.showEditContentModal });
+        // if (value === 'closed') {
+        //     this.setState({ showEditContentModal: !this.state.showEditContentModal });
+        // }
+        // else {
+        //    // this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
+        //     this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
+        // }
     }
     //
 
