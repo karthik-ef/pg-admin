@@ -47,32 +47,32 @@ class SearchByTag extends Component {
             = this.Tag_LanguageOfInstruction_Value = this.Tag_LanguageLearned_Value = this.Tag_Platform_Value = this.Tag_Continent_Value
             = this.Tag_Country_Value = this.Tag_State_Value = this.Tag_City_Value = this.Tag_Feature_Value = "*"
 
-        this.props.ValueFromDb && this.props.ValueFromDb.length === 0
-            //Tag values for create page
-            ? Constant.Tag_Collection.forEach(element => {
-                element === Constant.Tag_Topic // Tag_Topic value is market specific
-                    ? this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element && m.MarketCode === this.props.storeData._selectedMarket)
+        // this.props.ValueFromDb && this.props.ValueFromDb.length === 0
+        //     //Tag values for create page
+        Constant.Tag_Collection.forEach(element => {
+            element === Constant.Tag_Topic // Tag_Topic value is market specific
+                ? this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element && m.MarketCode === this.props.storeData._selectedMarket)
+                    .map(m => { return { Value: m.Value } }))
+                : element === Constant.Tag_AgeRange //Tag_AgeRange is combination of value from 0-99
+                    ? this[element] = dataForDropDown(ageRangeData.map(m => { return { Value: m.Value } }))
+                    : this[element] = dataForDropDown(this.props.storeData._createPageTags.filter(m => m.TagName === element)
                         .map(m => { return { Value: m.Value } }))
-                    : element === Constant.Tag_AgeRange //Tag_AgeRange is combination of value from 0-99
-                        ? this[element] = dataForDropDown(ageRangeData.map(m => { return { Value: m.Value } }))
-                        : this[element] = dataForDropDown(this.props.storeData._createPageTags.filter(m => m.TagName === element)
-                            .map(m => { return { Value: m.Value } }))
-            })
-            //Tag values for filter and content editor pages
-            : Constant.Tag_Collection.forEach(element => {
-                element === Constant.Tag_Duration // Drop down data for duration tag
-                    ? this[element] = dataForDropDown(this.props.storeData._durationTags.map(m => { return { Value: m } }))
-                    : element === Constant.Tag_Platform // Drop down data for platform tag
-                        ? this[element] = dataForDropDown(this.props.storeData._platformTags.map(m => { return { Value: m } }))
-                        //Else drop down data for rest of the tags
-                        : window.location.pathname === Path.ExportPgData //drop down data for other tags for user markets
-                            ? this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element)
-                                .map(m => { return m.Value })
-                                .filter((x, i, a) => { return a.indexOf(x) === i }).map(m => { return { Value: m } }))
-                            //Else drop down data for other tags only for selected market
-                            : this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element && m.MarketCode === this.props.storeData._selectedMarket)
-                                .map(m => { return { Value: m.Value } }))
-            });
+        })
+        //Tag values for filter and content editor pages
+        //  Constant.Tag_Collection.forEach(element => {
+        //     element === Constant.Tag_Duration // Drop down data for duration tag
+        //         ? this[element] = dataForDropDown(this.props.storeData._durationTags.map(m => { return { Value: m } }))
+        //         : element === Constant.Tag_Platform // Drop down data for platform tag
+        //             ? this[element] = dataForDropDown(this.props.storeData._platformTags.map(m => { return { Value: m } }))
+        //             //Else drop down data for rest of the tags
+        //             : window.location.pathname === Path.ExportPgData //drop down data for other tags for user markets
+        //                 ? this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element)
+        //                     .map(m => { return m.Value })
+        //                     .filter((x, i, a) => { return a.indexOf(x) === i }).map(m => { return { Value: m } }))
+        //                 //Else drop down data for other tags only for selected market
+        //                 : this[element] = dataForDropDown(this.props.storeData._uniqueContentTags.filter(m => m.TagName === element && m.MarketCode === this.props.storeData._selectedMarket)
+        //                     .map(m => { return { Value: m.Value } }))
+        // });
 
         this.buildDropDownComponent();
     }

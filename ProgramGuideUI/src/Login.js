@@ -51,15 +51,16 @@ class Login extends Component {
     }
 
     componentDidUpdate() {
-        Object.keys(this.props.storeData).length - 1 === 10
+        Object.keys(this.props.storeData).length === 9
             ? this.pass()
             : this.Loading = true;
     }
 
     render() {
-        var progressbarCount = Object.keys(this.props.storeData).length - 1 === 10
-            ? '95'
-            : Object.keys(this.props.storeData).length - 1 + '0';
+        var progressbarCount = Object.keys(this.props.storeData).length + '0';
+        // var progressbarCount = Object.keys(this.props.storeData).length === 9
+        //     ? '95'
+        //     : Object.keys(this.props.storeData).length - 1 + '0';
         //console.log(this.props);
         //console.log(Object.keys(this.props.storeData).length);
 

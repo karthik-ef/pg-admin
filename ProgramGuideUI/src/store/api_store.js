@@ -5,9 +5,10 @@ export function setStoreData() {
     return (dispatch) => {
         dispatch(LoginDetails.call(this));
         dispatch(EfCom20_Content_UserMarkets.call(this));
-        dispatch(DurationTags.call(this));
-        dispatch(PlatformTags.call(this));
-        dispatch(BannerImages.call(this));
+        dispatch(CreatePageTags.call(this));
+        // dispatch(DurationTags.call(this));
+        // dispatch(PlatformTags.call(this));
+        // dispatch(BannerImages.call(this));
         dispatch(UserDashboard.call(this));
     }
 }
