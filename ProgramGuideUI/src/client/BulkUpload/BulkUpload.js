@@ -63,7 +63,7 @@ class BulkUpload extends Component {
               if (i === 0 || i === 31) {
                 if (isNaN(content)) {
                   this.validationFailed = true;
-                  alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should contain numeric value for ' + element[2] +' page. Please correct and upload again.');
+                  alert(Constant.EXPORT_TO_EXCEL_COLUMNS[i] + ' column should contain numeric value for ' + element[2] + ' page. Please correct and upload again.');
                 }
               }
               else {
@@ -186,7 +186,7 @@ class BulkUpload extends Component {
           <table className="table table-borderless" id="bulkUploadBatchDetails">
             <tbody>
               <p><b>Batches not published to LIVE</b></p>
-              {this.state.bulkUploadDetailsData}
+              {this.state.bulkUploadDetailsData[this.state.bulkUploadDetailsData.length - 1]}
             </tbody>
           </table>
           : ''
