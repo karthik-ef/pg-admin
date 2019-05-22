@@ -57,8 +57,6 @@ class Header extends Component {
     }
 
     render() {
-        console.log(this.props.storeData._loginDetails.userName.toString().toLowerCase())
-
         const { open, option } = this.state;
         return (
             <div className="headerDiv">

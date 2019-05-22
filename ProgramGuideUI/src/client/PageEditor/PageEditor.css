@@ -81,3 +81,8 @@ input#txtPparentPageUrl {
   border-top: none;
   padding:0;
 }
+
+.toggle__view{
+  float: right;
+  margin-right: 80%;
+}
