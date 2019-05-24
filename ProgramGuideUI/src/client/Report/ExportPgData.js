@@ -68,6 +68,7 @@ class ExportPgData extends Component {
     }
 
     exportToExcel() {
+        alert('Report generation is in progress. It may take a while depending on the number of pages.');
         /*Excel data */
         var excelData = this.props.storeData._uniqueContentData && !this.customizedData.length > 0
             ? this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode))
