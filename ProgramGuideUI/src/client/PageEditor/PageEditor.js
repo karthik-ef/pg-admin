@@ -39,6 +39,7 @@ class PageEditor extends Component {
         this.objDrillDownAlias = {}
         this.Checkduplicate = {};
         this.validation = false;
+        this.pageTaggingData = [];
 
         this.state = {
             showDuplicateErrorForCreate: false,
@@ -61,6 +62,32 @@ class PageEditor extends Component {
                 $(this).find('img').attr("src", Down)
             }
         });
+
+        // While creating new page, pageUrl will be empty.
+        var pageUrl = this.props.EditPageRow !== undefined
+            ? this.props.EditPageRow['EditRowData']['PageUrl']
+            : ''
+
+        //Store the page tagging for the selected market
+        this.pageTaggingData = this.props.storeData._uniqueContentData
+            .filter(m => m.MarketCode === this.props.storeData._selectedMarket
+                && m.PageUrl !== pageUrl)
+            .map(m => {
+                return m.Tag_Topic + '_' +
+                    m.Tag_When + '_' +
+                    m.Tag_CourseType + '_' +
+                    m.Tag_AgeRange + '_' +
+                    m.Tag_Duration + '_' +
+                    m.Tag_LanguageOfInstruction + '_' +
+                    m.Tag_LanguageLearned + '_' +
+                    m.Tag_Platform + '_' +
+                    m.Tag_Continent + '_' +
+                    m.Tag_Country + '_' +
+                    m.Tag_State + '_' +
+                    m.Tag_City + '_' +
+                    m.Tag_Feature + '_' +
+                    m.AdditionalDurationDetails
+            });
     }
 
     updatePageAliasToQA() {
@@ -267,18 +294,24 @@ class PageEditor extends Component {
     }
     //Update the modified data to QA
     async UpdateToQA() {
-        await this.getModifiedData();
 
-        this.props.isNewPage !== undefined
-            ? API.createNewPage.call(this)
-            : API.updateUniqueContent.call(this);
+        if (!this.pageTaggingData.includes(this.objPageTag)) {
+            await this.getModifiedData();
 
-        await this.updatePageAliasToQA();
-        await this.updateCustomizedLinksToQA();
+            this.props.isNewPage !== undefined
+                ? API.createNewPage.call(this)
+                : API.updateUniqueContent.call(this);
 
-        if (!this.validation) {
-            $('#pageEditor').modal('hide');
-            this.props.getEditorContentData('Data updated');
+            await this.updatePageAliasToQA();
+            await this.updateCustomizedLinksToQA();
+
+            if (!this.validation) {
+                $('#pageEditor').modal('hide');
+                this.props.getEditorContentData('Data updated');
+            }
+        }
+        else {
+            alert('The selected page tagging is already present. Please change.')
         }
     }
 
