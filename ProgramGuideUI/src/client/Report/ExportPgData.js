@@ -93,45 +93,62 @@ class ExportPgData extends Component {
         }
 
         saveAs(new Blob([s2ab(wbout)], { type: "application/octet-stream" }), "PG-Data.xlsx");
+
+        this.setState({ isDataLoaded: true });
+    }
+
+    clearFilter() {
+        this.customizedData = [];
+        this.selectedMarket = [];
+        this.setState({ isDataLoaded: false });
     }
 
     render() {
         return (
             <div className="itemDiv add-users__wrapper">
-                <div className="container">
-                    {this.selectedMarket.length > 0
-                        ?
-                        this.customizedData.length > 0
-                            ?
-                            <div className="alert alert-info" role="alert">
-                                <span className="alert-text__info strong__text"> Filter Applied! </span> <br />
-                                <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.customizedData.length}</span> <br />
-                                <span className="alert-text__info strong__text">{this.filterType}</span> <span className="alert-text__info secondary__text">{this.filterCriteria}</span>
-                            </div>
-                            :
-                            <div className="alert alert-info" role="alert">
-                                <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode)).length}</span> <br />
-                            </div>
-                        : ''
-                    }
-                    {this.state.customize ? <FilterResult getFilterResultData={this.filterResultData.bind(this)} /> : ''}
-                    <label htmlFor="exampleInputEmail1"><strong>Select Market(s) to export the data</strong></label>
-                    <div className="row">
-                        <div className="input-group">
-                            <div className="col-sm-4">
-                                <DropDown
-                                    Markets={this.props.storeData._efCom_OrganicSearch_Markets
-                                        .map(m => { return { label: m.Name, value: m.MarketCode } })}
-                                    multiSelect={true}
-                                    bindedMarketValue={this.BindMarkets.bind(this)}
-                                />
-                            </div>
-                            <button className="btn btn-dark" type="button" disabled={this.isDisabled} onClick={this.customize.bind(this)} >Customize</button>
+                {this.state.isDataLoaded
+                    ? <div className="container">
+                        <div className="alert alert-success" role="alert">
+                            <span>Report is downloaded successfully.</span> <br />
                         </div>
+                        <button className="btn btn-primary" type="button" onClick={this.clearFilter.bind(this)} >Export Pg Data</button>
                     </div>
-                    <br />
-                    <button className="btn btn-primary" type="button" onClick={this.exportToExcel.bind(this)} >Export</button>
-                </div>
+                    :
+                    <div className="container">
+                        {this.selectedMarket.length > 0
+                            ?
+                            this.customizedData.length > 0
+                                ?
+                                <div className="alert alert-info" role="alert">
+                                    <span className="alert-text__info strong__text"> Filter Applied! </span> <br />
+                                    <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.customizedData.length}</span> <br />
+                                    <span className="alert-text__info strong__text">{this.filterType}</span> <span className="alert-text__info secondary__text">{this.filterCriteria}</span>
+                                </div>
+                                :
+                                <div className="alert alert-info" role="alert">
+                                    <span className="alert-text__info strong__text"> Number of Pages returned: </span> <span className="alert-text__info secondary__text">{this.props.storeData._uniqueContentData.filter(m => this.selectedMarket.includes(m.MarketCode)).length}</span> <br />
+                                </div>
+                            : ''
+                        }
+                        {this.state.customize ? <FilterResult getFilterResultData={this.filterResultData.bind(this)} /> : ''}
+                        <label htmlFor="exampleInputEmail1"><strong>Select Market(s) to export the data</strong></label>
+                        <div className="row">
+                            <div className="input-group">
+                                <div className="col-sm-4">
+                                    <DropDown
+                                        Markets={this.props.storeData._efCom_OrganicSearch_Markets
+                                            .map(m => { return { label: m.Name, value: m.MarketCode } })}
+                                        multiSelect={true}
+                                        bindedMarketValue={this.BindMarkets.bind(this)}
+                                    />
+                                </div>
+                                <button className="btn btn-dark" type="button" disabled={this.isDisabled} onClick={this.customize.bind(this)} >Customize</button>
+                            </div>
+                        </div>
+                        <br />
+                        <button className="btn btn-primary" type="button" onClick={this.exportToExcel.bind(this)} >Export</button>
+                    </div>
+                }
             </div>
         );
     }
