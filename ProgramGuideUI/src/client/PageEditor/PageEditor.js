@@ -286,15 +286,19 @@ class PageEditor extends Component {
     }
 
     async UpdateToLive() {
-        await this.getModifiedData();
-        await this.UpdateToQA();
-        await this.updatePageAliasToLIVE();
-        await this.updateCustomizedLinksToLIVE();
-        await API.publishToLive.call(this);
+        if (!this.pageTaggingData.includes(this.objPageTag)) {
+            await this.getModifiedData();
+            await this.UpdateToQA();
+            await this.updatePageAliasToLIVE();
+            await this.updateCustomizedLinksToLIVE();
+            await API.publishToLive.call(this);
+        }
+        else {
+            alert('The selected page tagging is already present. Please change.')
+        }
     }
     //Update the modified data to QA
     async UpdateToQA() {
-
         if (!this.pageTaggingData.includes(this.objPageTag)) {
             await this.getModifiedData();
 
