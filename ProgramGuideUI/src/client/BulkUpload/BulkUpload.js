@@ -157,7 +157,6 @@ class BulkUpload extends Component {
     });
 
     this.publishToLiveData = {
-      batchId: batchId,
       userName: this.props.storeData._loginDetails.userName,
       xmlData: jsonxml({ XmlDocument: xmlBatchData })
     };
