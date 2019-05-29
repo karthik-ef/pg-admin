@@ -17,6 +17,7 @@ export const deleteUser = `http://ctdev.ef.com:3001/api/deleteUser`;
 export const bulkUpload = `http://ctdev.ef.com:3001/api/bulkUpload`;
 export const bulkUploadDetail = `http://ctdev.ef.com:3001/api/bulkUploadDetail`;
 export const getBatchDetails = `http://ctdev.ef.com:3001/api/getBatchDetails/?userName=`;
+export const deleteBatchId = `http://ctdev.ef.com:3001/api/deleteBatchId/?batchId=`
 
 //Search Results
 export const getMaxOfUniqueContentId = `http://ctdev.ef.com:3001/api/getMaxOfUniqueContentId`;

@@ -161,6 +161,8 @@ class BulkUpload extends Component {
       xmlData: jsonxml({ XmlDocument: xmlBatchData })
     };
 
+    this.publishedBatchId = batchId;
+
     API.publishBulkUpload.call(this);
   }
 

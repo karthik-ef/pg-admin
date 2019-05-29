@@ -68,8 +68,16 @@ export function publishBulkUpload() {
     console.log(this.publishToLiveData);
     axios.post(API.publishBulkUpload, this.publishToLiveData)
         .then(result => {
-            getBulkUploadDetails.call(this);
+            deleteBatchId.call(this);
             alert('Changes successfully published to LIVE')
+        })
+        .catch(err => { console.log(err) });
+}
+
+export function deleteBatchId(){
+    axios.get(API.deleteBatchId + this.publishedBatchId)
+        .then(result => {
+            getBulkUploadDetails.call(this);
         })
         .catch(err => { console.log(err) });
 }
