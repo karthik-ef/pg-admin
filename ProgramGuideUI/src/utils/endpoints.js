@@ -35,6 +35,9 @@ export const getCustomizedLinksDetails = `http://ctdev.ef.com:3001/api/getCustom
 export const getDrillDownAliasDetails = `http://ctdev.ef.com:3001/api/getDrillDownAliasDetails/?UniqueContent_ID=`;
 export const saveCustomizedLinksDetails = `http://ctdev.ef.com:3001/api/SaveCustomizedLinksDetails`;
 export const saveDrilldownAliasTagsDetails = `http://ctdev.ef.com:3001/api/SaveDrilldownAliasTagsDetails`;
+export const saveCustomizedLinksDetailsToLive = `http://ctdev.ef.com:3001/api/SaveCustomizedLinksDetailsToLive`;
+export const saveDrilldownAliasTagsDetailsToLive = `http://ctdev.ef.com:3001/api/SaveDrilldownAliasTagsDetailsToLive`;
+
 export const updateUniqueContent = `http://ctdev.ef.com:3001/api/updateUniqueContent`;
 export const createNewPage = `http://ctdev.ef.com:3001/api/createNewPage`;
 

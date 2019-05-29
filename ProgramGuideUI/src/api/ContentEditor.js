@@ -58,7 +58,7 @@ export function saveDrilldownAliasTagsDetailsQA() {
 
 export function saveCustomizedLinksDetailsLive() {
     console.log(this.objCustomizedData);
-    axios.post(API.saveCustomizedLinksDetails, this.objCustomizedData)
+    axios.post(API.saveCustomizedLinksDetailsToLive, this.objCustomizedData)
         .then(result => {
             console.log(result);
         }).catch(err => { console.log(err) });
@@ -66,7 +66,7 @@ export function saveCustomizedLinksDetailsLive() {
 
 export function saveDrilldownAliasTagsDetailsLive() {
     console.log(this.objDrillDownAlias);
-    axios.post(API.saveDrilldownAliasTagsDetails, this.objDrillDownAlias)
+    axios.post(API.saveDrilldownAliasTagsDetailsToLive, this.objDrillDownAlias)
         .then(result => {
             console.log(result);
         }).catch(err => { console.log(err) });
