@@ -403,7 +403,10 @@ class PageEditor extends Component {
                                 </div> : ''} */}
                                 <button type="button" class="btn btn-modal-default" onClick={this.Close.bind(this)}>Cancel</button>
                                 <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToQA.bind(this)}>Save</button>
-                                <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToLive.bind(this)}>Publish</button>
+                                {this.props.isNewPage === undefined
+                                    ? <button type="button" class="btn btn-primary btn-modal" onClick={this.UpdateToLive.bind(this)}>Publish</button>
+                                    : ''
+                                }
                             </div>
                         </div>
                     </div>
