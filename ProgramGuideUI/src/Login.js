@@ -47,7 +47,7 @@ class Login extends Component {
         setTimeout(() => {
             $('#exampleModalCenter').modal('hide');
             this.props.Authentication(true)
-        }, 10000);
+        }, 12000);
     }
 
     componentDidUpdate() {
