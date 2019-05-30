@@ -23,6 +23,8 @@ class CustomRichTextEditor extends Component {
 
   onChange = (value) => {
 
+    console.log(this.props.showHtmlText ? value.toString('markdown') : value.toString('html'));
+
     this.editedHtml = this.props.showHtmlText ? false : true;
 
     this.setState({
@@ -30,7 +32,11 @@ class CustomRichTextEditor extends Component {
       setDefaultText: false
     }, function () {
       // Pass the entered text value to calling component
-      this.props.getRichTextEditorValue(value.toString('html'));
+      this.props.getRichTextEditorValue(
+        this.props.showHtmlText
+          ? value.toString('markdown')
+          : value.toString('html')
+      );
     });
   };
 
