@@ -100,8 +100,8 @@ export async function getSitemapMinisites() {
 export async function getSitemapSearchPages() {
   await axios.get(API.getSitemapSearchPages + this.selectedWebsite + '&marketCode=' + this.selectedMarket)
     .then(result => {
-      this.XMLData = groupBy(result.data.filter(m => m.IsActive === true), function (item) {
-        return item.PageUrl.toString();
+      this.XMLData = groupBy(result.data, function (item) {
+        return item.RelativePageUrl.toString();
       });
       this.siteMapXmlData = [];
       var rootXMLOpen = '<?xml version="1.0" encoding="UTF-8"?> <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">';
@@ -112,16 +112,17 @@ export async function getSitemapSearchPages() {
       var xmlLocClose = '</loc>';
       var xmlLastmodOpen = '<lastmod>';
       var xmlLastmodClose = '</lastmod>';
-      var xmlPriorityOpen = '<priority>'
-      var xmlPriorityClose = '</priority>'
+      var xmlPriorityOpen = '<priority>';
+      var xmlPriorityClose = '</priority>';
 
+      console.log(this.XMLData);
       this.XMLData.forEach((element, i) => {
         var priority = Object.keys(element).toString().replace(/\//g, '').toLowerCase() === this.selectedWebsite.replace(/\//g, '').toLowerCase() ? '1' : '0.5';
         this.siteMapXmlData.push(
           xmlUrlOpen + xmlLocOpen + element[Object.keys(element)].map(m => { return m.Domain })[0]
-          + element[Object.keys(element)].map(m => { return m.PageUrl })[0] + xmlLocClose +
+          + element[Object.keys(element)].map(m => { return m.RelativePageUrl })[0] + xmlLocClose +
           element[Object.keys(element)].map(m => {
-            return '<xhtml:link rel="alternate" hreflang="' + m.MarketCode + '" href="https://' + m.RelativeUrl + '" />'
+            return '<xhtml:link rel="alternate" hreflang="' + m.HrefLangCode + '" href="https://' + m.PageUrl + '" />'
           }).toString().replace(/,/g, ' ') +
           xmlLastmodOpen + moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ") + xmlLastmodClose + xmlPriorityOpen + priority + xmlPriorityClose + xmlUrlClose
         );
