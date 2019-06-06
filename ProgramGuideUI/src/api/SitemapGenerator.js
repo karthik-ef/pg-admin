@@ -21,7 +21,7 @@ function generateMinisiteXML() {
   var isDifferentMinisitePage = true;
 
   //Loop throught pages for all markets
-  this.minisitesData.forEach((element, i) => {
+  this.minisitesData.forEach((element, i, array) => {
     i === 0 ? previousPageID = element.itemID : ''; // Initialize previousPageID
     i === 0 ? rootPageID = element.itemID : ''; // Save the rootpage ID which will be used for priority
 
@@ -44,7 +44,7 @@ function generateMinisiteXML() {
     }
 
     // Step 2 - If itemID is different then it's a new page, generate the closing tag and store the corresponding data
-    if (previousPageID !== element.itemID) {
+    if (previousPageID !== element.itemID || i === array.length - 1) {
       var priority = previousPageID === rootPageID ? 1 : 0.5; // Priority is 1 for root page
       previousPageID = element.itemID; //Assign the new sibling page ID
       isDifferentMinisitePage = true; // Reset the flag
