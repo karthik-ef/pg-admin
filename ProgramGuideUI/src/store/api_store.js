@@ -8,7 +8,7 @@ export function setStoreData() {
         dispatch(CreatePageTags.call(this));
         // dispatch(DurationTags.call(this));
         // dispatch(PlatformTags.call(this));
-        // dispatch(BannerImages.call(this));
+        dispatch(BannerImages.call(this));
         dispatch(UserDashboard.call(this));
     }
 }
