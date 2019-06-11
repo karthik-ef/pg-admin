@@ -52,6 +52,8 @@ export const getPageDatabase_SearchPages = `http://pg2-admin.ef.com/api/getPageD
 export const getSitemapSearchPages = `http://pg2-admin.ef.com/api/getSitemapSearchPages/?webSiteName=`;
 export const getSitemapMinisites = `https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/Sitemapping/?mc=we&website=`;
 export const getHreflangMappingDetails = `http://pg2-admin.ef.com/api/getHreflangMappingDetails`;
+export const getUniversalTopicUniqueContentMappingPages = `http://ctdev.ef.com:3001/api/getUniversalTopicUniqueContentMappingPages/?MarketCode=`;
+export const getPgEquivalentPages = `http://ctdev.ef.com:3001/api/getPgEquivalentPages/?MarketCode=`
 
 //Email Notification
 export const sendEmail = `http://pg2-admin.ef.com/api/sendEmail`;

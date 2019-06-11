@@ -46,11 +46,14 @@ class SitemapGenerator extends Component {
         this.selectedMarket = item;
         this.xmlFileName = 'sitemap-' + this.selectedWebsite.replace('/', '').toLowerCase() + '-' + this.selectedMarket.toLowerCase() + '.xml';
         //Check the type of website
-        this.props.storeData._sitemapWebsites
+        var websiteType = this.props.storeData._sitemapWebsites
           .filter(m => m.WebsiteName === this.selectedWebsite)
-          .map(m => { return m.Type }).toString() === 'Product'
+          .map(m => { return m.Type }).toString()
+        websiteType === 'Product'
           ? await API.getSitemapSearchPages.call(this)
-          : await API.getSitemapMinisites.call(this)
+          : websiteType === 'PG'
+            ? await API.getPGPages.call(this)
+            : await API.getSitemapMinisites.call(this)
 
 
 

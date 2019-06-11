@@ -97,6 +97,48 @@ export async function getSitemapMinisites() {
   }
 }
 
+export async function getPGPages() {
+
+  //STEP:1 Get UniversalTopic & UniqueContent data for selected market
+  await axios.get(API.getUniversalTopicUniqueContentMappingPages + this.selectedMarket)
+    .then(result => {
+      this.MappingData = result.data;
+    }).catch(err => { console.log(err) });
+
+  //STEP:2 Get equivalent pages in other markets based on UniversalTopic in STEP 1
+  await axios.get(API.getPgEquivalentPages + this.selectedMarket)
+    .then(result => {
+      this.PgEquivalentPages = result.data;
+    }).catch(err => { console.log(err) });
+
+  //Loop each pages in the selected market and find it's equivalent pages in other markets
+  this.MappingData.forEach(element => {
+    console.log(element.TopicInEnglish);
+    console.log(element.PageUrl);
+    // Filter out unmatched tags
+    console.log(this.PgEquivalentPages.filter(m => m.Tags === element.Tags && m.TopicInEnglish === element.TopicInEnglish));
+    //Filter out unmatched age groups
+  });
+}
+
+export function getUniversalTopicUniqueContentMappingPages() {
+  axios.get(API.getUniversalTopicUniqueContentMappingPages + this.selectedMarket)
+    .then(result => {
+      this.MappingData = result.data;
+      console.log(result.data);
+    })
+    .catch(err => { console.log(err) });
+}
+
+async function getPgEquivalentPages() {
+  axios.get(API.getPgEquivalentPages + this.selectedMarket)
+    .then(result => {
+      this.PgEquivalentPages = result.data;
+      console.log(result.data);
+    })
+    .catch(err => { console.log(err) });
+}
+
 export async function getSitemapSearchPages() {
   await axios.get(API.getSitemapSearchPages + this.selectedWebsite + '&marketCode=' + this.selectedMarket)
     .then(result => {
