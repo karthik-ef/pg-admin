@@ -7,38 +7,34 @@ import * as CONSTANT from '../utils/constant';
 import * as GENERIC from '../utils/generic';
 
 function generateMinisiteXML() {
-
   //Check if there
-  if (this.minisitesData.filter(m => m.marketCode === this.props.storeData._sitemapMarkets
-    .filter(m => m.MarketCode === this.selectedMarket)
-    .map(m => { return m.HreflangCode }).toString()).length === 0) {
+  if (this.minisitesData.filter(m => m.marketCode === this.selectedMarket).length === 0) {
     return;
   }
 
   var previousPageID, rootPageID, domainName; // Hold previous and root page itemID
   var beginXMLTag, endXMLTag; // 
   var sitemapXmlData = [], xmlBody = []; // Array to store all pages corresponsing name in other markets and individual pages corresponsing name in other markets
-  var isDifferentMinisitePage = true;
 
   //Loop throught pages for all markets
   this.minisitesData.forEach((element, i, array) => {
     i === 0 ? previousPageID = element.itemID : ''; // Initialize previousPageID
     i === 0 ? rootPageID = element.itemID : ''; // Save the rootpage ID which will be used for priority
 
-    domainName = this.props.storeData._sitemapMarkets.filter(m => m.HreflangCode === element.marketCode).map(m => m.DomainName).toString();
+    domainName = this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === element.marketCode).map(m => m.DomainName).toString();
     domainName = domainName.toString().slice(-1) === '/'
       ? domainName.toString().slice(0, -1)
       : domainName
 
     // Step 1 - Check if it's a new page
-    if (isDifferentMinisitePage) {
+    if (!beginXMLTag) {
       beginXMLTag = CONSTANT.xmlUrlOpen +
         CONSTANT.xmlLocOpen +
-        domainName +
+        //Domain Name
+        this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === this.selectedMarket)
+          .map(m => m.DomainName).toString() +
         this.minisitesData.filter(m => m.itemID === element.itemID
-          && m.marketCode === this.props.storeData._sitemapMarkets
-            .filter(m => m.MarketCode === this.selectedMarket)
-            .map(m => { return m.HreflangCode }).toString())
+          && m.marketCode === this.selectedMarket)
           .map(m => { return m.pageUrl }).toString().toLowerCase() +
         CONSTANT.xmlLocClose;
     }
@@ -47,7 +43,6 @@ function generateMinisiteXML() {
     if (previousPageID !== element.itemID || i === array.length - 1) {
       var priority = previousPageID === rootPageID ? 1 : 0.5; // Priority is 1 for root page
       previousPageID = element.itemID; //Assign the new sibling page ID
-      isDifferentMinisitePage = true; // Reset the flag
 
       //Store the last mod and priority for each minisite page
       endXMLTag = CONSTANT.xmlLastmodOpen + moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ") + CONSTANT.xmlLastmodClose + // Lastmod Section
@@ -59,18 +54,28 @@ function generateMinisiteXML() {
         xmlBody.map(m => { return m }).toString().replace(/,/g, ' ') +
         endXMLTag);
 
+      beginXMLTag = CONSTANT.xmlUrlOpen +
+        CONSTANT.xmlLocOpen +
+        this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === this.selectedMarket)
+          .map(m => m.DomainName).toString() +
+        this.minisitesData.filter(m => m.itemID === element.itemID
+          && m.marketCode === this.selectedMarket)
+          .map(m => { return m.pageUrl }).toString().toLowerCase() +
+        CONSTANT.xmlLocClose
+
+      // isFirstloop = false;
       xmlBody = []; // Reset to hold new page details
     }
 
     // Store the corresponding page name in rest of the markets
     xmlBody.push('<xhtml:link rel="alternate" hreflang="' +
-      element.marketCode + // hrefLangCode
+      this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === element.marketCode)
+        .map(m => { return m.HreflangCode }).toString() + // hrefLangCode
       '" href="https://' +
       domainName + //Domain Name
       element.pageUrl + //Page URL
       '" />');
 
-    isDifferentMinisitePage = false; // Page will be different only when ItemID is not same
   });
 
   var xmldata = CONSTANT.rootXMLOpen + // XML open 
@@ -113,10 +118,10 @@ export async function getPGPages() {
 
   //Loop each pages in the selected market and find it's equivalent pages in other markets
   this.MappingData.forEach(element => {
-    console.log(element.TopicInEnglish);
+    console.log(element.UniversalExperience);
     console.log(element.PageUrl);
     // Filter out unmatched tags
-    console.log(this.PgEquivalentPages.filter(m => m.Tags === element.Tags && m.TopicInEnglish === element.TopicInEnglish));
+    console.log(this.PgEquivalentPages.filter(m => m.Tags === element.Tags && m.UniversalExperience === element.UniversalExperience));
     //Filter out unmatched age groups
   });
 }
