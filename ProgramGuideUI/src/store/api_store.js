@@ -187,3 +187,19 @@ export function CreatePageTags() {
             .catch(err => { console.log(err) });
     }
 }
+
+// Store newly created pages
+export function SitemapUniversalExperience() {
+    return (dispatch) => {
+        axios.get(EndPoint.getSitemapUniversalExperience)
+            .then(result => { dispatch({ type: 'store_SitemapUniversalExperience', data: result.data }) })
+            .catch(err => { console.log(err) });
+    }
+}
+export function SitemapUniversalAgeGroup() {
+    return (dispatch) => {
+        axios.get(EndPoint.getSitemapUniversalAgeGroup)
+            .then(result => { dispatch({ type: 'store_SitemapUniversalAgeGroup', data: result.data }) })
+            .catch(err => { console.log(err) });
+    }
+}

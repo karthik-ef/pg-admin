@@ -9,3 +9,5 @@ export const SitemapGenerator = '/SitemapGenerator';
 export const ExportPgData = '/ExportPgData';
 export const AgeGroup = '/AgeGroup';
 export const Publish = '/Publish';
+export const SitemapUniversalExperience = '/SitemapUniversalExperience'
+export const SitemapUniversalAgeGroup = '/SitemapUniversalAgeGroup';

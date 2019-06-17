@@ -44,7 +44,8 @@ export const createNewPage = `http://pg2-admin.ef.com/api/createNewPage`;
 
 //Reports
 export const topicExperienceMappingDetails = `https://ctdev.ef.com/common/ef-services/PG2Services/api/CommonService/GetTopicExperienceMappingDetails/?mc=`
-
+export const getSitemapUniversalExperience = `http://ctdev.ef.com:3001/api/getSitemapUniversalExperience`
+export const getSitemapUniversalAgeGroup = `http://ctdev.ef.com:3001/api/getSitemapUniversalAgeGroup`
 //Sitemap Generator
 export const getSitemapWebsites = `http://pg2-admin.ef.com/api/getSitemapWebsites`;
 export const getSitemapAllPages = `http://pg2-admin.ef.com/api/getSitemapAllPages/?marketCode=`

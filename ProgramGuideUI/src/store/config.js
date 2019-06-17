@@ -143,9 +143,17 @@ function amount(state = defaultState, action) {
       ...state, _ageGroupMarketCode: action.data
     }
   }
-
-
-
+  else if (action.type === 'store_SitemapUniversalExperience') {
+    return {
+      ...state, _sitemapUniversalExperience: action.data
+    }
+  }
+  else if (action.type === 'store_SitemapUniversalAgeGroup') {
+    return {
+      ...state, _sitemapUniversalAgeGroup: action.data
+    }
+  }
+  
   return state;
 }
 

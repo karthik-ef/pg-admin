@@ -10,6 +10,8 @@ import SitemapGenerator from './client/Report/SitemapGenerator';
 import ExportPgData from './client/Report/ExportPgData';
 import AgeGroup from './client/Report/AgeReport';
 import Publish from './client/Publish/PublishToLive';
+import SitemapUniversalExperience from  './client/Report/Sitemap_UniversalExperience';
+import SitemapUniversalAgeGroup from './client/Report/Sitemap_UniversalAgeGroup';
 import * as Path from '../src/utils/routepath';
 import storeData from './store/config';
 
@@ -23,6 +25,8 @@ export default () =>
     <Route path={Path.TopicExperienceMapping} exact component={TopicExperienceMapping} />
     <Route path={Path.ExportPgData} exact component={ExportPgData} />
     <Route path={Path.AgeGroup} exact component={AgeGroup} />
+    <Route path={Path.SitemapUniversalExperience} exact component={SitemapUniversalExperience} />
+    <Route path={Path.SitemapUniversalAgeGroup} exact component={SitemapUniversalAgeGroup} />
 
     <Route path={Path.Publish} exact component={Publish} />
     {/* Components available for admin users only */}

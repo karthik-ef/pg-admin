@@ -153,6 +153,8 @@ class Header extends Component {
                                             <div className="dropdown-divider"></div>
                                             <Link to="/ExportPgData" className="nav-link no-padding">Export Pg Data</Link>
                                             <Link to="/AgeGroup" className="nav-link no-padding">Age Group Report</Link>
+                                            <Link to="/SitemapUniversalExperience" className="nav-link no-padding">Sitemap Universal Experience </Link>
+                                            <Link to="/SitemapUniversalAgeGroup" className="nav-link no-padding">Sitemap Universal AgeGroup </Link>
                                         </div>
                                     </li>
                                     {this.props.storeData._loginDetails.userName === 'karthik.subbarayappa' ||

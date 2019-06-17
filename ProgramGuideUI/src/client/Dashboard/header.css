@@ -147,3 +147,7 @@
   background-color: #efefef;
   cursor: pointer;
 }
+
+.dropdown-menu.show {
+  display: contents;
+}
