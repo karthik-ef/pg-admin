@@ -54,6 +54,7 @@ export const getSitemapMinisites = `https://ctdev.ef.com/common/ef-services/PG2S
 export const getHreflangMappingDetails = `http://pg2-admin.ef.com/api/getHreflangMappingDetails`;
 export const getUniversalTopicUniqueContentMappingPages = `http://ctdev.ef.com:3001/api/getUniversalTopicUniqueContentMappingPages/?MarketCode=`;
 export const getPgEquivalentPages = `http://ctdev.ef.com:3001/api/getPgEquivalentPages/?MarketCode=`
+export const getUniversalAgeGroup = `http://ctdev.ef.com:3001/api/getUniversalAgeGroup/?MarketCode=`;
 
 //Email Notification
 export const sendEmail = `http://pg2-admin.ef.com/api/sendEmail`;

@@ -103,7 +103,6 @@ export async function getSitemapMinisites() {
 }
 
 export async function getPGPages() {
-
   //STEP:1 Get UniversalTopic & UniqueContent data for selected market
   await axios.get(API.getUniversalTopicUniqueContentMappingPages + this.selectedMarket)
     .then(result => {
@@ -116,21 +115,93 @@ export async function getPGPages() {
       this.PgEquivalentPages = result.data;
     }).catch(err => { console.log(err) });
 
+  //STEP:3 Get Universal AgeGroup
+  await axios.get(API.getUniversalAgeGroup + this.selectedMarket)
+    .then(result => {
+      this.PgUniversalAgeGroup = result.data;
+    }).catch(err => { console.log(err) });
+
+  generatePgXML.call(this);
+}
+
+function generatePgXML() {
+  var sitemapXmlData = [];;
+  var priority
   //Loop each pages in the selected market and find it's equivalent pages in other markets
-  this.MappingData.forEach(element => {
-    console.log(element.UniversalExperience);
-    console.log(element.PageUrl);
+  this.MappingData.forEach((element, i) => {
+    var beginXMLTag, endXMLTag;
+    var xmlBody = [];
+
+    //Initialize and update priority
+    priority = i === 0 ? 1 : 0.5;
+
+    beginXMLTag = CONSTANT.xmlUrlOpen +
+      CONSTANT.xmlLocOpen +
+      this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === this.selectedMarket).map(m => m.DomainName).toString().replace(/\/(?=[^\/]*$)/, '')
+      + element.PageUrl
+      + CONSTANT.xmlLocClose;
+
+    endXMLTag = CONSTANT.xmlLastmodOpen + moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ") + CONSTANT.xmlLastmodClose + // Lastmod Section
+      CONSTANT.xmlPriorityOpen + priority + CONSTANT.xmlPriorityClose + //Priority Section 
+      CONSTANT.xmlUrlClose;
+
     // Filter out unmatched tags
-    console.log(this.PgEquivalentPages.filter(m => m.Tags === element.Tags && m.UniversalExperience === element.UniversalExperience));
+    this.filteredPages = this.PgEquivalentPages.filter(m => m.Tags === element.Tags && m.UniversalExperience === element.UniversalExperience);
+
+    xmlBody.push(this.filteredPages.filter(m => m.Tag_AgeRange === element.Tag_AgeRange)
+      .map(m => {
+        return '<xhtml:link rel="alternate" hreflang="' +
+          this.props.storeData._sitemapMarkets.filter(p => p.MarketCode === m.MarketCode)
+            .map(x => { return x.HreflangCode }).toString()
+          +
+          '" href="https://' +
+          this.props.storeData._sitemapMarkets.filter(p => p.MarketCode === m.MarketCode)
+            .map(x => x.DomainName).toString().replace(/\/(?=[^\/]*$)/, '')
+          + m.PageUrl
+          + '" />'
+      }));
     //Filter out unmatched age groups
+    //console.log(this.filteredPages.filter(m => m.Tag_AgeRange === element.Tag_AgeRange));
+    //console.log(element.PageUrl);
+    //console.log(this.filteredPages.filter(m => m.Tag_AgeRange !== element.Tag_AgeRange));
+    var unmatchedAgeGroup = this.filteredPages.filter(m => m.Tag_AgeRange !== element.Tag_AgeRange);
+    unmatchedAgeGroup.forEach(ageGroupData => {
+      var missingAgeRange_UniversalAgeGroup = this.PgUniversalAgeGroup.filter(m => m.Tag_AgeGroup === ageGroupData.Tag_AgeRange).map(m => { return m.UniversalAgeGroup_ID })[0];
+      var uniqueContentAgeRange_UniversalAgeGroup = this.PgUniversalAgeGroup.filter(m => m.Tag_AgeGroup === element.Tag_AgeRange).map(m => { return m.UniversalAgeGroup_ID })[0];
+
+      if (missingAgeRange_UniversalAgeGroup === uniqueContentAgeRange_UniversalAgeGroup) {
+        xmlBody.push('<xhtml:link rel="alternate" hreflang="' +
+          this.props.storeData._sitemapMarkets.filter(p => p.MarketCode === ageGroupData.MarketCode)
+            .map(x => { return x.HreflangCode }).toString() +
+          '" href="https://' +
+          this.props.storeData._sitemapMarkets.filter(p => p.MarketCode === ageGroupData.MarketCode)
+            .map(x => x.DomainName).toString().replace(/\/(?=[^\/]*$)/, '')
+          + ageGroupData.PageUrl
+          + '" />')
+      }
+      // console.log(ageGroupData.Tag_AgeRange);
+      // console.log(element.Tag_AgeRange)
+      // console.log(ageGroup);
+    });
+
+    sitemapXmlData.push(beginXMLTag +
+      xmlBody.map(m => { return m }).toString().replace(/,/g, '') +
+      endXMLTag);
+    //generatePgXML.call(this);
   });
+
+  var xmldata = CONSTANT.rootXMLOpen + // XML open 
+    sitemapXmlData.map(m => { return m }).toString().replace(/,/g, '') + // Root and sibling page content
+    CONSTANT.rootXMLClose; //XML close 
+
+  // Download the XML file
+  GENERIC.generateSitemapXml(xmldata, this.xmlFileName);
 }
 
 export function getUniversalTopicUniqueContentMappingPages() {
   axios.get(API.getUniversalTopicUniqueContentMappingPages + this.selectedMarket)
     .then(result => {
       this.MappingData = result.data;
-      console.log(result.data);
     })
     .catch(err => { console.log(err) });
 }
@@ -139,7 +210,6 @@ async function getPgEquivalentPages() {
   axios.get(API.getPgEquivalentPages + this.selectedMarket)
     .then(result => {
       this.PgEquivalentPages = result.data;
-      console.log(result.data);
     })
     .catch(err => { console.log(err) });
 }
@@ -162,7 +232,6 @@ export async function getSitemapSearchPages() {
       var xmlPriorityOpen = '<priority>';
       var xmlPriorityClose = '</priority>';
 
-      console.log(this.XMLData);
       this.XMLData.forEach((element, i) => {
         var priority = Object.keys(element).toString().replace(/\//g, '').toLowerCase() === this.selectedWebsite.replace(/\//g, '').toLowerCase() ? '1' : '0.5';
         this.siteMapXmlData.push(
