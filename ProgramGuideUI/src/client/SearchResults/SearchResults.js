@@ -40,13 +40,28 @@ class SearchResult extends Component {
         this.setState({ showSearchFilterModal: true });
     }
 
+
+    componentDidUpdate() {
+        if (this.refreshData) {
+            this.props.storeData._uniqueContentData
+                .filter(m => m.MarketCode === this.props.storeData._selectedMarket).length > 0
+                ? this.filterResultData(this.props.storeData._searchFilterData)
+                : '';
+        }
+    }
+
+
     //Reset the state
     clearFilter() {
+        this.refreshData = false;
         this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
+        this.props.dispatch({ type: 'Store_FilteredData', data: undefined });
         this.setState({ isFilterApplied: false });
     }
 
     filterResultData = (value) => {
+        this.refreshData = false;
+        this.props.dispatch({ type: 'Store_FilteredData', data: value });
         if (!value) {
             this.setState({ showSearchFilterModal: false });
             return;
@@ -98,16 +113,17 @@ class SearchResult extends Component {
     }
 
     editorContentData = (value) => {
-        this.setState({ showEditContentModal: !this.state.showEditContentModal });
-        // if (value === 'closed') {
-        //     this.setState({ showEditContentModal: !this.state.showEditContentModal });
-        // }
-        // else {
-        //    // this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
-        //     this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false });
-        // }
+
+        if (value === 'closed') {
+            this.setState({ showEditContentModal: !this.state.showEditContentModal });
+        }
+        else {
+            // this.props.dispatch({ type: 'Store_FilterTagCriteria', data: undefined });
+            this.setState({ showEditContentModal: !this.state.showEditContentModal, isFilterApplied: false }, function () {
+                this.refreshData = true;
+            });
+        }
     }
-    //
 
     render() {
 

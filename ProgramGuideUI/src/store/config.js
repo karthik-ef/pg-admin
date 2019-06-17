@@ -153,7 +153,11 @@ function amount(state = defaultState, action) {
       ...state, _sitemapUniversalAgeGroup: action.data
     }
   }
-  
+  else if (action.type === 'Store_FilteredData') {
+    return {
+      ...state, _searchFilterData: action.data
+    }
+  }
   return state;
 }
 
