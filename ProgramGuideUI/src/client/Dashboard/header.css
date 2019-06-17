@@ -148,6 +148,6 @@
   cursor: pointer;
 }
 
-.dropdown-menu.show {
-  display: contents;
+.dropdown-menu {
+width: 250px;
 }
