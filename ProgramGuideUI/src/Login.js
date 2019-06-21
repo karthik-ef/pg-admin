@@ -82,7 +82,7 @@ class Login extends Component {
                                     <form className="form-horizontal" onSubmit={this.handleSubmit.bind(this)}>
                                         <div className="form-group row">
                                             <div className="col-sm-12">
-                                                <input type="text" className="form-control" id="inputEmail3" ref="emailId" placeholder="Email" required />
+                                                <input type="text" className="form-control" id="inputEmail3" ref="emailId" placeholder="Username" required />
                                             </div>
                                         </div>
 
