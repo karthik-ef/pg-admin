@@ -82,6 +82,7 @@ class CustomRichTextEditor extends Component {
         <RichTextEditor
           value={Value}
           onChange={this.onChange}
+          className = "textEditor"
         />
       </div>
     );

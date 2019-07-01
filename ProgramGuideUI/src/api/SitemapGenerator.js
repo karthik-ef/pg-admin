@@ -239,7 +239,7 @@ export async function getSitemapSearchPages() {
           + element[Object.keys(element)].map(m => { return m.RelativePageUrl })[0] + xmlLocClose +
           element[Object.keys(element)].map(m => {
             return '<xhtml:link rel="alternate" hreflang="' + m.HrefLangCode + '" href="https://' + m.PageUrl + '" />'
-          }).toString().replace(/,/g, ' ') +
+          }).toString().replace(/,/g, '') +
           xmlLastmodOpen + moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ") + xmlLastmodClose + xmlPriorityOpen + priority + xmlPriorityClose + xmlUrlClose
         );
       });

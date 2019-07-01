@@ -335,7 +335,7 @@ class DrillDown extends Component {
                                             <button id="featurePageTag1Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag1" aria-expanded="true" aria-controls="collapseFeaturePageTag1" className="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag1PreviewOnClick.bind(this)} >Preview</button>
                                         </span>
                                     </div>
-                                    <div id="collapseFeaturePageTag1" className="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag1Button">
+                                    <div id="collapseFeaturePageTag1" className="collapse" aria-labelledby="DrillDown">
                                         {!this.isTag1Valid ? <div className="alert alert-danger" role="alert">
                                             Invalid tag!
                                                                 </div> : this.state.showTag1Preview ?
@@ -356,7 +356,7 @@ class DrillDown extends Component {
                                         <button id="featurePageTag2Preview" data-toggle="collapse" data-target="#collapseFeaturePageTag2" aria-expanded="true" aria-controls="collapseFeaturePageTag2" className="btn btn-primary btn-modal" type="submit" onBlur={this.onBlur} onClick={this.tag2PreviewOnClick.bind(this)} >Preview</button>
                                     </span>
                                 </div>
-                                <div id="collapseFeaturePageTag2" className="collapse" aria-labelledby="DrillDown" data-parent="featurePageTag2Button">
+                                <div id="collapseFeaturePageTag2" className="collapse" aria-labelledby="DrillDown">
                                     {!this.isTag2Valid ? <div className="alert alert-danger" role="alert">
                                         Invalid tag!
                                                                 </div> : this.state.showTag2Preview ?
