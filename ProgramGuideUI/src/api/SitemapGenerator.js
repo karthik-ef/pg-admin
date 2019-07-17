@@ -51,7 +51,7 @@ function generateMinisiteXML() {
 
       //Store each individual page data to array
       sitemapXmlData.push(beginXMLTag +
-        xmlBody.map(m => { return m }).toString().replace(/,/g, ' ') +
+        xmlBody.map(m => { return m }).toString().replace(/,/g, '') +
         endXMLTag);
 
       beginXMLTag = CONSTANT.xmlUrlOpen +
@@ -235,7 +235,7 @@ export async function getSitemapSearchPages() {
       this.XMLData.forEach((element, i) => {
         var priority = Object.keys(element).toString().replace(/\//g, '').toLowerCase() === this.selectedWebsite.replace(/\//g, '').toLowerCase() ? '1' : '0.5';
         this.siteMapXmlData.push(
-          xmlUrlOpen + xmlLocOpen + element[Object.keys(element)].map(m => { return m.Domain })[0]
+          xmlUrlOpen + xmlLocOpen +  this.props.storeData._sitemapMarkets.filter(m => m.MarketCode === this.selectedMarket).map(m => m.DomainName).toString().replace(/\/(?=[^\/]*$)/, '')
           + element[Object.keys(element)].map(m => { return m.RelativePageUrl })[0] + xmlLocClose +
           element[Object.keys(element)].map(m => {
             return '<xhtml:link rel="alternate" hreflang="' + m.HrefLangCode + '" href="https://' + m.PageUrl + '" />'
