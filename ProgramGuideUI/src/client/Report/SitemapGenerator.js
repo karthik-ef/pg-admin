@@ -48,7 +48,9 @@ class SitemapGenerator extends Component {
         //Check the type of website
         var websiteType = this.props.storeData._sitemapWebsites
           .filter(m => m.WebsiteName === this.selectedWebsite)
-          .map(m => { return m.Type }).toString()
+          .map(m => { return m.WebsiteCategory }).toString()
+
+          console.log(websiteType);
         websiteType === 'Product'
           ? await API.getSitemapSearchPages.call(this)
           : websiteType === 'PG'
